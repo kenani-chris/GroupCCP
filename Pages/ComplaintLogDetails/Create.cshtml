@@ -1,0 +1,51 @@
+﻿@page
+@model GroupCCP.Pages.ComplaintLogDetails.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>ComplaintLogDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.LogCustomerId" class="control-label"></label>
+                <select asp-for="ComplaintLogDetail.LogCustomerId" class ="form-control" asp-items="ViewBag.LogCustomerId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.LogMeansId" class="control-label"></label>
+                <select asp-for="ComplaintLogDetail.LogMeansId" class ="form-control" asp-items="ViewBag.LogMeansId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.LogLevelId" class="control-label"></label>
+                <select asp-for="ComplaintLogDetail.LogLevelId" class ="form-control" asp-items="ViewBag.LogLevelId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.LogStatusId" class="control-label"></label>
+                <select asp-for="ComplaintLogDetail.LogStatusId" class ="form-control" asp-items="ViewBag.LogStatusId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.StatusClosedDate" class="control-label"></label>
+                <input asp-for="ComplaintLogDetail.StatusClosedDate" class="form-control" />
+                <span asp-validation-for="ComplaintLogDetail.StatusClosedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

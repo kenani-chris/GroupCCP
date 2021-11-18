@@ -1,0 +1,61 @@
+﻿@page
+@model GroupCCP.Pages.Companies.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].CompanyNameAbbreviation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].CompanyCreateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].CompanyActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].Group)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Company) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyNameAbbreviation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyCreateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group.GroupName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.CompanyId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.CompanyId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.CompanyId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

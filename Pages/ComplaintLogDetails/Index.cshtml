@@ -1,0 +1,61 @@
+﻿@page
+@model GroupCCP.Pages.ComplaintLogDetails.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Customers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Means)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Level)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].StatusClosedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ComplaintLogDetail) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customers.CustomerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Means.Means)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Level.LevelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusClosedDate)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.LogId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.LogId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.LogId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
