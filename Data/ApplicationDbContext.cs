@@ -77,18 +77,24 @@ namespace GroupCCP.Data
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
             });
-
+            
             modelBuilder.Entity<StaffAccount>(entity =>
             {
                 entity.HasKey(x => x.AccountId);
-                entity.HasOne(x => x.User)
+                entity.HasOne(x => x.ApplicationUser)
+                    .WithMany(x => x.StaffAccounts)
+                    .HasForeignKey(x => x.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+
+                /*entity.HasOne(x => x.User)
                     .WithMany(x => x.StaffAccounts)
                     .HasForeignKey(x => x.UserId)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired(true);
+                    .IsRequired(true);*/
             });
 
-            modelBuilder.Entity<Roles>(entity =>
+                modelBuilder.Entity<Roles>(entity =>
             {
                 entity.HasKey(x => x.RoleId);
                 entity.HasOne(x => x.Company)
@@ -231,6 +237,7 @@ namespace GroupCCP.Data
         public DbSet<GroupCCP.Models.ComplaintLogStatus> ComplaintLogStatus { get; set; }
         public DbSet<GroupCCP.Models.ComplaintLogDetail> ComplaintLogDetail { get; set; }
         public DbSet<GroupCCP.Models.ComplaintCustomerInfo> ComplaintCustomerInfo { get; set; }
+        public DbSet<GroupCCP.Models.StaffAccount> StaffAccount { get; set; }
     }
 }
 

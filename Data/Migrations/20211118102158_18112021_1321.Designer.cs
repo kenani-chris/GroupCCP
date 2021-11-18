@@ -4,14 +4,16 @@ using GroupCCP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GroupCCP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211118102158_18112021_1321")]
+    partial class _18112021_1321
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -492,10 +494,6 @@ namespace GroupCCP.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
@@ -508,9 +506,10 @@ namespace GroupCCP.Data.Migrations
                     b.Property<bool>("IsSuperUser")
                         .HasColumnType("bit");
 
-                    b.HasKey("AccountId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasKey("AccountId");
 
                     b.HasIndex("CompanyId");
 
@@ -580,10 +579,6 @@ namespace GroupCCP.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -635,8 +630,6 @@ namespace GroupCCP.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -721,13 +714,6 @@ namespace GroupCCP.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("GroupCCP.Models.ApplicationUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("GroupCCP.Models.Brands", b =>
@@ -959,19 +945,11 @@ namespace GroupCCP.Data.Migrations
 
             modelBuilder.Entity("GroupCCP.Models.StaffAccount", b =>
                 {
-                    b.HasOne("GroupCCP.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("StaffAccounts")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("GroupCCP.Models.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Company");
                 });
@@ -1108,11 +1086,6 @@ namespace GroupCCP.Data.Migrations
                     b.Navigation("Assignments");
 
                     b.Navigation("RolesAssignments");
-                });
-
-            modelBuilder.Entity("GroupCCP.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("StaffAccounts");
                 });
 #pragma warning restore 612, 618
         }

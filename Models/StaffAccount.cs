@@ -9,8 +9,9 @@ namespace GroupCCP.Models
     public class StaffAccount
     {
         public int AccountId { get; set; }
-        public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        public string ApplicationUserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
+        
         [Display(Name = "Company")]
         public int CompanyId { get; set; }
         public Company Company { get; set; }

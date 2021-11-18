@@ -8,6 +8,6 @@ namespace GroupCCP.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public ICollection<StaffAccount> StaffAccounts { get; set; }
+        public virtual IEnumerable<StaffAccount> StaffAccounts { get; set; }
     }
 }
