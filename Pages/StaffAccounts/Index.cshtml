@@ -15,7 +15,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.StaffAccount[0].ApplicationUser)
+                @Html.DisplayNameFor(model => model.StaffAccount[0].User)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StaffAccount[0].Company)
@@ -36,7 +36,7 @@
 @foreach (var item in Model.StaffAccount) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
+                @Html.DisplayFor(modelItem => item.User.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Company.CompanyName)

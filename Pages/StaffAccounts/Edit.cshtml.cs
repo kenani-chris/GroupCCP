@@ -31,15 +31,15 @@ namespace GroupCCP.Pages.StaffAccounts
             }
 
             StaffAccount = await _context.StaffAccount
-                .Include(s => s.ApplicationUser)
-                .Include(s => s.Company).FirstOrDefaultAsync(m => m.AccountId == id);
+                .Include(s => s.Company)
+                .Include(s => s.User).FirstOrDefaultAsync(m => m.AccountId == id);
 
             if (StaffAccount == null)
             {
                 return NotFound();
             }
-           ViewData["ApplicationUserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
            ViewData["CompanyId"] = new SelectList(_context.Company, "CompanyId", "CompanyName");
+           ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
             return Page();
         }
 

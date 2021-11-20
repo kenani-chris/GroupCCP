@@ -30,8 +30,8 @@ namespace GroupCCP.Pages.StaffAccounts
             }
 
             StaffAccount = await _context.StaffAccount
-                .Include(s => s.ApplicationUser)
-                .Include(s => s.Company).FirstOrDefaultAsync(m => m.AccountId == id);
+                .Include(s => s.Company)
+                .Include(s => s.User).FirstOrDefaultAsync(m => m.AccountId == id);
 
             if (StaffAccount == null)
             {

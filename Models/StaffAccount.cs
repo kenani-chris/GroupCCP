@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace GroupCCP.Models
     public class StaffAccount
     {
         public int AccountId { get; set; }
-        public string ApplicationUserId { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
         
         [Display(Name = "Company")]
         public int CompanyId { get; set; }

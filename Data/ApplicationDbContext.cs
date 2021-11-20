@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using GroupCCP.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace GroupCCP.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -15,6 +16,13 @@ namespace GroupCCP.Data
         }
         public DbSet<GroupCCP.Models.Group> Group { get; set; }
         public DbSet<GroupCCP.Models.Company> Company { get; set; }
+        public DbSet<GroupCCP.Models.Level> Level { get; set; }
+        public DbSet<GroupCCP.Models.LevelCategory> LevelCategory { get; set; }
+        public DbSet<GroupCCP.Models.ComplaintReceiveMeans> ComplaintReceiveMeans { get; set; }
+        public DbSet<GroupCCP.Models.ComplaintLogStatus> ComplaintLogStatus { get; set; }
+        public DbSet<GroupCCP.Models.ComplaintLogDetail> ComplaintLogDetail { get; set; }
+        public DbSet<GroupCCP.Models.ComplaintCustomerInfo> ComplaintCustomerInfo { get; set; }
+        public DbSet<GroupCCP.Models.StaffAccount> StaffAccount { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
@@ -77,21 +85,17 @@ namespace GroupCCP.Data
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
             });
-            
+            modelBuilder.Entity<ApplicationUser>(entity =>
+            {
+                entity.Property(x => x.Email);
+                entity.HasMany(x => x.StaffAccounts)
+                    .WithOne(x => x.User)
+                    .HasForeignKey(x => x.UserId)
+                    .IsRequired(true);
+            });
             modelBuilder.Entity<StaffAccount>(entity =>
             {
                 entity.HasKey(x => x.AccountId);
-                entity.HasOne(x => x.ApplicationUser)
-                    .WithMany(x => x.StaffAccounts)
-                    .HasForeignKey(x => x.ApplicationUserId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired(true);
-
-                /*entity.HasOne(x => x.User)
-                    .WithMany(x => x.StaffAccounts)
-                    .HasForeignKey(x => x.UserId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired(true);*/
             });
 
                 modelBuilder.Entity<Roles>(entity =>
@@ -231,13 +235,7 @@ namespace GroupCCP.Data
                 entity.HasKey(x => x.CustomerId);
             });
         }
-        public DbSet<GroupCCP.Models.Level> Level { get; set; }
-        public DbSet<GroupCCP.Models.LevelCategory> LevelCategory { get; set; }
-        public DbSet<GroupCCP.Models.ComplaintReceiveMeans> ComplaintReceiveMeans { get; set; }
-        public DbSet<GroupCCP.Models.ComplaintLogStatus> ComplaintLogStatus { get; set; }
-        public DbSet<GroupCCP.Models.ComplaintLogDetail> ComplaintLogDetail { get; set; }
-        public DbSet<GroupCCP.Models.ComplaintCustomerInfo> ComplaintCustomerInfo { get; set; }
-        public DbSet<GroupCCP.Models.StaffAccount> StaffAccount { get; set; }
+        
     }
 }
 

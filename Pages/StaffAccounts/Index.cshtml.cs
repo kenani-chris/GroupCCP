@@ -24,8 +24,8 @@ namespace GroupCCP.Pages.StaffAccounts
         public async Task OnGetAsync()
         {
             StaffAccount = await _context.StaffAccount
-                .Include(s => s.ApplicationUser)
-                .Include(s => s.Company).ToListAsync();
+                .Include(s => s.Company)
+                .Include(s => s.User).ToListAsync();
         }
     }
 }
