@@ -22,7 +22,7 @@ namespace GroupCCP.Pages.StaffAccounts
         public IActionResult OnGet()
         {
         ViewData["CompanyId"] = new SelectList(_context.Company, "CompanyId", "CompanyName");
-        ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+        ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Email");
             return Page();
         }
 

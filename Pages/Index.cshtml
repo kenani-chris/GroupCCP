@@ -1,10 +1,35 @@
 ﻿@page
 @model IndexModel
+
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Index";
+    Layout = "/Pages/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center" style="padding-top: 200px">
+    <h1 class="display-4">Welcome @User.Identity.Name</h1>
+    <p>Customer Complaint Portal</p>
 </div>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar10">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="navbar10">
+                <ul class="navbar-nav nav-fill w-100">
+                    @foreach (var item in Model.StaffAccount)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">@Html.DisplayFor(modelItem => item.Company.CompanyName)</a>
+                        </li>
+                        <div class=""></div>
+                        
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+        
+    </div>
