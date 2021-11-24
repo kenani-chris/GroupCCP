@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Pages\Account\" />
-    <Folder Include="Pages\site\" />
   </ItemGroup>
 
 </Project>

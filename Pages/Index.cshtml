@@ -21,10 +21,8 @@
                     @foreach (var item in Model.StaffAccount)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="#">@Html.DisplayFor(modelItem => item.Company.CompanyName)</a>
+                            <a class="nav-link" asp-page="site/Index" asp-route-CompanyId="@item.Company.CompanyId">@Html.DisplayFor(modelItem => item.Company.CompanyName)</a>
                         </li>
-                        <div class=""></div>
-                        
                     }
                 </ul>
             </div>
