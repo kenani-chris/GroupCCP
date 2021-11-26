@@ -2,6 +2,11 @@
 @model GroupCCP.Pages.site.IndexModel
 @{
     ViewData["Title"] = "Dashboard";
+    ViewData["PageTitle"] = "Dashboard";
     Layout = "/Pages/Shared/_SystemLayout.cshtml";
 }
-<p>this my friend is new to me</p>
+
+
+@Html.DisplayFor(model => model.Company.Group.GroupName)
+<h1>Index</h1>
+

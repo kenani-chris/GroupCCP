@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GroupCCP.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using GroupCCP.Data;
+using GroupCCP.Models;
 
 namespace GroupCCP.Pages.site
 {
@@ -19,12 +20,15 @@ namespace GroupCCP.Pages.site
 
         public Company Company { get; set; }
 
-        public IActionResult OnGet(int? CompanyId)
+        public async Task<IActionResult> OnGetAsync(int? CompanyId)
         {
             if (CompanyId == null)
             {
                 return NotFound();
             }
+            Company = await _context.Company
+                .Include(c => c.Group).FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+            return Page();
         }
     }
 }
