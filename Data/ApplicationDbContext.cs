@@ -233,6 +233,11 @@ namespace GroupCCP.Data
             modelBuilder.Entity<ComplaintCustomerInfo>(entity =>
             {
                 entity.HasKey(x => x.CustomerId);
+                entity.Property(x => x.CustomerName);
+                entity.HasOne(x => x.Company)
+                    .WithMany(x => x.Customers)
+                    .HasForeignKey(x => x.CompanyId)
+                    .IsRequired(true);
             });
         }
         

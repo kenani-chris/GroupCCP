@@ -27,6 +27,9 @@ namespace GroupCCP.Models
         [Display(Name = "Status")]
         public int LogStatusId { get; set; }
         public  ComplaintLogStatus Status { get; set; }
+        [Display(Name = "Log Submit Date")]
+        [DataType(DataType.DateTime)]
+        public string StatusSubmitDate { get; set; }
         [Display(Name = "Log Close Date")]
         [DataType(DataType.DateTime)]
         public string StatusClosedDate { get; set; }

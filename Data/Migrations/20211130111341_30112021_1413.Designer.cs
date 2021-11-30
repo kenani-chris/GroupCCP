@@ -4,14 +4,16 @@ using GroupCCP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GroupCCP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211130111341_30112021_1413")]
+    partial class _30112021_1413
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,9 +264,6 @@ namespace GroupCCP.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("StatusClosedDate")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StatusSubmitDate")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("LogId");
