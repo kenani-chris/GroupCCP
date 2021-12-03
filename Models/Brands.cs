@@ -11,7 +11,6 @@ namespace GroupCCP.Models
         public string Brand { get; set; }
         public int CompanyId { get; set; }
         public Company Company { get; set; }
-
-        public ICollection<ComplaintVehicleInfo> VehicleInfos { get; set; }
+        public ICollection<ComplaintLogDetail> ComplaintLogDetails { get; set; }
     }
 }

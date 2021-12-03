@@ -19,7 +19,9 @@ namespace GroupCCP.Data
         public DbSet<GroupCCP.Models.Level> Level { get; set; }
         public DbSet<GroupCCP.Models.LevelCategory> LevelCategory { get; set; }
         public DbSet<GroupCCP.Models.ComplaintReceiveMeans> ComplaintReceiveMeans { get; set; }
+        public DbSet<GroupCCP.Models.Brands> Brands { get; set; }
         public DbSet<GroupCCP.Models.ComplaintLogStatus> ComplaintLogStatus { get; set; }
+        public DbSet<GroupCCP.Models.ComplaintAssignment> ComplaintAssignment { get; set; }
         public DbSet<GroupCCP.Models.ComplaintLogDetail> ComplaintLogDetail { get; set; }
         public DbSet<GroupCCP.Models.ComplaintCustomerInfo> ComplaintCustomerInfo { get; set; }
         public DbSet<GroupCCP.Models.StaffAccount> StaffAccount { get; set; }
@@ -39,16 +41,6 @@ namespace GroupCCP.Data
                     .IsRequired(true);
             });
 
-            modelBuilder.Entity<ComplaintVehicleInfo>(entity =>
-            {
-                entity.HasKey(x => x.VehicleId);
-                entity.Property(x => x.RegistrationNumber);
-                entity.HasOne(x => x.Brands)
-                    .WithMany(x => x.VehicleInfos)
-                    .HasForeignKey(x => x.BrandId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired(true);
-            });
 
             modelBuilder.Entity<ComplaintCorrectiveInfo>(entity =>
             {
@@ -56,6 +48,12 @@ namespace GroupCCP.Data
                 entity.HasOne(x => x.Log)
                     .WithMany(x => x.Correctives)
                     .HasForeignKey(x => x.LogId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+
+                entity.HasOne(x => x.StaffAccount)
+                    .WithMany(x => x.ComplaintCorrectiveInfos)
+                    .HasForeignKey(x => x.StaffId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
             });
@@ -98,7 +96,7 @@ namespace GroupCCP.Data
                 entity.HasKey(x => x.AccountId);
             });
 
-                modelBuilder.Entity<Roles>(entity =>
+            modelBuilder.Entity<Roles>(entity =>
             {
                 entity.HasKey(x => x.RoleId);
                 entity.HasOne(x => x.Company)
@@ -209,6 +207,18 @@ namespace GroupCCP.Data
                     .HasForeignKey(x => x.LogStatusId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
+
+                entity.HasOne(x => x.Brands)
+                    .WithMany(x => x.ComplaintLogDetails)
+                    .HasForeignKey(x => x.BrandId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+
+                entity.HasOne(x => x.StaffAccount)
+                    .WithMany(x => x.ComplaintLogDetails)
+                    .HasForeignKey(x => x.StaffId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
             });
 
             modelBuilder.Entity<ComplaintLogStatus>(entity =>
@@ -240,6 +250,8 @@ namespace GroupCCP.Data
                     .IsRequired(true);
             });
         }
+        public DbSet<GroupCCP.Models.ComplaintCorrectiveInfo> ComplaintCorrectiveInfo { get; set; }
+        public DbSet<GroupCCP.Models.ComplaintFollowUp> ComplaintFollowUp { get; set; }
         
     }
 }

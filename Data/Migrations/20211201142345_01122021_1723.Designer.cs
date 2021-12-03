@@ -4,14 +4,16 @@ using GroupCCP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GroupCCP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211201142345_01122021_1723")]
+    partial class _01122021_1723
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,9 +145,6 @@ namespace GroupCCP.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AssignmentDate")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("LogId")
                         .HasColumnType("int");
 
@@ -179,14 +178,9 @@ namespace GroupCCP.Data.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
-                    b.Property<int>("StaffId")
-                        .HasColumnType("int");
-
                     b.HasKey("CorrectiveId");
 
                     b.HasIndex("LogId");
-
-                    b.HasIndex("StaffId");
 
                     b.ToTable("ComplaintCorrectiveInfo");
                 });
@@ -278,9 +272,6 @@ namespace GroupCCP.Data.Migrations
                     b.Property<string>("RegistrationNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StaffId")
-                        .HasColumnType("int");
-
                     b.Property<string>("StatusClosedDate")
                         .HasColumnType("nvarchar(max)");
 
@@ -298,8 +289,6 @@ namespace GroupCCP.Data.Migrations
                     b.HasIndex("LogMeansId");
 
                     b.HasIndex("LogStatusId");
-
-                    b.HasIndex("StaffId");
 
                     b.ToTable("ComplaintLogDetail");
                 });
@@ -770,15 +759,7 @@ namespace GroupCCP.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GroupCCP.Models.StaffAccount", "StaffAccount")
-                        .WithMany("ComplaintCorrectiveInfos")
-                        .HasForeignKey("StaffId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Log");
-
-                    b.Navigation("StaffAccount");
                 });
 
             modelBuilder.Entity("GroupCCP.Models.ComplaintCustomerInfo", b =>
@@ -851,12 +832,6 @@ namespace GroupCCP.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GroupCCP.Models.StaffAccount", "StaffAccount")
-                        .WithMany("ComplaintLogDetails")
-                        .HasForeignKey("StaffId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Brands");
 
                     b.Navigation("Customers");
@@ -864,8 +839,6 @@ namespace GroupCCP.Data.Migrations
                     b.Navigation("Level");
 
                     b.Navigation("Means");
-
-                    b.Navigation("StaffAccount");
 
                     b.Navigation("Status");
                 });
@@ -1122,10 +1095,6 @@ namespace GroupCCP.Data.Migrations
             modelBuilder.Entity("GroupCCP.Models.StaffAccount", b =>
                 {
                     b.Navigation("Assignments");
-
-                    b.Navigation("ComplaintCorrectiveInfos");
-
-                    b.Navigation("ComplaintLogDetails");
 
                     b.Navigation("RolesAssignments");
                 });

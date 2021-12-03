@@ -237,6 +237,16 @@
                 "info": false,
             });
 
+            $("#LogTable").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+                "paging": true,
+                "pageLength": 30,
+                "searching": true,
+                "info": false,
+                "order": [[1, "desc"]],
+            });
+
             $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,

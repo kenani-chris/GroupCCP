@@ -17,5 +17,7 @@ namespace GroupCCP.Models
         [Display(Name = "Corrective Action Summary")]
         [StringLength(400)]
         public string CorrectiveAction { get; set; }
+        public int StaffId { get; set; }
+        public StaffAccount StaffAccount { get; set; }
     }
 }

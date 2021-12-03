@@ -18,6 +18,11 @@ namespace GroupCCP.Models
         [StringLength(500)]
         [Display(Name = "Customer Request")]
         public string CustomerRequest { get; set; }
+        [Display(Name = "Registration Number")]
+        public string RegistrationNumber { get; set; }
+        public int BrandId { get; set; }
+        public Brands Brands { get; set; }
+        public string Model { get; set; }
         [Display(Name = "Receive Means")]
         public int LogMeansId { get; set; } 
         public ComplaintReceiveMeans Means { get; set; }
@@ -27,6 +32,8 @@ namespace GroupCCP.Models
         [Display(Name = "Status")]
         public int LogStatusId { get; set; }
         public  ComplaintLogStatus Status { get; set; }
+        public int StaffId { get; set; }
+        public StaffAccount StaffAccount { get; set; }
         [Display(Name = "Log Submit Date")]
         [DataType(DataType.DateTime)]
         public string StatusSubmitDate { get; set; }
