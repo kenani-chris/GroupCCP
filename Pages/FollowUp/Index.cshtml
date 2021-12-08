@@ -1,0 +1,55 @@
+﻿@page
+@model GroupCCP.Pages.FollowUp.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FollowUpCalls[0].FollowUpTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FollowUpCalls[0].FollowUpMandatory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FollowUpCalls[0].FollowUpType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FollowUpCalls[0].Company)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.FollowUpCalls) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FollowUpTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FollowUpMandatory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FollowUpType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company.CompanyName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.FollowUpId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.FollowUpId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.FollowUpId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

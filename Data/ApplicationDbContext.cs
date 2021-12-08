@@ -252,6 +252,7 @@ namespace GroupCCP.Data
         }
         public DbSet<GroupCCP.Models.ComplaintCorrectiveInfo> ComplaintCorrectiveInfo { get; set; }
         public DbSet<GroupCCP.Models.ComplaintFollowUp> ComplaintFollowUp { get; set; }
+        public DbSet<GroupCCP.Models.FollowUpCalls> FollowUpCalls { get; set; }
         
     }
 }

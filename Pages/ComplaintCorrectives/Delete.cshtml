@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Delete";
-    Layout = "/Pages/Shared/_Layout.cshtml";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h1>Delete</h1>
@@ -30,6 +30,18 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.CorrectiveAction)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.StaffAccount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.StaffAccount.UserId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.CorrectiveInfoDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.CorrectiveInfoDate)
         </dd>
     </dl>
     

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using GroupCCP.Data;
 using GroupCCP.Models;
 
-namespace GroupCCP.Pages.ComplaintCorrectives
+namespace GroupCCP.Pages.FollowUp
 {
     public class CreateModel : PageModel
     {
@@ -21,13 +21,12 @@ namespace GroupCCP.Pages.ComplaintCorrectives
 
         public IActionResult OnGet()
         {
-        ViewData["LogId"] = new SelectList(_context.ComplaintLogDetail, "LogId", "LogId");
-        ViewData["StaffId"] = new SelectList(_context.StaffAccount, "AccountId", "UserId");
+        ViewData["CompanyId"] = new SelectList(_context.Company, "CompanyId", "CompanyName");
             return Page();
         }
 
         [BindProperty]
-        public ComplaintCorrectiveInfo ComplaintCorrectiveInfo { get; set; }
+        public FollowUpCalls FollowUpCalls { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -37,7 +36,7 @@ namespace GroupCCP.Pages.ComplaintCorrectives
                 return Page();
             }
 
-            _context.ComplaintCorrectiveInfo.Add(ComplaintCorrectiveInfo);
+            _context.FollowUpCalls.Add(FollowUpCalls);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

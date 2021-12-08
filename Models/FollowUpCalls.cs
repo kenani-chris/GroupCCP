@@ -11,6 +11,7 @@ namespace GroupCCP.Models
         public int FollowUpId { get; set; }
         [StringLength(20)]
         public string FollowUpTime { get; set; }
+        public bool FollowUpMandatory { get; set; }
         [StringLength(20)]
         public string FollowUpType { get; set; }
         public int CompanyId { get; set; }

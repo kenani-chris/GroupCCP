@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GroupCCP.Data;
 using GroupCCP.Models;
 
-namespace GroupCCP.Pages.ComplaintCorrectives
+namespace GroupCCP.Pages.FollowUp
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace GroupCCP.Pages.ComplaintCorrectives
         }
 
         [BindProperty]
-        public ComplaintCorrectiveInfo ComplaintCorrectiveInfo { get; set; }
+        public FollowUpCalls FollowUpCalls { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,11 +29,10 @@ namespace GroupCCP.Pages.ComplaintCorrectives
                 return NotFound();
             }
 
-            ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo
-                .Include(c => c.Log)
-                .Include(c => c.StaffAccount).FirstOrDefaultAsync(m => m.CorrectiveId == id);
+            FollowUpCalls = await _context.FollowUpCalls
+                .Include(f => f.Company).FirstOrDefaultAsync(m => m.FollowUpId == id);
 
-            if (ComplaintCorrectiveInfo == null)
+            if (FollowUpCalls == null)
             {
                 return NotFound();
             }
@@ -47,11 +46,11 @@ namespace GroupCCP.Pages.ComplaintCorrectives
                 return NotFound();
             }
 
-            ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo.FindAsync(id);
+            FollowUpCalls = await _context.FollowUpCalls.FindAsync(id);
 
-            if (ComplaintCorrectiveInfo != null)
+            if (FollowUpCalls != null)
             {
-                _context.ComplaintCorrectiveInfo.Remove(ComplaintCorrectiveInfo);
+                _context.FollowUpCalls.Remove(FollowUpCalls);
                 await _context.SaveChangesAsync();
             }
 

@@ -19,5 +19,7 @@ namespace GroupCCP.Models
         public string CorrectiveAction { get; set; }
         public int StaffId { get; set; }
         public StaffAccount StaffAccount { get; set; }
+        [DataType(DataType.DateTime)]
+        public string CorrectiveInfoDate { get; set; }
     }
 }

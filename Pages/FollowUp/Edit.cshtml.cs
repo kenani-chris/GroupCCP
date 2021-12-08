@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using GroupCCP.Data;
 using GroupCCP.Models;
 
-namespace GroupCCP.Pages.ComplaintCorrectives
+namespace GroupCCP.Pages.FollowUp
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace GroupCCP.Pages.ComplaintCorrectives
         }
 
         [BindProperty]
-        public ComplaintCorrectiveInfo ComplaintCorrectiveInfo { get; set; }
+        public FollowUpCalls FollowUpCalls { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,16 +30,14 @@ namespace GroupCCP.Pages.ComplaintCorrectives
                 return NotFound();
             }
 
-            ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo
-                .Include(c => c.Log)
-                .Include(c => c.StaffAccount).FirstOrDefaultAsync(m => m.CorrectiveId == id);
+            FollowUpCalls = await _context.FollowUpCalls
+                .Include(f => f.Company).FirstOrDefaultAsync(m => m.FollowUpId == id);
 
-            if (ComplaintCorrectiveInfo == null)
+            if (FollowUpCalls == null)
             {
                 return NotFound();
             }
-           ViewData["LogId"] = new SelectList(_context.ComplaintLogDetail, "LogId", "LogId");
-           ViewData["StaffId"] = new SelectList(_context.StaffAccount, "AccountId", "UserId");
+           ViewData["CompanyId"] = new SelectList(_context.Company, "CompanyId", "CompanyName");
             return Page();
         }
 
@@ -52,7 +50,7 @@ namespace GroupCCP.Pages.ComplaintCorrectives
                 return Page();
             }
 
-            _context.Attach(ComplaintCorrectiveInfo).State = EntityState.Modified;
+            _context.Attach(FollowUpCalls).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +58,7 @@ namespace GroupCCP.Pages.ComplaintCorrectives
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ComplaintCorrectiveInfoExists(ComplaintCorrectiveInfo.CorrectiveId))
+                if (!FollowUpCallsExists(FollowUpCalls.FollowUpId))
                 {
                     return NotFound();
                 }
@@ -73,9 +71,9 @@ namespace GroupCCP.Pages.ComplaintCorrectives
             return RedirectToPage("./Index");
         }
 
-        private bool ComplaintCorrectiveInfoExists(int id)
+        private bool FollowUpCallsExists(int id)
         {
-            return _context.ComplaintCorrectiveInfo.Any(e => e.CorrectiveId == id);
+            return _context.FollowUpCalls.Any(e => e.FollowUpId == id);
         }
     }
 }

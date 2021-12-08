@@ -4,14 +4,16 @@ using GroupCCP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GroupCCP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211203085329_013122021_1153")]
+    partial class _013122021_1153
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,9 +174,6 @@ namespace GroupCCP.Data.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
-                    b.Property<string>("CorrectiveInfoDate")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("LogId")
                         .HasColumnType("int");
 
@@ -229,12 +228,6 @@ namespace GroupCCP.Data.Migrations
 
                     b.Property<int>("FollowUp")
                         .HasColumnType("int");
-
-                    b.Property<string>("FollowUpDate")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FollowUpFeedback")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LogId")
                         .HasColumnType("int");
@@ -393,7 +386,7 @@ namespace GroupCCP.Data.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("FollowUpMandatory")
+                    b.Property<bool>("FollowUpManadatory")
                         .HasColumnType("bit");
 
                     b.Property<string>("FollowUpTime")

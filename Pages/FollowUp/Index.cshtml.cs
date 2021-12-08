@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GroupCCP.Data;
 using GroupCCP.Models;
 
-namespace GroupCCP.Pages.ComplaintCorrectives
+namespace GroupCCP.Pages.FollowUp
 {
     public class IndexModel : PageModel
     {
@@ -19,13 +19,12 @@ namespace GroupCCP.Pages.ComplaintCorrectives
             _context = context;
         }
 
-        public IList<ComplaintCorrectiveInfo> ComplaintCorrectiveInfo { get;set; }
+        public IList<FollowUpCalls> FollowUpCalls { get;set; }
 
         public async Task OnGetAsync()
         {
-            ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo
-                .Include(c => c.Log)
-                .Include(c => c.StaffAccount).ToListAsync();
+            FollowUpCalls = await _context.FollowUpCalls
+                .Include(f => f.Company).ToListAsync();
         }
     }
 }
