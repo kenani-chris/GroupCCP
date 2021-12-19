@@ -31,15 +31,15 @@ namespace GroupCCP.Pages.ComplaintFollowUps
             }
 
             ComplaintFollowUp = await _context.ComplaintFollowUp
-                .Include(c => c.FollowUps)
-                .Include(c => c.Logs)
+                .Include(c => c.FollowUpCalls)
+                .Include(c => c.Log)
                 .Include(c => c.Staff).FirstOrDefaultAsync(m => m.FollowUpId == id);
 
             if (ComplaintFollowUp == null)
             {
                 return NotFound();
             }
-           ViewData["FollowUpId"] = new SelectList(_context.Set<FollowUpCalls>(), "FollowUpId", "FollowUpId");
+           ViewData["FollowUpTypeId"] = new SelectList(_context.FollowUpCalls, "FollowUpId", "FollowUpId");
            ViewData["LogId"] = new SelectList(_context.ComplaintLogDetail, "LogId", "LogId");
            ViewData["StaffId"] = new SelectList(_context.StaffAccount, "AccountId", "UserId");
             return Page();

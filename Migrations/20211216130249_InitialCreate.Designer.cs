@@ -4,6 +4,7 @@ using GroupCCP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupCCP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211216130249_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,9 +249,6 @@ namespace GroupCCP.Migrations
                     b.Property<string>("FollowUpFeedback")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FollowUpTypeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("LogId")
                         .HasColumnType("int");
 
@@ -257,8 +256,6 @@ namespace GroupCCP.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("FollowUpId");
-
-                    b.HasIndex("FollowUpTypeId");
 
                     b.HasIndex("LogId");
 
@@ -853,12 +850,6 @@ namespace GroupCCP.Migrations
 
             modelBuilder.Entity("GroupCCP.Models.ComplaintFollowUp", b =>
                 {
-                    b.HasOne("GroupCCP.Models.FollowUpCalls", "FollowUpCalls")
-                        .WithMany("ComplaintFollowUps")
-                        .HasForeignKey("FollowUpTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("GroupCCP.Models.ComplaintLogDetail", "Log")
                         .WithMany("FollowUps")
                         .HasForeignKey("LogId")
@@ -870,8 +861,6 @@ namespace GroupCCP.Migrations
                         .HasForeignKey("StaffId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("FollowUpCalls");
 
                     b.Navigation("Log");
 
@@ -1140,11 +1129,6 @@ namespace GroupCCP.Migrations
             modelBuilder.Entity("GroupCCP.Models.ComplaintReceiveMeans", b =>
                 {
                     b.Navigation("Logs");
-                });
-
-            modelBuilder.Entity("GroupCCP.Models.FollowUpCalls", b =>
-                {
-                    b.Navigation("ComplaintFollowUps");
                 });
 
             modelBuilder.Entity("GroupCCP.Models.Group", b =>

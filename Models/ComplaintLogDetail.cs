@@ -43,6 +43,6 @@ namespace GroupCCP.Models
         
         public ICollection<ComplaintAssignment> Assignments { get; set; }
         public ICollection<ComplaintCorrectiveInfo> Correctives { get; set; }
-        public ICollection<ComplaintFollowUp> ComplaintFollowUps { get; set; }
+        public ICollection<ComplaintFollowUp> FollowUps { get; set; }
     }
 }

@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "/Pages/Shared/_Layout.cshtml";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h1>Create</h1>
@@ -15,10 +15,6 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ComplaintFollowUp.FollowUpId" class="control-label"></label>
-                <select asp-for="ComplaintFollowUp.FollowUpId" class ="form-control" asp-items="ViewBag.FollowUpId"></select>
-            </div>
-            <div class="form-group">
                 <label asp-for="ComplaintFollowUp.LogId" class="control-label"></label>
                 <select asp-for="ComplaintFollowUp.LogId" class ="form-control" asp-items="ViewBag.LogId"></select>
             </div>
@@ -27,9 +23,18 @@
                 <select asp-for="ComplaintFollowUp.StaffId" class ="form-control" asp-items="ViewBag.StaffId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="ComplaintFollowUp.FollowUp" class="control-label"></label>
-                <input asp-for="ComplaintFollowUp.FollowUp" class="form-control" />
-                <span asp-validation-for="ComplaintFollowUp.FollowUp" class="text-danger"></span>
+                <label asp-for="ComplaintFollowUp.FollowUpTypeId" class="control-label"></label>
+                <select asp-for="ComplaintFollowUp.FollowUpTypeId" class ="form-control" asp-items="ViewBag.FollowUpTypeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintFollowUp.FollowUpDate" class="control-label"></label>
+                <input asp-for="ComplaintFollowUp.FollowUpDate" class="form-control" />
+                <span asp-validation-for="ComplaintFollowUp.FollowUpDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintFollowUp.FollowUpFeedback" class="control-label"></label>
+                <input asp-for="ComplaintFollowUp.FollowUpFeedback" class="form-control" />
+                <span asp-validation-for="ComplaintFollowUp.FollowUpFeedback" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

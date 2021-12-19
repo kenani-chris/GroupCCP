@@ -71,18 +71,26 @@ namespace GroupCCP.Data
             modelBuilder.Entity<ComplaintFollowUp>(entity =>
             {
                 entity.HasKey(x => x.FollowUpId);
-                entity.HasOne(x => x.FollowUps)
+
+                entity.HasOne(x => x.FollowUpCalls)
                     .WithMany(x => x.ComplaintFollowUps)
-                    .HasForeignKey(x => x.FollowUpId)
+                    .HasForeignKey(x => x.FollowUpTypeId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
 
-                entity.HasOne(x => x.Logs)
-                    .WithMany(x => x.ComplaintFollowUps)
+                entity.HasOne(x => x.Staff)
+                    .WithMany(x => x.FollowUps)
+                    .HasForeignKey(x => x.StaffId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+
+                entity.HasOne(x => x.Log)
+                    .WithMany(x => x.FollowUps)
                     .HasForeignKey(x => x.LogId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
             });
+
             modelBuilder.Entity<ApplicationUser>(entity =>
             {
                 entity.Property(x => x.Email);
@@ -238,6 +246,11 @@ namespace GroupCCP.Data
             modelBuilder.Entity<ComplaintReceiveMeans>(entity =>
             {
                 entity.HasKey(x => x.MeansId);
+                entity.HasData(
+                    new { MeansId = 1, Means = "Email"},
+                    new { MeansId = 2, Means = "Walk In" },
+                    new { MeansId = 3, Means = "Call" }
+                    );
             });
 
             modelBuilder.Entity<ComplaintCustomerInfo>(entity =>
@@ -251,8 +264,8 @@ namespace GroupCCP.Data
             });
         }
         public DbSet<GroupCCP.Models.ComplaintCorrectiveInfo> ComplaintCorrectiveInfo { get; set; }
-        public DbSet<GroupCCP.Models.ComplaintFollowUp> ComplaintFollowUp { get; set; }
         public DbSet<GroupCCP.Models.FollowUpCalls> FollowUpCalls { get; set; }
+        public DbSet<GroupCCP.Models.ComplaintFollowUp> ComplaintFollowUp { get; set; }
         
     }
 }

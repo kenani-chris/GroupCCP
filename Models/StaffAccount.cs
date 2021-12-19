@@ -28,5 +28,6 @@ namespace GroupCCP.Models
         public ICollection<RoleAssignment> RolesAssignments { get; set; }
         public ICollection<ComplaintLogDetail> ComplaintLogDetails { get; set; }
         public ICollection<ComplaintCorrectiveInfo> ComplaintCorrectiveInfos { get; set; }
+        public ICollection<ComplaintFollowUp> FollowUps { get; set; }
     }
 }

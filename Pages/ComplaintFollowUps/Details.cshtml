@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "/Pages/Shared/_Layout.cshtml";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h1>Details</h1>
@@ -13,10 +13,10 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ComplaintFollowUp.Logs)
+            @Html.DisplayNameFor(model => model.ComplaintFollowUp.Log)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ComplaintFollowUp.Logs.LogId)
+            @Html.DisplayFor(model => model.ComplaintFollowUp.Log.LogId)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ComplaintFollowUp.Staff)
@@ -25,16 +25,22 @@
             @Html.DisplayFor(model => model.ComplaintFollowUp.Staff.UserId)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ComplaintFollowUp.FollowUp)
+            @Html.DisplayNameFor(model => model.ComplaintFollowUp.FollowUpCalls)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ComplaintFollowUp.FollowUp)
+            @Html.DisplayFor(model => model.ComplaintFollowUp.FollowUpCalls.FollowUpId)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ComplaintFollowUp.FollowUps)
+            @Html.DisplayNameFor(model => model.ComplaintFollowUp.FollowUpDate)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ComplaintFollowUp.FollowUps.FollowUpId)
+            @Html.DisplayFor(model => model.ComplaintFollowUp.FollowUpDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintFollowUp.FollowUpFeedback)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintFollowUp.FollowUpFeedback)
         </dd>
     </dl>
 </div>

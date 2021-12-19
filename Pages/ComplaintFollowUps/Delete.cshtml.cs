@@ -30,8 +30,8 @@ namespace GroupCCP.Pages.ComplaintFollowUps
             }
 
             ComplaintFollowUp = await _context.ComplaintFollowUp
-                .Include(c => c.FollowUps)
-                .Include(c => c.Logs)
+                .Include(c => c.FollowUpCalls)
+                .Include(c => c.Log)
                 .Include(c => c.Staff).FirstOrDefaultAsync(m => m.FollowUpId == id);
 
             if (ComplaintFollowUp == null)

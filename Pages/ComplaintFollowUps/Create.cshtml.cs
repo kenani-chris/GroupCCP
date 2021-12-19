@@ -21,7 +21,7 @@ namespace GroupCCP.Pages.ComplaintFollowUps
 
         public IActionResult OnGet()
         {
-        ViewData["FollowUpId"] = new SelectList(_context.Set<FollowUpCalls>(), "FollowUpId", "FollowUpId");
+        ViewData["FollowUpTypeId"] = new SelectList(_context.FollowUpCalls, "FollowUpId", "FollowUpId");
         ViewData["LogId"] = new SelectList(_context.ComplaintLogDetail, "LogId", "LogId");
         ViewData["StaffId"] = new SelectList(_context.StaffAccount, "AccountId", "UserId");
             return Page();

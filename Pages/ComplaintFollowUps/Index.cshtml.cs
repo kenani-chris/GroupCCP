@@ -24,8 +24,8 @@ namespace GroupCCP.Pages.ComplaintFollowUps
         public async Task OnGetAsync()
         {
             ComplaintFollowUp = await _context.ComplaintFollowUp
-                .Include(c => c.FollowUps)
-                .Include(c => c.Logs)
+                .Include(c => c.FollowUpCalls)
+                .Include(c => c.Log)
                 .Include(c => c.Staff).ToListAsync();
         }
     }
