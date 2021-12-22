@@ -11,7 +11,7 @@
     <!-- small box -->
     <div class="small-box bg-info">
         <div class="inner">
-        <h3>@Model.AssignedLogs</h3>
+        <h3>@Model.MyAssignedLogs.Count</h3>
 
         <p>My Logs</p>
         </div>
@@ -25,7 +25,7 @@
     <!-- small box -->
     <div class="small-box bg-success">
         <div class="inner">
-        <h3>@Model.ResolvedLogs</h3>
+        <h3>@Model.MyResolvedLogs.Count</h3>
 
         <p>Resolved Logs</p>
         </div>
@@ -39,7 +39,7 @@
     <!-- small box -->
     <div class="small-box bg-warning">
         <div class="inner">
-        <h3>@Model.WIPLogs</h3>
+        <h3>@Model.MyWIPLogs.Count</h3>
 
         <p>Work In Progress</p>
         </div>
@@ -53,7 +53,7 @@
     <!-- small box -->
     <div class="small-box bg-danger">
         <div class="inner">
-        <h3>@Model.UnAttendedLogs</h3>
+        <h3>@Model.MyUnAttendedLogs.Count</h3>
 
         <p>Unattended</p>
         </div>

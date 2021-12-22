@@ -26,12 +26,6 @@ namespace GroupCCP.Pages.site
         public IList<ComplaintAssignment> MyAssignedLogs { get; set; }
         public IList<ComplaintAssignment> MyResolvedLogs { get; set; }
         public StaffAccount StaffAccount { get; set; }
-        public int UnAttendedLogs { get; set;}
-        public int WIPLogs { get; set;}
-
-        public int AssignedLogs { get; set; }
-        public int ResolvedLogs { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int? CompanyId)
         {
             if (CompanyId == null)
@@ -47,9 +41,13 @@ namespace GroupCCP.Pages.site
             }
             MyLogs = await _context.ComplaintAssignment
                 .Where(c => c.Staff == StaffAccount).ToListAsync();
-            MyAssignedLogs = MyLogs;
+            MyAssignedLogs = await _context.ComplaintAssignment
+                .Include(c => c.Log).ThenInclude(c => c.Status)
+                .Where(c => c.Staff == StaffAccount).ToListAsync();
+            
             foreach (var item in MyLogs)
             {
+                
                 var otherAssignment = _context.ComplaintAssignment.Where(c => c.LogId == item.LogId).OrderByDescending(c => c.AssignmentId).First();
                 if (otherAssignment != null)
                 {
@@ -59,7 +57,10 @@ namespace GroupCCP.Pages.site
                     }
                 }
             }
-            /*foreach (var item in MyAssignedLogs)
+            MyUnAttendedLogs = new List<ComplaintAssignment>();
+            MyWIPLogs = new List<ComplaintAssignment>();
+            MyResolvedLogs = new List<ComplaintAssignment>();
+            foreach (var item in MyAssignedLogs)
             {
                 if (item.Log.Status.Status == "Assigned")
                 {
@@ -73,38 +74,6 @@ namespace GroupCCP.Pages.site
                 {
                     MyResolvedLogs.Add(item);
                 }
-            }*/
-            if (MyAssignedLogs == null)
-            {
-                AssignedLogs = 0;
-            }
-            else
-            {
-                AssignedLogs = MyAssignedLogs.Count();
-            }
-            if (MyResolvedLogs == null)
-            {
-                ResolvedLogs = 0;
-            }
-            else
-            {
-                ResolvedLogs = MyResolvedLogs.Count();
-            }
-            if (MyWIPLogs == null)
-            {
-                WIPLogs = 0;
-            }
-            else
-            {
-                WIPLogs = MyWIPLogs.Count();
-            }
-            if (MyUnAttendedLogs == null)
-            {
-                UnAttendedLogs = 0;
-            }
-            else
-            {
-                UnAttendedLogs = MyUnAttendedLogs.Count();
             }
             
             return Page();
