@@ -1,0 +1,156 @@
+﻿@page
+@model GroupCCP.Pages.site.Logs.CorrectiveInfo.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_SystemLayout.cshtml";
+}
+<section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="./Index" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId">Logs</a></li>
+                <li class="breadcrumb-item"><a asp-page="../Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId">Log @Model.ComplaintLogDetail.LogId</a></li>
+                <li class="breadcrumb-item">Add Corrective</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div style="margin-bottom: 10px; width: 100%">
+            <partial name="menu" />
+        </div>
+        @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card container-fluid">
+                    <div class="card-header">
+                        <h4 class="float-left">Log @Html.DisplayFor(model => model.ComplaintLogDetail.LogId) - CorrectiveInfo</h4>
+                    </div>
+                    <div class="card-body">
+                        <table id="simpleTable" class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Customer</th>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.Customers.Customer)</td>
+                                </tr>
+                                <tr>
+                                    <th>Complaint</th>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.CustomerComplaint)</td>
+                                </tr>
+                                <tr>
+                                    <th>Customer Request</th>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.CustomerRequest)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintCorrectiveInfo.RouteCause" class="control-label"></label>
+                                <textarea asp-for="ComplaintCorrectiveInfo.RouteCause" class="form-control"></textarea>
+                                <span asp-validation-for="ComplaintCorrectiveInfo.RouteCause" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintCorrectiveInfo.CorrectiveAction" class="control-label"></label>
+                                <textarea asp-for="ComplaintCorrectiveInfo.CorrectiveAction" class="form-control"></textarea>
+                                <span asp-validation-for="ComplaintCorrectiveInfo.CorrectiveAction" class="text-danger"></span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="float-right" style="margin:5px">
+                                    <input type="submit" value="Update" class="btn btn-sm btn-primary py-0" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <!--Corrective info Details-->
+                <div class="card container-fluid">
+                    <div class="card-header">
+                        <h4 class="float-left">Previous Corrective Info</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Staff
+                                    </th>
+                                    <th colspan="2">
+                                        Info
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PreviousCorrectivrInfo)
+                                {
+                                    <tr>
+                                        <td rowspan="3">
+                                            @Html.DisplayFor(modelItem => item.StaffAccount.User.Email)
+                                        </td>
+                                        <th>
+                                            Date
+                                        </th>
+                                        <td>
+                                            @item.CorrectiveInfoDate
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Root Cause
+                                        </th>
+                                        <td>
+                                            @item.RouteCause
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Corrective Action
+                                        </th>
+                                        <td>
+                                            @item.CorrectiveAction
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+    </div>
+</section>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

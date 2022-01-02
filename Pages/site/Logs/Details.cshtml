@@ -1,0 +1,290 @@
+﻿@page
+@model GroupCCP.Pages.site.Logs.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "/Pages/Shared/_SystemLayout.cshtml";
+}
+<section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="./Index" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId">Logs</a></li>
+                <li class="breadcrumb-item">Log @Model.ComplaintLogDetail.LogId</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div style="margin-bottom: 10px; width: 100%">
+            <partial name="menu" />
+        </div>
+        @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                <!--Log Details-->
+                <div class="card container-fluid">
+                    <div class="card-header">
+                        <h4 class="float-left">Log @Html.DisplayFor(model => model.ComplaintLogDetail.LogId)</h4>
+                        @if(Model.LogEditPerm)
+                        {
+                            <a asp-page="Edit" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" class="text-white"><div class="nav-link float-right btn btn-warning  text-white">Edit Log</div></a>
+                        }
+                        
+                    </div>
+                    <div class="card-body">
+                        <table id="searchTable" class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Customer</th>
+                                    <td colspan="5">@Html.DisplayFor(model => model.ComplaintLogDetail.Customers.Customer)</td>
+                                </tr>
+                                <tr>
+                                    <th>Logged By</th>
+                                    <th>Means</th>
+                                    <th>Level</th>
+                                    <th>Status</th>
+                                    <th>Submit Date</th>
+                                    <th>Close Date</th>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.StaffAccount.User.Email)</td>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.Means.Means)</td>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.Level.LevelName)</td>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.Status.Status)</td>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.StatusSubmitDate)</td>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.StatusClosedDate)</td>
+                                </tr>
+                                <tr>
+                                    <th>Customer Complaint</th>
+                                    <td colspan="5">@Html.DisplayFor(model => model.ComplaintLogDetail.CustomerComplaint)</td>
+                                </tr>
+                                <tr>
+                                    <th>Customer Request</th>
+                                    <td colspan="5">@Html.DisplayFor(model => model.ComplaintLogDetail.CustomerRequest)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @if (Model.LogAssignViewPerm)
+                {
+                    <!--Assignment Assignment Details-->
+                    <div class="card container-fluid">
+                        <div class="card-header">
+                            <h4 class="float-left">Log Assignment</h4>
+                            @if (Model.LogAssignAddPerm)
+                            {
+                                <a asp-page="Assignment/Create" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" class="text-white"><div class="nav-link float-right btn btn-info  text-white">Assign</div></a>
+                            }
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ComplaintAssignment[0].Staff)
+                                        </th>
+                                        <th>
+                                            Assignment Type
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ComplaintAssignment[0].AssignmentDate)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ComplaintAssignment)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @if (Model.LogAssignEditPerm)
+                                                {
+                                                    <a asp-page="Assignment/Edit" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" asp-route-AssignmentId="@item.AssignmentId">@Html.DisplayFor(modelItem => item.Staff.User.Email)</a>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.Staff.User.Email)
+                                                }
+                                            
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AssignmentType)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AssignmentDate)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.LogCorrectiveViewPerm)
+                {
+                    <!--Corrective info Details-->
+                    <div class="card container-fluid">
+                        <div class="card-header">
+                            <h4 class="float-left">Log Corrective Info</h4>
+                            @if(Model.LogCorrectiveAddPerm)
+                            {
+                                <a asp-page="CorrectiveInfo/Create" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" class="text-white"><div class="nav-link float-right btn btn-info  text-white">Add Corrective</div></a>    
+                            }
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Staff
+                                        </th>
+                                        <th colspan="2">
+                                            Info
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ComplaintCorrectiveInfo)
+                                    {
+                                        <tr>
+                                            <td rowspan="3">
+                                                @if (Model.LogCorrectiveEditPerm)
+                                               {
+                                                    <a asp-page="CorrectiveInfo/Edit" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" asp-route-CorrectiveId="@item.CorrectiveId">@Html.DisplayFor(modelItem => item.StaffAccount.User.Email)</a>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.StaffAccount.User.Email)
+                                                }
+
+                                            </td>
+                                            <th>
+                                                Date
+                                            </th>
+                                            <td>
+                                                @item.CorrectiveInfoDate
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Root Cause
+                                            </th>
+                                            <td>
+                                                @item.RouteCause
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Corrective Action
+                                            </th>
+                                            <td>
+                                                @item.CorrectiveAction
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+                @if (Model.LogFollowUpViewPerm)
+                {
+                 <!--Follow Up info Details-->
+                    <div class="card container-fluid">
+                        <div class="card-header">
+                            <h4 class="float-left">Follow Up</h4>
+                            @if (Model.LogFollowUpAddPerm)
+                            {
+                                <a asp-page="FollowUp/Create" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" class="text-white"><div class="nav-link float-right btn btn-info  text-white">Add FollowUp</div></a>
+                            }
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Staff
+                                        </th>
+                                        <th colspan="2">
+                                            Info
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ComplaintFollowUp)
+                                    {
+                                        <tr>
+                                            <td rowspan="3">
+                                                @if (Model.LogFollowUpEditPerm)
+                                                {
+                                                    <a asp-page="FollowUp/Edit" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" asp-route-FollowUpId="@item.FollowUpId">@Html.DisplayFor(modelItem => item.Staff.User.Email)</a> 
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.Staff.User.Email)
+                                                }                                            
+                                            </td>
+                                            <th>
+                                                Date
+                                            </th>
+                                            <td>
+                                                @item.FollowUpDate
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                FollowUp Type
+                                            </th>
+                                            <td>
+                                                @item.FollowUpCalls.FollowUpType
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Feedback
+                                            </th>
+                                            <td>
+                                                @item.FollowUpFeedback
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>   
+                }
+            }
+    </div>
+</section>
+
+

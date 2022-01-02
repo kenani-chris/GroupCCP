@@ -1,0 +1,100 @@
+﻿@page
+@model GroupCCP.Pages.site.Logs.Assignment.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Pages/Shared/_SystemLayout.cshtml";
+}
+
+<section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="./Index" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId">Logs</a></li>
+                <li class="breadcrumb-item"><a asp-page="../Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId">Log @Model.ComplaintLogDetail.LogId</a></li>
+                <li class="breadcrumb-item">Delete Assign</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div style="margin-bottom: 10px; width: 100%">
+            <partial name="menu" />
+        </div>
+        @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card container-fluid">
+                    <div class="card-header">
+                        <h4 class="float-left">Assignment Delete</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <h3>
+                            Are you sure you want to delete this Assignment?
+                            <a asp-page="./Edit" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" asp-route-AssignmentId="@Model.ComplaintAssignment.AssignmentId" class="btn btn-sm btn-primary float-right">Edit Instead</a>   
+                        </h3>
+
+                        <div>
+                            <hr />
+                            <dl class="row">
+                                <dt class="col-sm-2">
+                                    Log
+                                </dt>
+                                <dd class="col-sm-10">
+                                    Log @Html.DisplayFor(model => model.ComplaintAssignment.LogId)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    Staff
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.ComplaintAssignment.Staff.User.Email)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.ComplaintAssignment.AssignmentDate)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.ComplaintAssignment.AssignmentDate)
+                                </dd>
+                            </dl>
+    
+                            <form method="post">
+                                <input type="hidden" asp-for="ComplaintAssignment.AssignmentId" />
+                                 <div class="card-footer">
+                                    <div class="float-right">
+                                        <input type="submit" value="Delete Assignment" class="btn btn-sm btn-danger py-0" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+    </div>
+</section>
