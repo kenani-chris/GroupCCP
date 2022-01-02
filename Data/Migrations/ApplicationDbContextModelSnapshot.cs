@@ -522,6 +522,35 @@ namespace GroupCCP.Migrations
                     b.ToTable("LevelCategory");
                 });
 
+            modelBuilder.Entity("GroupCCP.Models.LevelMembership", b =>
+                {
+                    b.Property<int>("MembershipId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MembershipId"), 1L, 1);
+
+                    b.Property<int>("LevelId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("MembershipActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MembershipRole")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StaffId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MembershipId");
+
+                    b.HasIndex("LevelId");
+
+                    b.HasIndex("StaffId");
+
+                    b.ToTable("LevelMemberships");
+                });
+
             modelBuilder.Entity("GroupCCP.Models.PermissionAssignment", b =>
                 {
                     b.Property<int>("AssignmentId")
@@ -554,8 +583,7 @@ namespace GroupCCP.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PermissionId"), 1L, 1);
 
                     b.Property<string>("Entity")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Permission")
                         .HasColumnType("nvarchar(max)");
@@ -563,6 +591,452 @@ namespace GroupCCP.Migrations
                     b.HasKey("PermissionId");
 
                     b.ToTable("Permissions");
+
+                    b.HasData(
+                        new
+                        {
+                            PermissionId = 1,
+                            Entity = "Complaint - Submitted Complaints",
+                            Permission = "List"
+                        },
+                        new
+                        {
+                            PermissionId = 2,
+                            Entity = "Complaint - Submitted Complaints",
+                            Permission = "Close"
+                        },
+                        new
+                        {
+                            PermissionId = 3,
+                            Entity = "Complaint - Submitted Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 4,
+                            Entity = "Complaint - Submitted Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 5,
+                            Entity = "Complaint - Submitted Complaints",
+                            Permission = "Read"
+                        },
+                        new
+                        {
+                            PermissionId = 6,
+                            Entity = "Complaint - Submitted Complaints",
+                            Permission = "Export"
+                        },
+                        new
+                        {
+                            PermissionId = 63,
+                            Entity = "FollowUp - Submitted Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 7,
+                            Entity = "FollowUp - Submitted Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 8,
+                            Entity = "FollowUp - Submitted Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 9,
+                            Entity = "FollowUp - Submitted Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 64,
+                            Entity = "Corrective - Submitted Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 10,
+                            Entity = "Corrective - Submitted Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 11,
+                            Entity = "Corrective - Submitted Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 12,
+                            Entity = "Corrective - Submitted Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 65,
+                            Entity = "Assignment - Submitted Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 13,
+                            Entity = "Assignment - Submitted Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 14,
+                            Entity = "Assignment - Submitted Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 15,
+                            Entity = "Assignment - Submitted Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 16,
+                            Entity = "Complaint - My Complaints",
+                            Permission = "List"
+                        },
+                        new
+                        {
+                            PermissionId = 17,
+                            Entity = "Complaint - My Complaints",
+                            Permission = "Close"
+                        },
+                        new
+                        {
+                            PermissionId = 18,
+                            Entity = "Complaint - My Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 19,
+                            Entity = "Complaint - My Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 20,
+                            Entity = "Complaint - My Complaints",
+                            Permission = "Read"
+                        },
+                        new
+                        {
+                            PermissionId = 21,
+                            Entity = "Complaint - My Complaints",
+                            Permission = "Export"
+                        },
+                        new
+                        {
+                            PermissionId = 66,
+                            Entity = "FollowUp - My Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 22,
+                            Entity = "FollowUp - My Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 23,
+                            Entity = "FollowUp - My Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 24,
+                            Entity = "FollowUp - My Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 67,
+                            Entity = "Corrective - My Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 25,
+                            Entity = "Corrective - My Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 26,
+                            Entity = "Corrective - My Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 27,
+                            Entity = "Corrective - My Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 68,
+                            Entity = "Assignment - My Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 28,
+                            Entity = "Assignment - My Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 29,
+                            Entity = "Assignment - My Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 30,
+                            Entity = "Assignment - My Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 31,
+                            Entity = "Complaint - Escallated Complaints",
+                            Permission = "List"
+                        },
+                        new
+                        {
+                            PermissionId = 32,
+                            Entity = "Complaint - Escallated Complaints",
+                            Permission = "Close"
+                        },
+                        new
+                        {
+                            PermissionId = 33,
+                            Entity = "Complaint - Escallated Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 34,
+                            Entity = "Complaint - Escallated Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 35,
+                            Entity = "Complaint - Escallated Complaints",
+                            Permission = "Read"
+                        },
+                        new
+                        {
+                            PermissionId = 36,
+                            Entity = "Complaint - Escallated Complaints",
+                            Permission = "Export"
+                        },
+                        new
+                        {
+                            PermissionId = 69,
+                            Entity = "FollowUp - Escallated Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 37,
+                            Entity = "FollowUp - Escallated Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 38,
+                            Entity = "FollowUp - Escallated Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 39,
+                            Entity = "FollowUp - Escallated Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 70,
+                            Entity = "Corrective - Escallated Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 40,
+                            Entity = "Corrective - Escallated Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 41,
+                            Entity = "Corrective - Escallated Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 42,
+                            Entity = "Corrective - Escallated Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 71,
+                            Entity = "Assignment - Escallated Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 43,
+                            Entity = "Assignment - Escallated Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 44,
+                            Entity = "Assignment - Escallated Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 45,
+                            Entity = "Assignment - Escallated Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 46,
+                            Entity = "Complaint - Level Down Complaints",
+                            Permission = "List"
+                        },
+                        new
+                        {
+                            PermissionId = 47,
+                            Entity = "Complaint - Level Down Complaints",
+                            Permission = "Close"
+                        },
+                        new
+                        {
+                            PermissionId = 48,
+                            Entity = "Complaint - Level Down Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 49,
+                            Entity = "Complaint - Level Down Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 50,
+                            Entity = "Complaint - Level Down Complaints",
+                            Permission = "Read"
+                        },
+                        new
+                        {
+                            PermissionId = 51,
+                            Entity = "Complaint - Level Down Complaints",
+                            Permission = "Export"
+                        },
+                        new
+                        {
+                            PermissionId = 72,
+                            Entity = "FollowUp - Level Down Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 52,
+                            Entity = "FollowUp - Level Down Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 53,
+                            Entity = "FollowUp - Level Down Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 54,
+                            Entity = "FollowUp - Level Down Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 73,
+                            Entity = "Corrective - Level Down Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 55,
+                            Entity = "Corrective - Level Down Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 56,
+                            Entity = "Corrective - Level Down Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 57,
+                            Entity = "Corrective - Level Down Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 76,
+                            Entity = "Assignment - Level Down Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 58,
+                            Entity = "Assignment - Level Down Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 59,
+                            Entity = "Assignment - Level Down Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 60,
+                            Entity = "Assignment - Level Down Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 61,
+                            Entity = "Complaint",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 62,
+                            Entity = "Customer",
+                            Permission = "Add"
+                        });
                 });
 
             modelBuilder.Entity("GroupCCP.Models.RoleAssignment", b =>
@@ -976,6 +1450,25 @@ namespace GroupCCP.Migrations
                     b.Navigation("ParentCategory");
                 });
 
+            modelBuilder.Entity("GroupCCP.Models.LevelMembership", b =>
+                {
+                    b.HasOne("GroupCCP.Models.Level", "Level")
+                        .WithMany("LevelMemberships")
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GroupCCP.Models.StaffAccount", "Staff")
+                        .WithMany("LevelMemberships")
+                        .HasForeignKey("StaffId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Level");
+
+                    b.Navigation("Staff");
+                });
+
             modelBuilder.Entity("GroupCCP.Models.PermissionAssignment", b =>
                 {
                     b.HasOne("GroupCCP.Models.Permissions", "Permissions")
@@ -1156,6 +1649,8 @@ namespace GroupCCP.Migrations
                 {
                     b.Navigation("ChildLevels");
 
+                    b.Navigation("LevelMemberships");
+
                     b.Navigation("Logs");
                 });
 
@@ -1187,6 +1682,8 @@ namespace GroupCCP.Migrations
                     b.Navigation("ComplaintLogDetails");
 
                     b.Navigation("FollowUps");
+
+                    b.Navigation("LevelMemberships");
 
                     b.Navigation("RolesAssignments");
                 });

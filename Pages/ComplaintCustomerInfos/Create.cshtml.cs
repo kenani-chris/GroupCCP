@@ -21,6 +21,7 @@ namespace GroupCCP.Pages.ComplaintCustomerInfos
 
         public IActionResult OnGet()
         {
+        ViewData["CompanyId"] = new SelectList(_context.Company, "CompanyId", "CompanyName");
             return Page();
         }
 

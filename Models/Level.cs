@@ -22,6 +22,7 @@ namespace GroupCCP.Models
         public LevelCategory LevelCategory { get; set; }
 
         public ICollection<ComplaintLogDetail> Logs { get; set; }
+        public ICollection<LevelMembership> LevelMemberships { get; set; }
 
     }
 }

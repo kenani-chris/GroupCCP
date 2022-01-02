@@ -29,7 +29,8 @@ namespace GroupCCP.Pages.ComplaintCustomerInfos
                 return NotFound();
             }
 
-            ComplaintCustomerInfo = await _context.ComplaintCustomerInfo.FirstOrDefaultAsync(m => m.CustomerId == id);
+            ComplaintCustomerInfo = await _context.ComplaintCustomerInfo
+                .Include(c => c.Company).FirstOrDefaultAsync(m => m.CustomerId == id);
 
             if (ComplaintCustomerInfo == null)
             {

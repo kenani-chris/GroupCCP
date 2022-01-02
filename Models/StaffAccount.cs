@@ -29,5 +29,6 @@ namespace GroupCCP.Models
         public ICollection<ComplaintLogDetail> ComplaintLogDetails { get; set; }
         public ICollection<ComplaintCorrectiveInfo> ComplaintCorrectiveInfos { get; set; }
         public ICollection<ComplaintFollowUp> FollowUps { get; set; }
+        public ICollection<LevelMembership> LevelMemberships { get; set; }
     }
 }

@@ -1,0 +1,31 @@
+﻿@page
+@model GroupCCP.Pages.site.Errors.NoActiveStaffAccountModel
+@{  ViewData["Title"] = "No Active Staff Account";
+    ViewData["PageTitle"] = "No Active Staff Account";
+    Layout = "/Pages/Shared/_SystemLayout.cshtml";
+}
+
+<div class="alert alert-danger alert-dismissible container-fluid" style="margin-top:100px">
+    <h5>
+        <i class="icon fas fa-ban"></i>
+        Account Alert!
+    </h5>
+    <table class="table table-bordered">
+        <tr>
+            <th>User</th>
+            <td>@User.Identity.Name</td>
+        </tr>
+        <tr>
+            <th>Company</th>
+            <td>@Model.Company.CompanyName</td>
+        </tr>
+        <tr>
+            <th>Error</th>
+            <td>It Appears the user does not have a staff account in @Model.Company.CompanyName or has been deactivated</td>
+        </tr>
+        <tr>
+            <th>Resolve</th>
+            <td>Ask respective admin to enable or create</td>
+        </tr>
+    </table>
+</div>

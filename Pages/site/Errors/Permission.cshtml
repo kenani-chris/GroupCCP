@@ -1,0 +1,32 @@
+﻿<div class="alert alert-danger alert-dismissible container-fluid" style="margin-top:100px">
+        <h5>
+            <i class="icon fas fa-ban"></i>
+            Permission Alert!
+        </h5>
+        <table class="table table-bordered">
+            <tr>
+                <th>User</th>
+                <td>@User.Identity.Name</td>
+            </tr>
+            <tr>
+                <th>Company</th>
+                <td>@Model.Company.CompanyName</td>
+            </tr>
+            <tr>
+                <th>Error</th>
+                <td>It Appears the user does not have Permission for this page</td>
+            </tr>
+            <tr>
+                <th>Resolve</th>
+                <td>Ask respective admin to grant access</td>
+            </tr>
+            <tr>
+                <th>Permission Entity</th>
+                <td>@Model.PermissionEntity</td>
+            </tr>
+            <tr>
+                <th>Permission Required</th>
+                <td>@Model.PermissionRequired</td>
+            </tr>
+        </table>
+    </div>

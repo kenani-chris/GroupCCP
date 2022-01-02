@@ -25,6 +25,7 @@ namespace GroupCCP.Data
         public DbSet<GroupCCP.Models.ComplaintLogDetail> ComplaintLogDetail { get; set; }
         public DbSet<GroupCCP.Models.ComplaintCustomerInfo> ComplaintCustomerInfo { get; set; }
         public DbSet<GroupCCP.Models.StaffAccount> StaffAccount { get; set; }
+        public DbSet<GroupCCP.Models.LevelMembership> LevelMemberships{ get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
@@ -117,6 +118,106 @@ namespace GroupCCP.Data
             modelBuilder.Entity<Permissions>(entity =>
             {
                 entity.HasKey(x => x.PermissionId);
+                entity.HasData(
+                    new { PermissionId = 1, Entity = "Complaint - Submitted Complaints", Permission = "List"},
+                    new { PermissionId = 2, Entity = "Complaint - Submitted Complaints", Permission = "Close"},
+                    new { PermissionId = 3, Entity = "Complaint - Submitted Complaints", Permission = "Edit"},
+                    new { PermissionId = 4, Entity = "Complaint - Submitted Complaints", Permission = "Delete"},
+                    new { PermissionId = 5, Entity = "Complaint - Submitted Complaints", Permission = "Read"},
+                    new { PermissionId = 6, Entity = "Complaint - Submitted Complaints", Permission = "Export"},
+                    
+                    new { PermissionId = 63, Entity = "FollowUp - Submitted Complaints", Permission = "View"},
+                    new { PermissionId = 7, Entity = "FollowUp - Submitted Complaints", Permission = "Add"},
+                    new { PermissionId = 8, Entity = "FollowUp - Submitted Complaints", Permission = "Edit"},
+                    new { PermissionId = 9, Entity = "FollowUp - Submitted Complaints", Permission = "Delete"},
+
+                    new { PermissionId = 64, Entity = "Corrective - Submitted Complaints", Permission = "View"},
+                    new { PermissionId = 10, Entity = "Corrective - Submitted Complaints", Permission = "Add"},
+                    new { PermissionId = 11, Entity = "Corrective - Submitted Complaints", Permission = "Edit"},
+                    new { PermissionId = 12, Entity = "Corrective - Submitted Complaints", Permission = "Delete"},
+
+                    new { PermissionId = 65, Entity = "Assignment - Submitted Complaints", Permission = "View" },
+                    new { PermissionId = 13, Entity = "Assignment - Submitted Complaints", Permission = "Add" },
+                    new { PermissionId = 14, Entity = "Assignment - Submitted Complaints", Permission = "Edit" },
+                    new { PermissionId = 15, Entity = "Assignment - Submitted Complaints", Permission = "Delete" },
+
+
+                    
+                    new { PermissionId = 16, Entity = "Complaint - My Complaints", Permission = "List"},
+                    new { PermissionId = 17, Entity = "Complaint - My Complaints", Permission = "Close"},
+                    new { PermissionId = 18, Entity = "Complaint - My Complaints", Permission = "Edit"},
+                    new { PermissionId = 19, Entity = "Complaint - My Complaints", Permission = "Delete"},
+                    new { PermissionId = 20, Entity = "Complaint - My Complaints", Permission = "Read"},
+                    new { PermissionId = 21, Entity = "Complaint - My Complaints", Permission = "Export"},
+                    
+                    new { PermissionId = 66, Entity = "FollowUp - My Complaints", Permission = "View"},
+                    new { PermissionId = 22, Entity = "FollowUp - My Complaints", Permission = "Add"},
+                    new { PermissionId = 23, Entity = "FollowUp - My Complaints", Permission = "Edit"},
+                    new { PermissionId = 24, Entity = "FollowUp - My Complaints", Permission = "Delete"},
+
+                    new { PermissionId = 67, Entity = "Corrective - My Complaints", Permission = "View"},
+                    new { PermissionId = 25, Entity = "Corrective - My Complaints", Permission = "Add"},
+                    new { PermissionId = 26, Entity = "Corrective - My Complaints", Permission = "Edit"},
+                    new { PermissionId = 27, Entity = "Corrective - My Complaints", Permission = "Delete"},
+
+                    new { PermissionId = 68, Entity = "Assignment - My Complaints", Permission = "View" },
+                    new { PermissionId = 28, Entity = "Assignment - My Complaints", Permission = "Add" },
+                    new { PermissionId = 29, Entity = "Assignment - My Complaints", Permission = "Edit" },
+                    new { PermissionId = 30, Entity = "Assignment - My Complaints", Permission = "Delete" },
+
+
+                    
+                    new { PermissionId = 31, Entity = "Complaint - Escallated Complaints", Permission = "List"},
+                    new { PermissionId = 32, Entity = "Complaint - Escallated Complaints", Permission = "Close"},
+                    new { PermissionId = 33, Entity = "Complaint - Escallated Complaints", Permission = "Edit"},
+                    new { PermissionId = 34, Entity = "Complaint - Escallated Complaints", Permission = "Delete"},
+                    new { PermissionId = 35, Entity = "Complaint - Escallated Complaints", Permission = "Read"},
+                    new { PermissionId = 36, Entity = "Complaint - Escallated Complaints", Permission = "Export"},
+                    
+                    new { PermissionId = 69, Entity = "FollowUp - Escallated Complaints", Permission = "View"},
+                    new { PermissionId = 37, Entity = "FollowUp - Escallated Complaints", Permission = "Add"},
+                    new { PermissionId = 38, Entity = "FollowUp - Escallated Complaints", Permission = "Edit"},
+                    new { PermissionId = 39, Entity = "FollowUp - Escallated Complaints", Permission = "Delete"},
+
+                    new { PermissionId = 70, Entity = "Corrective - Escallated Complaints", Permission = "View"},
+                    new { PermissionId = 40, Entity = "Corrective - Escallated Complaints", Permission = "Add"},
+                    new { PermissionId = 41, Entity = "Corrective - Escallated Complaints", Permission = "Edit"},
+                    new { PermissionId = 42, Entity = "Corrective - Escallated Complaints", Permission = "Delete"},
+
+                    new { PermissionId = 71, Entity = "Assignment - Escallated Complaints", Permission = "View" },
+                    new { PermissionId = 43, Entity = "Assignment - Escallated Complaints", Permission = "Add" },
+                    new { PermissionId = 44, Entity = "Assignment - Escallated Complaints", Permission = "Edit" },
+                    new { PermissionId = 45, Entity = "Assignment - Escallated Complaints", Permission = "Delete" },
+
+
+                    
+                    new { PermissionId = 46, Entity = "Complaint - Level Down Complaints", Permission = "List"},
+                    new { PermissionId = 47, Entity = "Complaint - Level Down Complaints", Permission = "Close"},
+                    new { PermissionId = 48, Entity = "Complaint - Level Down Complaints", Permission = "Edit"},
+                    new { PermissionId = 49, Entity = "Complaint - Level Down Complaints", Permission = "Delete"},
+                    new { PermissionId = 50, Entity = "Complaint - Level Down Complaints", Permission = "Read"},
+                    new { PermissionId = 51, Entity = "Complaint - Level Down Complaints", Permission = "Export"},
+                    
+                    new { PermissionId = 72, Entity = "FollowUp - Level Down Complaints", Permission = "View"},
+                    new { PermissionId = 52, Entity = "FollowUp - Level Down Complaints", Permission = "Add"},
+                    new { PermissionId = 53, Entity = "FollowUp - Level Down Complaints", Permission = "Edit"},
+                    new { PermissionId = 54, Entity = "FollowUp - Level Down Complaints", Permission = "Delete"},
+
+                    new { PermissionId = 73, Entity = "Corrective - Level Down Complaints", Permission = "View"},
+                    new { PermissionId = 55, Entity = "Corrective - Level Down Complaints", Permission = "Add"},
+                    new { PermissionId = 56, Entity = "Corrective - Level Down Complaints", Permission = "Edit"},
+                    new { PermissionId = 57, Entity = "Corrective - Level Down Complaints", Permission = "Delete"},
+
+                    new { PermissionId = 76, Entity = "Assignment - Level Down Complaints", Permission = "View" },
+                    new { PermissionId = 58, Entity = "Assignment - Level Down Complaints", Permission = "Add" },
+                    new { PermissionId = 59, Entity = "Assignment - Level Down Complaints", Permission = "Edit" },
+                    new { PermissionId = 60, Entity = "Assignment - Level Down Complaints", Permission = "Delete" },
+
+                    new { PermissionId = 61, Entity = "Complaint", Permission = "Add" },
+                    new { PermissionId = 62, Entity = "Customer", Permission = "Add" }
+
+
+                    );
             });
 
             modelBuilder.Entity<PermissionAssignment>(entity =>
@@ -189,7 +290,25 @@ namespace GroupCCP.Data
                     .IsRequired(false);
             });
 
-            modelBuilder.Entity<ComplaintLogDetail>(entity =>
+            modelBuilder.Entity<LevelMembership>(entity =>
+            {
+                entity.HasKey(x => x.MembershipId);
+
+                entity.HasOne(x => x.Level)
+                .WithMany(x => x.LevelMemberships)
+                .HasForeignKey(x => x.LevelId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(true);
+
+                entity.HasOne(x => x.Staff)
+                .WithMany(x => x.LevelMemberships)
+                .HasForeignKey(x => x.StaffId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(true);
+
+            });
+
+                modelBuilder.Entity<ComplaintLogDetail>(entity =>
             {
                 entity.HasKey(x => x.LogId);
 
@@ -266,6 +385,10 @@ namespace GroupCCP.Data
         public DbSet<GroupCCP.Models.ComplaintCorrectiveInfo> ComplaintCorrectiveInfo { get; set; }
         public DbSet<GroupCCP.Models.FollowUpCalls> FollowUpCalls { get; set; }
         public DbSet<GroupCCP.Models.ComplaintFollowUp> ComplaintFollowUp { get; set; }
+        public DbSet<GroupCCP.Models.RoleAssignment> RoleAssignment { get; set; }
+        public DbSet<GroupCCP.Models.Roles> Roles { get; set; }
+        public DbSet<GroupCCP.Models.PermissionAssignment> PermissionAssignment { get; set; }
+        public DbSet<GroupCCP.Models.Permissions> Permissions { get; set; }
         
     }
 }

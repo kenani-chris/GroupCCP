@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GroupCCP.Data;
 using GroupCCP.Models;
 
-namespace GroupCCP.Pages.site.Customers
+namespace GroupCCP.Pages.RoleAssignments
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace GroupCCP.Pages.site.Customers
         }
 
         [BindProperty]
-        public ComplaintCustomerInfo ComplaintCustomerInfo { get; set; }
+        public RoleAssignment RoleAssignment { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,10 +29,11 @@ namespace GroupCCP.Pages.site.Customers
                 return NotFound();
             }
 
-            ComplaintCustomerInfo = await _context.ComplaintCustomerInfo
-                .Include(c => c.Company).FirstOrDefaultAsync(m => m.CustomerId == id);
+            RoleAssignment = await _context.RoleAssignment
+                .Include(r => r.Roles)
+                .Include(r => r.Staff).FirstOrDefaultAsync(m => m.RoleAssignmentId == id);
 
-            if (ComplaintCustomerInfo == null)
+            if (RoleAssignment == null)
             {
                 return NotFound();
             }
@@ -46,11 +47,11 @@ namespace GroupCCP.Pages.site.Customers
                 return NotFound();
             }
 
-            ComplaintCustomerInfo = await _context.ComplaintCustomerInfo.FindAsync(id);
+            RoleAssignment = await _context.RoleAssignment.FindAsync(id);
 
-            if (ComplaintCustomerInfo != null)
+            if (RoleAssignment != null)
             {
-                _context.ComplaintCustomerInfo.Remove(ComplaintCustomerInfo);
+                _context.RoleAssignment.Remove(RoleAssignment);
                 await _context.SaveChangesAsync();
             }
 

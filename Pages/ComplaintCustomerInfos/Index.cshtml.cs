@@ -23,7 +23,8 @@ namespace GroupCCP.Pages.ComplaintCustomerInfos
 
         public async Task OnGetAsync()
         {
-            ComplaintCustomerInfo = await _context.ComplaintCustomerInfo.ToListAsync();
+            ComplaintCustomerInfo = await _context.ComplaintCustomerInfo
+                .Include(c => c.Company).ToListAsync();
         }
     }
 }

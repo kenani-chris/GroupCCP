@@ -28,9 +28,6 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-                <!--<li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Help</a>
-                </li>-->
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
@@ -104,7 +101,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-page="/site/Logs/Index" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="1" class="nav-link">
+                            <a asp-page="/site/Logs/Index" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="2" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
                                     My Logs
@@ -112,7 +109,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'cfao_kenya:My_KPI' %}" class="nav-link">
+                            <a asp-page="/site/Logs/Index" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="3" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
                                     Escallated Logs
@@ -120,7 +117,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'cfao_kenya:My_KPI' %}" class="nav-link">
+                            <a asp-page="/site/Logs/Index" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="4" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
                                     Level Down Logs
@@ -159,27 +156,9 @@
             <!-- /.sidebar -->
         </aside>
         <div class="content-wrapper">
+            
+            @RenderBody()
 
-            <section class="content-header">
-                <div class="container-fluid row">
-                    <div class="col-md-6">
-                        <h1 class="m-0 text-dark">@ViewData["PageTitle"]</h1>
-                    </div>
-                    <div class="col-md-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item">Dashboard</li>
-                            @ViewData["NavigationLinks"]
-                        </ol>
-                    </div>
-                </div>
-            </section>
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row container-fluid card-body">
-                        @RenderBody()
-                    </div>
-                </div>
-            </section>
         </div>
         <footer class="main-footer">
             <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
@@ -214,7 +193,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jquery.vmap.min.js" integrity="sha512-Zk7h8Wpn6b9LpplWXq1qXpnzJl8gHPfZFf8+aR4aO/4bcOD5+/Si4iNu9qE38/t/j1qFKJ08KWX34d2xmG0jrA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/maps/jquery.vmap.usa.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js" integrity="sha512-NhRZzPdzMOMf005Xmd4JonwPftz4Pe99mRVcFeRDcdCtfjv46zPIi/7ZKScbpHD/V0HB1Eb+ZWigMqw94VUVaw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.js" integrity="sha512-W76C8qrNYavcaycIH9EijxRuswoS+LCqA1+hq+ECrmjzAbe/SHhTgrwA1uc84husS/Gz50mxOEHPzrcd3sxBqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

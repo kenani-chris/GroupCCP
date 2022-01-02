@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using GroupCCP.Data;
 using GroupCCP.Models;
 
-namespace GroupCCP.Pages.site.Customers
+namespace GroupCCP.Pages.RoleAssignments
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace GroupCCP.Pages.site.Customers
         }
 
         [BindProperty]
-        public ComplaintCustomerInfo ComplaintCustomerInfo { get; set; }
+        public RoleAssignment RoleAssignment { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,14 +30,16 @@ namespace GroupCCP.Pages.site.Customers
                 return NotFound();
             }
 
-            ComplaintCustomerInfo = await _context.ComplaintCustomerInfo
-                .Include(c => c.Company).FirstOrDefaultAsync(m => m.CustomerId == id);
+            RoleAssignment = await _context.RoleAssignment
+                .Include(r => r.Roles)
+                .Include(r => r.Staff).FirstOrDefaultAsync(m => m.RoleAssignmentId == id);
 
-            if (ComplaintCustomerInfo == null)
+            if (RoleAssignment == null)
             {
                 return NotFound();
             }
-           ViewData["CompanyId"] = new SelectList(_context.Company, "CompanyId", "CompanyName");
+           ViewData["RoleID"] = new SelectList(_context.Set<Roles>(), "RoleId", "RoleId");
+           ViewData["StaffId"] = new SelectList(_context.StaffAccount, "AccountId", "UserId");
             return Page();
         }
 
@@ -50,7 +52,7 @@ namespace GroupCCP.Pages.site.Customers
                 return Page();
             }
 
-            _context.Attach(ComplaintCustomerInfo).State = EntityState.Modified;
+            _context.Attach(RoleAssignment).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +60,7 @@ namespace GroupCCP.Pages.site.Customers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ComplaintCustomerInfoExists(ComplaintCustomerInfo.CustomerId))
+                if (!RoleAssignmentExists(RoleAssignment.RoleAssignmentId))
                 {
                     return NotFound();
                 }
@@ -71,9 +73,9 @@ namespace GroupCCP.Pages.site.Customers
             return RedirectToPage("./Index");
         }
 
-        private bool ComplaintCustomerInfoExists(int id)
+        private bool RoleAssignmentExists(int id)
         {
-            return _context.ComplaintCustomerInfo.Any(e => e.CustomerId == id);
+            return _context.RoleAssignment.Any(e => e.RoleAssignmentId == id);
         }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GroupCCP.Data;
 using GroupCCP.Models;
 
-namespace GroupCCP.Pages.site.Customers
+namespace GroupCCP.Pages.PermissionAssignments
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace GroupCCP.Pages.site.Customers
             _context = context;
         }
 
-        public ComplaintCustomerInfo ComplaintCustomerInfo { get; set; }
+        public PermissionAssignment PermissionAssignment { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,10 +28,11 @@ namespace GroupCCP.Pages.site.Customers
                 return NotFound();
             }
 
-            ComplaintCustomerInfo = await _context.ComplaintCustomerInfo
-                .Include(c => c.Company).FirstOrDefaultAsync(m => m.CustomerId == id);
+            PermissionAssignment = await _context.PermissionAssignment
+                .Include(p => p.Permissions)
+                .Include(p => p.Roles).FirstOrDefaultAsync(m => m.AssignmentId == id);
 
-            if (ComplaintCustomerInfo == null)
+            if (PermissionAssignment == null)
             {
                 return NotFound();
             }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using GroupCCP.Data;
 using GroupCCP.Models;
+
 using System.Collections;
 
 namespace GroupCCP.Pages.site
@@ -26,28 +27,50 @@ namespace GroupCCP.Pages.site
         public IList<ComplaintAssignment> MyAssignedLogs { get; set; }
         public IList<ComplaintAssignment> MyResolvedLogs { get; set; }
         public StaffAccount StaffAccount { get; set; }
+        public string PermissionRequired {get; set;}
+        public string PermissionEntity {get; set;}
+        public bool StaffHasPerm { get; set; }
+        public IList<string> PageLists { get; set; }
         public async Task<IActionResult> OnGetAsync(int? CompanyId)
         {
+            //Check Passed Parameters if are ok
             if (CompanyId == null)
             {
-                return NotFound();
+                return NotFound("Company not found");
             }
-            Company = await _context.Company
-                .Include(c => c.Group).FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
-            StaffAccount = await _context.StaffAccount.Where(c => c.CompanyId == CompanyId).FirstOrDefaultAsync(c => c.User.UserName == User.Identity.Name);
-            if (StaffAccount == null)
+            else
             {
-                return NotFound(CompanyId);
+                Company = await _context.Company.Include(c => c.Group).FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+                if(Company == null)
+                {
+                    return NotFound("Company not found");
+                }
             }
-            MyLogs = await _context.ComplaintAssignment
-                .Where(c => c.Staff == StaffAccount).ToListAsync();
-            MyAssignedLogs = await _context.ComplaintAssignment
-                .Include(c => c.Log).ThenInclude(c => c.Status)
-                .Where(c => c.Staff == StaffAccount).ToListAsync();
+            
+            // Common Functions
+            Defaults Default = new(_context);
+
+            //Initialize Permissions required
+            PermissionRequired = null;
+            PermissionEntity = null;
+
+            //Check if Staff has a valid staff account
+            if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
+            {
+                return RedirectToPage("./Errors/NoActiveStaffAccount", new { CompanyId = Company.CompanyId });
+            }
+            else
+            {
+                StaffAccount = Default.GetStaffAccount(User.Identity.Name, Company.CompanyId);
+                // Check if Staff role has required permissions
+                StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
+            }
+            
+            MyLogs = await _context.ComplaintAssignment.Where(c => c.Staff == StaffAccount).ToListAsync();
+            MyAssignedLogs = await _context.ComplaintAssignment.Include(c => c.Log).ThenInclude(c => c.Status).Where(c => c.Staff == StaffAccount).ToListAsync();
             
             foreach (var item in MyLogs)
             {
-                
                 var otherAssignment = _context.ComplaintAssignment.Where(c => c.LogId == item.LogId).OrderByDescending(c => c.AssignmentId).First();
                 if (otherAssignment != null)
                 {
