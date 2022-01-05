@@ -47,6 +47,7 @@ namespace GroupCCP.Pages.site.Logs
 
             // Common Functions
             Defaults Default = new(_context);
+            WindowsService windowsService = new(_context);
 
             //Initialize Permissions required
             LogTypeId = (int)LogType;
@@ -63,6 +64,7 @@ namespace GroupCCP.Pages.site.Logs
                 StaffAccount = Default.GetStaffAccount(User.Identity.Name, Company.CompanyId);
                 // Check if Staff role has required permissions
                 StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
+
             }
 
             //Other Context Objects
