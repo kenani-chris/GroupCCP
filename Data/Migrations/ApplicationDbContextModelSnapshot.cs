@@ -301,6 +301,9 @@ namespace GroupCCP.Migrations
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PriorityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("RegistrationNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -324,6 +327,8 @@ namespace GroupCCP.Migrations
                     b.HasIndex("LogMeansId");
 
                     b.HasIndex("LogStatusId");
+
+                    b.HasIndex("PriorityId");
 
                     b.HasIndex("StaffId");
 
@@ -549,6 +554,62 @@ namespace GroupCCP.Migrations
                     b.HasIndex("StaffId");
 
                     b.ToTable("LevelMemberships");
+                });
+
+            modelBuilder.Entity("GroupCCP.Models.Notification", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotificationId"), 1L, 1);
+
+                    b.Property<bool>("IsSent")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StaffId")
+                        .HasColumnType("int");
+
+                    b.HasKey("NotificationId");
+
+                    b.HasIndex("StaffId");
+
+                    b.ToTable("Notification");
+                });
+
+            modelBuilder.Entity("GroupCCP.Models.OverdueReminder", b =>
+                {
+                    b.Property<int>("ReminderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReminderId"), 1L, 1);
+
+                    b.Property<bool>("IsSent")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LogId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MessageType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reminder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StaffId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReminderId");
+
+                    b.HasIndex("LogId");
+
+                    b.HasIndex("StaffId");
+
+                    b.ToTable("OverdueReminder");
                 });
 
             modelBuilder.Entity("GroupCCP.Models.PermissionAssignment", b =>
@@ -1036,6 +1097,63 @@ namespace GroupCCP.Migrations
                             PermissionId = 62,
                             Entity = "Customer",
                             Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 77,
+                            Entity = "Admin - Home",
+                            Permission = "View"
+                        });
+                });
+
+            modelBuilder.Entity("GroupCCP.Models.Priority", b =>
+                {
+                    b.Property<int>("PriorityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PriorityId"), 1L, 1);
+
+                    b.Property<float>("PriorityCloseDate")
+                        .HasColumnType("real");
+
+                    b.Property<string>("PriorityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PriorityId");
+
+                    b.ToTable("Priority");
+
+                    b.HasData(
+                        new
+                        {
+                            PriorityId = 1,
+                            PriorityCloseDate = 4f,
+                            PriorityName = "Critical"
+                        },
+                        new
+                        {
+                            PriorityId = 2,
+                            PriorityCloseDate = 8f,
+                            PriorityName = "High"
+                        },
+                        new
+                        {
+                            PriorityId = 3,
+                            PriorityCloseDate = 24f,
+                            PriorityName = "Normal"
+                        },
+                        new
+                        {
+                            PriorityId = 4,
+                            PriorityCloseDate = 48f,
+                            PriorityName = "Low"
+                        },
+                        new
+                        {
+                            PriorityId = 5,
+                            PriorityCloseDate = 0f,
+                            PriorityName = "Extremely Low"
                         });
                 });
 
@@ -1115,6 +1233,56 @@ namespace GroupCCP.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("StaffAccount");
+                });
+
+            modelBuilder.Entity("GroupCCP.Models.Timelines", b =>
+                {
+                    b.Property<int>("TimeLineId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TimeLineId"), 1L, 1);
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("OverdueAssignedEscallate")
+                        .HasColumnType("bit");
+
+                    b.Property<float>("OverdueAssignedHrs")
+                        .HasColumnType("real");
+
+                    b.Property<float>("OverdueAssignedReminderHrs")
+                        .HasColumnType("real");
+
+                    b.Property<float>("OverdueClosedEscallate")
+                        .HasColumnType("real");
+
+                    b.Property<float>("OverdueResolvedClosedHrs")
+                        .HasColumnType("real");
+
+                    b.Property<float>("OverdueResolvedClosedReminderHrs")
+                        .HasColumnType("real");
+
+                    b.Property<bool>("OverdueResolvedEscallate")
+                        .HasColumnType("bit");
+
+                    b.Property<float>("OverdueResolvedHrs")
+                        .HasColumnType("real");
+
+                    b.Property<float>("OverdueResolvedReminderHrs")
+                        .HasColumnType("real");
+
+                    b.Property<int>("PriorityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TimeLineId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("PriorityId");
+
+                    b.ToTable("Timelines");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1384,6 +1552,12 @@ namespace GroupCCP.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("GroupCCP.Models.Priority", "Priority")
+                        .WithMany("ComplaintLogDetails")
+                        .HasForeignKey("PriorityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("GroupCCP.Models.StaffAccount", "StaffAccount")
                         .WithMany("ComplaintLogDetails")
                         .HasForeignKey("StaffId")
@@ -1397,6 +1571,8 @@ namespace GroupCCP.Migrations
                     b.Navigation("Level");
 
                     b.Navigation("Means");
+
+                    b.Navigation("Priority");
 
                     b.Navigation("StaffAccount");
 
@@ -1469,6 +1645,36 @@ namespace GroupCCP.Migrations
                     b.Navigation("Staff");
                 });
 
+            modelBuilder.Entity("GroupCCP.Models.Notification", b =>
+                {
+                    b.HasOne("GroupCCP.Models.StaffAccount", "Account")
+                        .WithMany("Notifications")
+                        .HasForeignKey("StaffId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("GroupCCP.Models.OverdueReminder", b =>
+                {
+                    b.HasOne("GroupCCP.Models.ComplaintLogDetail", "ComplaintLogDetail")
+                        .WithMany("OverdueReminders")
+                        .HasForeignKey("LogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GroupCCP.Models.StaffAccount", "StaffAccount")
+                        .WithMany("OverdueReminders")
+                        .HasForeignKey("StaffId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ComplaintLogDetail");
+
+                    b.Navigation("StaffAccount");
+                });
+
             modelBuilder.Entity("GroupCCP.Models.PermissionAssignment", b =>
                 {
                     b.HasOne("GroupCCP.Models.Permissions", "Permissions")
@@ -1535,6 +1741,25 @@ namespace GroupCCP.Migrations
                     b.Navigation("Company");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("GroupCCP.Models.Timelines", b =>
+                {
+                    b.HasOne("GroupCCP.Models.Company", "Company")
+                        .WithMany("Timelines")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GroupCCP.Models.Priority", "Priority")
+                        .WithMany("Timelines")
+                        .HasForeignKey("PriorityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Priority");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1609,6 +1834,8 @@ namespace GroupCCP.Migrations
                     b.Navigation("LevelCategories");
 
                     b.Navigation("Roles");
+
+                    b.Navigation("Timelines");
                 });
 
             modelBuilder.Entity("GroupCCP.Models.ComplaintCustomerInfo", b =>
@@ -1623,6 +1850,8 @@ namespace GroupCCP.Migrations
                     b.Navigation("Correctives");
 
                     b.Navigation("FollowUps");
+
+                    b.Navigation("OverdueReminders");
                 });
 
             modelBuilder.Entity("GroupCCP.Models.ComplaintLogStatus", b =>
@@ -1666,6 +1895,13 @@ namespace GroupCCP.Migrations
                     b.Navigation("Assignments");
                 });
 
+            modelBuilder.Entity("GroupCCP.Models.Priority", b =>
+                {
+                    b.Navigation("ComplaintLogDetails");
+
+                    b.Navigation("Timelines");
+                });
+
             modelBuilder.Entity("GroupCCP.Models.Roles", b =>
                 {
                     b.Navigation("Assignments");
@@ -1684,6 +1920,10 @@ namespace GroupCCP.Migrations
                     b.Navigation("FollowUps");
 
                     b.Navigation("LevelMemberships");
+
+                    b.Navigation("Notifications");
+
+                    b.Navigation("OverdueReminders");
 
                     b.Navigation("RolesAssignments");
                 });

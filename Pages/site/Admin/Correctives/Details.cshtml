@@ -1,0 +1,50 @@
+﻿@page
+@model GroupCCP.Pages.site.Admin.Correctives.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_SystemLayout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ComplaintCorrectiveInfo</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.Log)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.Log.LogId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.RouteCause)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.RouteCause)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.CorrectiveAction)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.CorrectiveAction)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.StaffAccount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.StaffAccount.UserId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.CorrectiveInfoDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.CorrectiveInfoDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.ComplaintCorrectiveInfo.CorrectiveId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

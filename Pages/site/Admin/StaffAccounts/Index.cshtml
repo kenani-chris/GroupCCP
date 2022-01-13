@@ -1,0 +1,61 @@
+﻿@page
+@model GroupCCP.Pages.site.Admin.StaffAccounts.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_SystemLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffAccount[0].User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffAccount[0].Company)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffAccount[0].IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffAccount[0].IsSuperUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffAccount[0].CreateDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.StaffAccount) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsSuperUser)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.AccountId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.AccountId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.AccountId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

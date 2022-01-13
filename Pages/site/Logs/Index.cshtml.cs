@@ -47,7 +47,9 @@ namespace GroupCCP.Pages.site.Logs
 
             // Common Functions
             Defaults Default = new(_context);
-            WindowsService windowsService = new(_context);
+            TasksFunctions tasks = new(_context);
+
+            tasks.GetOverdueAssignedLogs();
 
             //Initialize Permissions required
             LogTypeId = (int)LogType;

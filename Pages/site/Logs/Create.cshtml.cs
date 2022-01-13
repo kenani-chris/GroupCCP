@@ -78,6 +78,7 @@ namespace GroupCCP.Pages.site.Logs
                 .ThenInclude(c => c.Company)
                 .Where(c => c.LevelCategory.Company == Company), "LevelId", "LevelName");
             ViewData["LogMeansId"] = new SelectList(_context.ComplaintReceiveMeans, "MeansId", "Means");
+            ViewData["PriorityId"] = new SelectList(_context.Priority, "PriorityId", "PriorityName");
             ViewData["BrandId"] = new SelectList(_context.Brands
                 .Where(x => x.Company == Company), "BrandId", "Brand");
 

@@ -27,5 +27,6 @@ namespace GroupCCP.Models
         public ICollection<Brands> Brands { get; set; }
         public ICollection<FollowUpCalls> FollowUps { get; set; }
         public ICollection<ComplaintCustomerInfo> Customers { get; set; }
+        public ICollection<Timelines> Timelines { get; set; }
     }
 }

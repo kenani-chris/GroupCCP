@@ -34,6 +34,8 @@ namespace GroupCCP.Models
         public  ComplaintLogStatus Status { get; set; }
         public int StaffId { get; set; }
         public StaffAccount StaffAccount { get; set; }
+        public int PriorityId { get; set; }
+        public Priority Priority { get; set; }
         [Display(Name = "Log Submit Date")]
         [DataType(DataType.DateTime)]
         public string StatusSubmitDate { get; set; }
@@ -44,5 +46,6 @@ namespace GroupCCP.Models
         public ICollection<ComplaintAssignment> Assignments { get; set; }
         public ICollection<ComplaintCorrectiveInfo> Correctives { get; set; }
         public ICollection<ComplaintFollowUp> FollowUps { get; set; }
+        public ICollection<OverdueReminder> OverdueReminders { get; set; } 
     }
 }

@@ -30,5 +30,7 @@ namespace GroupCCP.Models
         public ICollection<ComplaintCorrectiveInfo> ComplaintCorrectiveInfos { get; set; }
         public ICollection<ComplaintFollowUp> FollowUps { get; set; }
         public ICollection<LevelMembership> LevelMemberships { get; set; }
+        public ICollection<Notification> Notifications { get; set; }
+        public ICollection<OverdueReminder> OverdueReminders { get; set; }
     }
 }

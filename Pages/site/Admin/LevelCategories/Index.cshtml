@@ -1,0 +1,49 @@
+﻿@page
+@model GroupCCP.Pages.site.Admin.LevelCategories.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_SystemLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LevelCategory[0].CategorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LevelCategory[0].Company)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LevelCategory[0].ParentCategory)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.LevelCategory) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParentCategory.CategorName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.LevelCategoryId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.LevelCategoryId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.LevelCategoryId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -46,6 +46,9 @@ namespace GroupCCP.Pages.site
                     return NotFound("Company not found");
                 }
             }
+
+            TasksFunctions tasks = new(_context);
+            tasks.AssignLogs();
             
             // Common Functions
             Defaults Default = new(_context);

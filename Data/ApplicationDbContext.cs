@@ -214,8 +214,10 @@ namespace GroupCCP.Data
                     new { PermissionId = 60, Entity = "Assignment - Level Down Complaints", Permission = "Delete" },
 
                     new { PermissionId = 61, Entity = "Complaint", Permission = "Add" },
-                    new { PermissionId = 62, Entity = "Customer", Permission = "Add" }
+                    new { PermissionId = 62, Entity = "Customer", Permission = "Add" },
 
+                    // Admin Permissions
+                    new { PermissionId = 77, Entity = "Admin - Home", Permission = "View" }
 
                     );
             });
@@ -346,6 +348,12 @@ namespace GroupCCP.Data
                     .HasForeignKey(x => x.StaffId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
+
+                entity.HasOne(x => x.Priority)
+                    .WithMany(x => x.ComplaintLogDetails)
+                    .HasForeignKey(x => x.PriorityId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
             });
 
             modelBuilder.Entity<ComplaintLogStatus>(entity =>
@@ -381,6 +389,54 @@ namespace GroupCCP.Data
                     .HasForeignKey(x => x.CompanyId)
                     .IsRequired(true);
             });
+
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.HasKey(x => x.NotificationId);
+                entity.HasOne(x => x.Account)
+                    .WithMany(x => x.Notifications)
+                    .HasForeignKey(x => x.StaffId)
+                    .IsRequired(true);
+            });
+
+            modelBuilder.Entity<Timelines>(entity =>
+            {
+                entity.HasKey(x => x.TimeLineId);
+                entity.HasOne(x => x.Company)
+                    .WithMany(x => x.Timelines)
+                    .HasForeignKey(x => x.CompanyId)
+                    .IsRequired(true);
+                entity.HasOne(x => x.Priority)
+                    .WithMany(x => x.Timelines)
+                    .HasForeignKey(x => x.PriorityId)
+                    .IsRequired(true);
+            });
+
+            modelBuilder.Entity<Priority>(entity =>
+            {
+                entity.HasKey(x => x.PriorityId);
+                entity.HasData(
+                    new {PriorityId = 1, PriorityName = "Critical", PriorityCloseDate = 4F},
+                    new {PriorityId = 2, PriorityName = "High", PriorityCloseDate = 8F},
+                    new {PriorityId = 3, PriorityName = "Normal", PriorityCloseDate = 24F},
+                    new {PriorityId = 4, PriorityName = "Low", PriorityCloseDate = 48F},
+                    new {PriorityId = 5, PriorityName = "Extremely Low", PriorityCloseDate = 0F}
+                    );
+            });
+            
+            modelBuilder.Entity<OverdueReminder>(entity =>
+            {
+                entity.HasKey(x => x.ReminderId);
+                entity.HasOne(x => x.StaffAccount)
+                    .WithMany(x => x.OverdueReminders)
+                    .HasForeignKey(x => x.StaffId)
+                    .IsRequired(true);
+                
+                entity.HasOne(x => x.ComplaintLogDetail)
+                    .WithMany(x => x.OverdueReminders)
+                    .HasForeignKey(x => x.LogId)
+                    .IsRequired(true);
+            });
         }
         public DbSet<GroupCCP.Models.ComplaintCorrectiveInfo> ComplaintCorrectiveInfo { get; set; }
         public DbSet<GroupCCP.Models.FollowUpCalls> FollowUpCalls { get; set; }
@@ -389,6 +445,10 @@ namespace GroupCCP.Data
         public DbSet<GroupCCP.Models.Roles> Roles { get; set; }
         public DbSet<GroupCCP.Models.PermissionAssignment> PermissionAssignment { get; set; }
         public DbSet<GroupCCP.Models.Permissions> Permissions { get; set; }
+        public DbSet<GroupCCP.Models.Notification> Notification { get; set; }
+        public DbSet<GroupCCP.Models.Timelines> Timelines { get; set; }
+        public DbSet<GroupCCP.Models.OverdueReminder> OverdueReminder { get; set; }
+        public DbSet<GroupCCP.Models.Priority> Priority { get; set; }
         
     }
 }

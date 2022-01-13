@@ -48,6 +48,7 @@ namespace GroupCCP
             services.AddRazorPages();
             
             services.AddHostedService<NotificationTask>();
+            services.AddHostedService<AssigningTask>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

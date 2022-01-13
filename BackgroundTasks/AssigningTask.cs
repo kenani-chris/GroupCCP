@@ -9,18 +9,13 @@ using System.Threading.Tasks;
 
 namespace GroupCCP
 {
-    public class NotificationTask : BackgroundService
+    public class AssigningTask : BackgroundService
     {
-        private readonly ILogger<NotificationTask> Logger;
-        private readonly TasksFunctions windowsService;
         private readonly GroupCCP.Data.ApplicationDbContext _context;
-        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public NotificationTask(ILogger<NotificationTask> logger, IServiceProvider serviceProvider)
+        public AssigningTask(IServiceProvider serviceProvider)
         {
-            Logger = logger;
             IServiceScope serviceScope = serviceProvider.GetService<IServiceScopeFactory>().CreateScope();
-
             _context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
         }
  
@@ -29,30 +24,17 @@ namespace GroupCCP
             
             while (!stoppingToken.IsCancellationRequested)
             {
-                await Task.Delay(1000);
-                
-
+                TasksFunctions taskFunctions = new(_context);
+                await Task.Delay(30000, stoppingToken);
                 try
                 {
-                    TasksFunctions windowsService = new(_context);
-                    windowsService.SaySomething();
-                    LogInformation("I say we got sth good going");
+                    taskFunctions.AssignLogs();
                 }
                 catch (Exception ex)
                 {
-                    LogErrors(ex.Message);
+                    taskFunctions.WriteLog("Notification task failed with error \"" + ex.Message + "\"");
                 }
-
             }
-        }
-        public void LogErrors(string error)
-        {
-            Logger.LogError(error);
-        }
-
-        public void LogInformation(string information)
-        {
-            Logger.LogInformation(information);
         }
     }
 }

@@ -1,0 +1,97 @@
+﻿@page
+@model GroupCCP.Pages.site.Admin.Timeline.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_SystemLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Timelines[0].Priority)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timelines[0].OverdueAssignedHrs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timelines[0].OverdueAssignedReminderHrs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timelines[0].OverdueAssignedEscallate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timelines[0].OverdueResolvedHrs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timelines[0].OverdueResolvedReminderHrs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timelines[0].OverdueResolvedEscallate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timelines[0].OverdueResolvedClosedHrs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timelines[0].OverdueResolvedClosedReminderHrs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timelines[0].OverdueClosedEscallate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timelines[0].Company)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Timelines) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Priority.PriorityId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverdueAssignedHrs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverdueAssignedReminderHrs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverdueAssignedEscallate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverdueResolvedHrs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverdueResolvedReminderHrs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverdueResolvedEscallate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverdueResolvedClosedHrs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverdueResolvedClosedReminderHrs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverdueClosedEscallate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company.CompanyName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.TimeLineId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.TimeLineId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.TimeLineId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

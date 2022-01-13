@@ -188,7 +188,6 @@ namespace GroupCCP.Pages.site
                     .ToList();
                 if(LogAssignments.Count > 0)
                 {
-                    Console.WriteLine(Assignment.AssignmentDate);
                     AllAssignments.Remove(Assignment);
                 }
             }

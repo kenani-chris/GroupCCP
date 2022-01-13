@@ -1,0 +1,109 @@
+﻿@page
+@model GroupCCP.Pages.site.Admin.Logs.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_SystemLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Customers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].CustomerComplaint)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].CustomerRequest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].RegistrationNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Brands)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Means)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Level)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].StaffAccount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Priority)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].StatusSubmitDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].StatusClosedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ComplaintLogDetail) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customers.CustomerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerComplaint)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerRequest)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegistrationNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brands.BrandId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Means.Means)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Level.LevelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaffAccount.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Priority.PriorityId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusSubmitDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusClosedDate)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.LogId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.LogId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.LogId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -27,7 +27,7 @@
   <ItemGroup>
     <Folder Include="Areas\Identity\Pages\Account\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Images12\" />
+    <Folder Include="SystemLogs\" />
     <Folder Include="Pages\ComplaintAssignments\" />
   </ItemGroup>
 
