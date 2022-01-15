@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'WebApps-kc-learn'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_840444F76E5F4490B7DABACD6768B931 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_055BAD2893124DBCAAA833223CD19F44 }}
           package: .
