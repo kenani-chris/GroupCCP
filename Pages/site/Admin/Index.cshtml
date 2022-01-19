@@ -4,7 +4,6 @@
     Layout = "/Pages/Shared/_SystemLayout.cshtml";
 }
 
-
  <section class="content-header container-fluid">
     <div class="container-fluid row">
         <div class="col-md-6">
@@ -13,7 +12,7 @@
         <div class="col-md-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
-                <li class="breadcrumb-item">Logs</li>
+                <li class="breadcrumb-item">Admin</li>
             </ol>
         </div>
     </div>
@@ -21,9 +20,6 @@
 
 <section class="content">
     <div class="container-fluid">
-        <div style=" width: 100%">
-            <partial name="menu" />
-        </div>
         <div class="row container-fluid card-body">
             @if (!Model.StaffHasPerm)
             {
@@ -49,10 +45,81 @@
             }
             else
             {
-                <div class="card container-fluid">
-
-                    <div class="card-body" style="overflow-x: auto">
-
+                <div class="container-fluid row">
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h4>2 Logs</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h4>2 Staffs</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h4>2 Levels</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h4>2 Brands</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                </div>
+                <div class="card card-primary container-fluid">
+                    <div class="card-header">
+                        <h3 class="card-title">Admin Operations - You've got supercow powers</h3>
+                    </div>
+              
+                    <div class="card-body row">
+                        <div class="col-md-3">
+                            <strong><i class="fas fa-book mr-1"></i> Complaint</strong>
+                            <hr>
+                            <ul class="text-muted">
+                                <li><a asp-page="/site/Admin/Logs/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Logs</a></li>
+                                <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Customers</a></li>
+                                <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Brands</a></li>
+                                <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Receive Means</a></li>
+                                <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Follow Up Types</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <strong><i class="fas fa-book mr-1"></i> Levels/Categories</strong>
+                            <hr>
+                            <ul class="text-muted">
+                              <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Levels</a></li>
+                              <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Level Categories</a></li>
+                              <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Level Memberships</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <strong><i class="fas fa-book mr-1"></i> Accounts/Permissions/Roles</strong>
+                            <hr>
+                            <ul class="text-muted">
+                              <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Accounts</a></li>
+                              <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Role Assognments</a></li>
+                              <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Roles & Permissions</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <strong><i class="fas fa-book mr-1"></i> Settings</strong>
+                            <hr>
+                            <ul class="text-muted">
+                              <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Timelines</a></li>
+                              <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Company</a></li>
+                              <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Roles & Permissions</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             }

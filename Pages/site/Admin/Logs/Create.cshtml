@@ -6,82 +6,121 @@
     Layout = "~/Pages/Shared/_SystemLayout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>ComplaintLogDetail</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.LogCustomerId" class="control-label"></label>
-                <select asp-for="ComplaintLogDetail.LogCustomerId" class ="form-control" asp-items="ViewBag.LogCustomerId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.CustomerComplaint" class="control-label"></label>
-                <input asp-for="ComplaintLogDetail.CustomerComplaint" class="form-control" />
-                <span asp-validation-for="ComplaintLogDetail.CustomerComplaint" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.CustomerRequest" class="control-label"></label>
-                <input asp-for="ComplaintLogDetail.CustomerRequest" class="form-control" />
-                <span asp-validation-for="ComplaintLogDetail.CustomerRequest" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.RegistrationNumber" class="control-label"></label>
-                <input asp-for="ComplaintLogDetail.RegistrationNumber" class="form-control" />
-                <span asp-validation-for="ComplaintLogDetail.RegistrationNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.BrandId" class="control-label"></label>
-                <select asp-for="ComplaintLogDetail.BrandId" class ="form-control" asp-items="ViewBag.BrandId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.Model" class="control-label"></label>
-                <input asp-for="ComplaintLogDetail.Model" class="form-control" />
-                <span asp-validation-for="ComplaintLogDetail.Model" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.LogMeansId" class="control-label"></label>
-                <select asp-for="ComplaintLogDetail.LogMeansId" class ="form-control" asp-items="ViewBag.LogMeansId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.LogLevelId" class="control-label"></label>
-                <select asp-for="ComplaintLogDetail.LogLevelId" class ="form-control" asp-items="ViewBag.LogLevelId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.LogStatusId" class="control-label"></label>
-                <select asp-for="ComplaintLogDetail.LogStatusId" class ="form-control" asp-items="ViewBag.LogStatusId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.StaffId" class="control-label"></label>
-                <select asp-for="ComplaintLogDetail.StaffId" class ="form-control" asp-items="ViewBag.StaffId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.PriorityId" class="control-label"></label>
-                <select asp-for="ComplaintLogDetail.PriorityId" class ="form-control" asp-items="ViewBag.PriorityId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.StatusSubmitDate" class="control-label"></label>
-                <input asp-for="ComplaintLogDetail.StatusSubmitDate" class="form-control" />
-                <span asp-validation-for="ComplaintLogDetail.StatusSubmitDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.StatusClosedDate" class="control-label"></label>
-                <input asp-for="ComplaintLogDetail.StatusClosedDate" class="form-control" />
-                <span asp-validation-for="ComplaintLogDetail.StatusClosedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId">Admin</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Logs/Index" asp-route-CompanyId="@Model.Company.CompanyId">Logs</a></li>
+                <li class="breadcrumb-item">Add Log</li>
+            </ol>
+        </div>
     </div>
-</div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+                <div class="card container-fluid">
+                    <form method="post">
+                        <div class="card-body">
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="input-group">
+                                
+                                <select data-live-search="true" asp-for="ComplaintLogDetail.LogCustomerId" class="form-control my-select selectpicker" asp-items="ViewBag.LogCustomerId">
+                                    <option value="">----</option>
+                                </select>
+                            </div>
+                            <br />
+                            <hr />
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label asp-for="ComplaintLogDetail.RegistrationNumber" class="control-label"></label>
+                                    <input asp-for="ComplaintLogDetail.RegistrationNumber" class="form-control" />
+                                    <span asp-validation-for="ComplaintLogDetail.RegistrationNumber" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="ComplaintLogDetail.BrandId" class="control-label"></label>
+                                    <select asp-for="ComplaintLogDetail.BrandId" class="form-control" asp-items="ViewBag.BrandId">
+                                        <option value="">----</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="ComplaintLogDetail.Model" class="control-label"></label>
+                                    <input asp-for="ComplaintLogDetail.Model" class="form-control" />
+                                    <span asp-validation-for="ComplaintLogDetail.Model" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label asp-for="ComplaintLogDetail.CustomerComplaint" class="control-label"></label>
+                                <textarea asp-for="ComplaintLogDetail.CustomerComplaint" class="form-control"></textarea>
+                                <span asp-validation-for="ComplaintLogDetail.CustomerComplaint" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintLogDetail.CustomerRequest" class="control-label"></label>
+                                <textarea asp-for="ComplaintLogDetail.CustomerRequest" class="form-control"></textarea>
+                                <span asp-validation-for="ComplaintLogDetail.CustomerRequest" class="text-danger"></span>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label asp-for="ComplaintLogDetail.LogMeansId" class="control-label"></label>
+                                    <select asp-for="ComplaintLogDetail.LogMeansId" class="form-control" asp-items="ViewBag.LogMeansId">
+                                        <option value="">----</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="ComplaintLogDetail.LogLevelId" class="control-label"></label>
+                                    <select asp-for="ComplaintLogDetail.LogLevelId" class="form-control" asp-items="ViewBag.LogLevelId">
+                                        <option value="">----</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label">Priority</label>
+                                    <select asp-for="ComplaintLogDetail.PriorityId" class="form-control" asp-items="ViewBag.PriorityId">
+                                        <option value="">----</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-right" style="margin:5px">
+                                <input type="submit" value="Add Complaint" class="btn btn-sm btn-primary py-0" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            }
+    </div>
+</section>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -40,9 +40,6 @@ namespace GroupCCP.Pages.site.Admin
 
             // Common Functions
             Defaults Default = new(_context);
-            TasksFunctions tasks = new(_context);
-
-            tasks.GetOverdueAssignedLogs();
 
             //Initialize Permissions required
             PermissionRequired = "View";
@@ -62,7 +59,7 @@ namespace GroupCCP.Pages.site.Admin
             }
 
             //Other Context Objects
-            PageTitle = "Admin Dashboard";
+            PageTitle = "Admin - Logs";
 
             return Page();
         }

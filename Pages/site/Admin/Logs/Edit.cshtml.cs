@@ -22,40 +22,77 @@ namespace GroupCCP.Pages.site.Admin.Logs
 
         [BindProperty]
         public ComplaintLogDetail ComplaintLogDetail { get; set; }
+        public Company Company { get; set; }
+        public string PageTitle { get; set; }
+        public bool StaffHasPerm { get; set; }
+        public StaffAccount StaffAccount { get; set; }
+        public string PermissionRequired { get; set; }
+        public string PermissionEntity { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+
+        public async Task<IActionResult> OnGetAsync(int? CompanyId, int? LogId)
         {
-            if (id == null)
+            //Check Passed Parameters if are ok
+            if (CompanyId == null || LogId == null)
             {
                 return NotFound();
             }
-
-            ComplaintLogDetail = await _context.ComplaintLogDetail
-                .Include(c => c.Brands)
-                .Include(c => c.Customers)
-                .Include(c => c.Level)
-                .Include(c => c.Means)
-                .Include(c => c.Priority)
-                .Include(c => c.StaffAccount)
-                .Include(c => c.Status).FirstOrDefaultAsync(m => m.LogId == id);
-
-            if (ComplaintLogDetail == null)
+            else
             {
-                return NotFound();
+                Company = await _context.Company
+                    .Include(c => c.Group)
+                    .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+
+                ComplaintLogDetail = await _context.ComplaintLogDetail
+                    .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                    .Include(c => c.Customers)
+                    .Include(c => c.Level)
+                    .Include(c => c.Means)
+                    .Include(c => c.Status).FirstOrDefaultAsync(m => m.LogId == LogId);
+                if (Company == null || ComplaintLogDetail == null)
+                {
+                    return NotFound();
+                }
             }
-           ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId");
-           ViewData["LogCustomerId"] = new SelectList(_context.ComplaintCustomerInfo, "CustomerId", "CustomerId");
-           ViewData["LogLevelId"] = new SelectList(_context.Level, "LevelId", "LevelName");
-           ViewData["LogMeansId"] = new SelectList(_context.ComplaintReceiveMeans, "MeansId", "Means");
-           ViewData["PriorityId"] = new SelectList(_context.Priority, "PriorityId", "PriorityId");
-           ViewData["StaffId"] = new SelectList(_context.StaffAccount, "AccountId", "UserId");
-           ViewData["LogStatusId"] = new SelectList(_context.ComplaintLogStatus, "StatusId", "Status");
+
+            // Common Functions
+            Defaults Default = new(_context);
+
+            //Initialize Permissions required
+            PermissionRequired = "Edit";
+            PermissionEntity = "Admin - Logs";
+
+            //Check if Staff has a valid staff account
+            if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
+            {
+                return RedirectToPage("./Errors/NoActiveStaffAccount", new { Company.CompanyId });
+            }
+            else
+            {
+                StaffAccount = Default.GetStaffAccount(User.Identity.Name, Company.CompanyId);
+                // Check if Staff role has required permissions
+                StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
+            }
+
+            // Other Context Objects
+            PageTitle = "Admin - Log " + ComplaintLogDetail.LogId + " - Edit";
+
+            ViewData["LogCustomerId"] = new SelectList(_context.ComplaintCustomerInfo
+                .Where(c => c.Company == Company), "CustomerId", "Customer");
+            ViewData["LogLevelId"] = new SelectList(_context.Level
+                .Include(c => c.LevelCategory)
+                .ThenInclude(c => c.Company)
+                .Where(c => c.LevelCategory.Company == Company), "LevelId", "LevelName");
+            ViewData["LogMeansId"] = new SelectList(_context.ComplaintReceiveMeans, "MeansId", "Means");
+            ViewData["BrandId"] = new SelectList(_context.Brands
+                .Where(x => x.Company == Company), "BrandId", "Brand");
+            ViewData["PriorityId"] = new SelectList(_context.Priority, "PriorityId", "PriorityName");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int CompanyId, int LogId)
         {
             if (!ModelState.IsValid)
             {
@@ -79,8 +116,11 @@ namespace GroupCCP.Pages.site.Admin.Logs
                     throw;
                 }
             }
-
-            return RedirectToPage("./Index");
+            Company = await _context.Company
+               .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+            ComplaintLogDetail = await _context.ComplaintLogDetail
+               .Include(c => c.Status).FirstOrDefaultAsync(m => m.LogId == LogId);
+            return RedirectToPage("./Details", new { Company.CompanyId, ComplaintLogDetail.LogId });
         }
 
         private bool ComplaintLogDetailExists(int id)

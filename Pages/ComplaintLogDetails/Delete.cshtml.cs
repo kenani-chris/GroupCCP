@@ -30,9 +30,12 @@ namespace GroupCCP.Pages.ComplaintLogDetails
             }
 
             ComplaintLogDetail = await _context.ComplaintLogDetail
+                .Include(c => c.Brands)
                 .Include(c => c.Customers)
                 .Include(c => c.Level)
                 .Include(c => c.Means)
+                .Include(c => c.Priority)
+                .Include(c => c.StaffAccount)
                 .Include(c => c.Status).FirstOrDefaultAsync(m => m.LogId == id);
 
             if (ComplaintLogDetail == null)

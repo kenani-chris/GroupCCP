@@ -2,108 +2,126 @@
 @model GroupCCP.Pages.site.Admin.Logs.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_SystemLayout.cshtml";
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Customers)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].CustomerComplaint)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].CustomerRequest)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].RegistrationNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Brands)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Means)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Level)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].StaffAccount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Priority)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].StatusSubmitDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].StatusClosedDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.ComplaintLogDetail) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customers.CustomerId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomerComplaint)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomerRequest)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brands.BrandId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Means.Means)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Level.LevelName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StaffAccount.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Priority.PriorityId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StatusSubmitDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StatusClosedDate)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.LogId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.LogId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.LogId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+ <section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId">Admin</a></li>
+                <li class="breadcrumb-item">Logs</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row container-fluid card-body">
+            @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card container-fluid">
+                    <div class="card-header">
+                        All Logs
+                        <a asp-page="Create" asp-route-CompanyId="@Model.Company.CompanyId" class="text-white"><div class="nav-link float-right btn btn-info  text-white">New Log</div></a>
+                    </div>
+                    <div class="card-body" style="overflow-x: auto">
+                        <table class="table table-striped" id="LogTable">
+                
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].LogId)
+                                    </th>
+                                    <th>
+                                        Customer
+                                    </th>
+                                    <th>
+                                        Reg
+                                    </th>
+                                    <th>
+                                        Means
+                                    </th>
+                                    <th>
+                                        Level
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th>
+                                        Priority
+                                    </th>
+                                    <th>
+                                        Submit Date
+                                    </th>
+                                    <th>
+                                        Close Date
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ComplaintLogDetail) {
+                                    <tr>
+                                        <td>
+                                            <a asp-page="./Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogId="@item.LogId">Log @Html.DisplayFor(modelItem => item.LogId)</a>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Customers.CustomerName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RegistrationNumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Means.Means)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Level.LevelName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Status.Status)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Priority.PriorityName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.StatusSubmitDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.StatusClosedDate)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+                    

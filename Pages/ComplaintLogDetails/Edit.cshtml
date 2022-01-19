@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "/Pages/Shared/_Layout.cshtml";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h1>Edit</h1>
@@ -21,6 +21,31 @@
                 <span asp-validation-for="ComplaintLogDetail.LogCustomerId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ComplaintLogDetail.CustomerComplaint" class="control-label"></label>
+                <input asp-for="ComplaintLogDetail.CustomerComplaint" class="form-control" />
+                <span asp-validation-for="ComplaintLogDetail.CustomerComplaint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.CustomerRequest" class="control-label"></label>
+                <input asp-for="ComplaintLogDetail.CustomerRequest" class="form-control" />
+                <span asp-validation-for="ComplaintLogDetail.CustomerRequest" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.RegistrationNumber" class="control-label"></label>
+                <input asp-for="ComplaintLogDetail.RegistrationNumber" class="form-control" />
+                <span asp-validation-for="ComplaintLogDetail.RegistrationNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.BrandId" class="control-label"></label>
+                <select asp-for="ComplaintLogDetail.BrandId" class="form-control" asp-items="ViewBag.BrandId"></select>
+                <span asp-validation-for="ComplaintLogDetail.BrandId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.Model" class="control-label"></label>
+                <input asp-for="ComplaintLogDetail.Model" class="form-control" />
+                <span asp-validation-for="ComplaintLogDetail.Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ComplaintLogDetail.LogMeansId" class="control-label"></label>
                 <select asp-for="ComplaintLogDetail.LogMeansId" class="form-control" asp-items="ViewBag.LogMeansId"></select>
                 <span asp-validation-for="ComplaintLogDetail.LogMeansId" class="text-danger"></span>
@@ -34,6 +59,21 @@
                 <label asp-for="ComplaintLogDetail.LogStatusId" class="control-label"></label>
                 <select asp-for="ComplaintLogDetail.LogStatusId" class="form-control" asp-items="ViewBag.LogStatusId"></select>
                 <span asp-validation-for="ComplaintLogDetail.LogStatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.StaffId" class="control-label"></label>
+                <select asp-for="ComplaintLogDetail.StaffId" class="form-control" asp-items="ViewBag.StaffId"></select>
+                <span asp-validation-for="ComplaintLogDetail.StaffId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.PriorityId" class="control-label"></label>
+                <select asp-for="ComplaintLogDetail.PriorityId" class="form-control" asp-items="ViewBag.PriorityId"></select>
+                <span asp-validation-for="ComplaintLogDetail.PriorityId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.StatusSubmitDate" class="control-label"></label>
+                <input asp-for="ComplaintLogDetail.StatusSubmitDate" class="form-control" />
+                <span asp-validation-for="ComplaintLogDetail.StatusSubmitDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ComplaintLogDetail.StatusClosedDate" class="control-label"></label>

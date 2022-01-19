@@ -217,7 +217,28 @@ namespace GroupCCP.Data
                     new { PermissionId = 62, Entity = "Customer", Permission = "Add" },
 
                     // Admin Permissions
-                    new { PermissionId = 77, Entity = "Admin - Home", Permission = "View" }
+                    new { PermissionId = 77, Entity = "Admin - Home", Permission = "View" },
+
+                    new { PermissionId = 78, Entity = "Admin - Logs", Permission = "List" },
+                    new { PermissionId = 79, Entity = "Admin - Logs", Permission = "Edit" },
+                    new { PermissionId = 80, Entity = "Admin - Logs", Permission = "Delete" },
+                    new { PermissionId = 81, Entity = "Admin - Logs", Permission = "Create" },
+                    new { PermissionId = 82, Entity = "Admin - Logs", Permission = "View" },
+
+                    new { PermissionId = 83, Entity = "Admin - Assignment", Permission = "List" },
+                    new { PermissionId = 84, Entity = "Admin - Assignment", Permission = "Edit" },
+                    new { PermissionId = 85, Entity = "Admin - Assignment", Permission = "Delete" },
+                    new { PermissionId = 86, Entity = "Admin - Assignment", Permission = "Create" },
+
+                    new { PermissionId = 87, Entity = "Admin - FollowUp", Permission = "List" },
+                    new { PermissionId = 88, Entity = "Admin - FollowUp", Permission = "Edit" },
+                    new { PermissionId = 89, Entity = "Admin - FollowUp", Permission = "Delete" },
+                    new { PermissionId = 90, Entity = "Admin - FollowUp", Permission = "Create" },
+
+                    new { PermissionId = 91, Entity = "Admin - Corrective", Permission = "List" },
+                    new { PermissionId = 92, Entity = "Admin - Corrective", Permission = "Edit" },
+                    new { PermissionId = 93, Entity = "Admin - Corrective", Permission = "Delete" },
+                    new { PermissionId = 94, Entity = "Admin - Corrective", Permission = "Create" }
 
                     );
             });

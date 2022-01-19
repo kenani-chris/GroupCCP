@@ -4,6 +4,7 @@ using GroupCCP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupCCP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220119070902_19012022_1007")]
+    partial class _19012022_1007
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1133,78 +1135,6 @@ namespace GroupCCP.Migrations
                             PermissionId = 82,
                             Entity = "Admin - Logs",
                             Permission = "View"
-                        },
-                        new
-                        {
-                            PermissionId = 83,
-                            Entity = "Admin - Assignment",
-                            Permission = "List"
-                        },
-                        new
-                        {
-                            PermissionId = 84,
-                            Entity = "Admin - Assignment",
-                            Permission = "Edit"
-                        },
-                        new
-                        {
-                            PermissionId = 85,
-                            Entity = "Admin - Assignment",
-                            Permission = "Delete"
-                        },
-                        new
-                        {
-                            PermissionId = 86,
-                            Entity = "Admin - Assignment",
-                            Permission = "Create"
-                        },
-                        new
-                        {
-                            PermissionId = 87,
-                            Entity = "Admin - FollowUp",
-                            Permission = "List"
-                        },
-                        new
-                        {
-                            PermissionId = 88,
-                            Entity = "Admin - FollowUp",
-                            Permission = "Edit"
-                        },
-                        new
-                        {
-                            PermissionId = 89,
-                            Entity = "Admin - FollowUp",
-                            Permission = "Delete"
-                        },
-                        new
-                        {
-                            PermissionId = 90,
-                            Entity = "Admin - FollowUp",
-                            Permission = "Create"
-                        },
-                        new
-                        {
-                            PermissionId = 91,
-                            Entity = "Admin - Corrective",
-                            Permission = "List"
-                        },
-                        new
-                        {
-                            PermissionId = 92,
-                            Entity = "Admin - Corrective",
-                            Permission = "Edit"
-                        },
-                        new
-                        {
-                            PermissionId = 93,
-                            Entity = "Admin - Corrective",
-                            Permission = "Delete"
-                        },
-                        new
-                        {
-                            PermissionId = 94,
-                            Entity = "Admin - Corrective",
-                            Permission = "Create"
                         });
                 });
 

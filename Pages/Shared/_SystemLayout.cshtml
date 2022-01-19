@@ -133,7 +133,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'cfao_kenya:My_KPI' %}" class="nav-link">
+                            <a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
                                     Admin

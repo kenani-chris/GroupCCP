@@ -132,6 +132,7 @@ namespace GroupCCP.Pages.site
                     .Include(c => c.Means)
                     .Include(c => c.Level)
                     .Include(c => c.Customers)
+                    .Include(c => c.Priority)
                     .Include(c => c.StaffAccount).ThenInclude(c => c.User)
                     .Where(c => c.StaffId == StaffId).ToList();
             }

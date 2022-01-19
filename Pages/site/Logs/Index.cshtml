@@ -51,7 +51,6 @@
             else
             {
                 <div class="card container-fluid">
-
                     <div class="card-body" style="overflow-x: auto">
                         <table class="table table-striped" id="LogTable">
                             <thead>
@@ -73,6 +72,9 @@
                                     </th>
                                     <th>
                                         Status
+                                    </th>
+                                    <th>
+                                        Priority
                                     </th>
                                     <th>
                                         Submit Date
@@ -102,6 +104,9 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Status.Status)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Priority.PriorityName)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.StatusSubmitDate)
