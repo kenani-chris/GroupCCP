@@ -22,30 +22,93 @@ namespace GroupCCP.Pages.site.Admin.Assignments
 
         [BindProperty]
         public ComplaintAssignment ComplaintAssignment { get; set; }
+        public IList<ComplaintAssignment> PreviousAssignment { get; set; }
+        public ComplaintLogDetail ComplaintLogDetail { get; set; }
+        public Company Company { get; set; }
+        public int LogTypeId { get; set; }
+        public string PageTitle { get; set; }
+        public bool StaffHasPerm { get; set; }
+        public StaffAccount StaffAccount { get; set; }
+        public string PermissionRequired { get; set; }
+        public string PermissionEntity { get; set; }
+        public bool LogAssignAddPerm { get; set; }
+        public bool LogAssignDeletePerm { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? CompanyId,int? LogId, int? AssignmentId)
         {
-            if (id == null)
+            //Check Passed Parameters if are ok
+            if (CompanyId == null || LogId == null || AssignmentId == null)
             {
                 return NotFound();
             }
+            else
+            {
+                Company = await _context.Company
+                    .Include(c => c.Group)
+                    .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
 
-            ComplaintAssignment = await _context.ComplaintAssignment
+                ComplaintLogDetail = await _context.ComplaintLogDetail
+                    .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                    .Include(c => c.Customers)
+                    .Include(c => c.Level)
+                    .Include(c => c.Means)
+                    .Include(c => c.Status).FirstOrDefaultAsync(m => m.LogId == LogId);
+
+                ComplaintAssignment = await _context.ComplaintAssignment
                 .Include(c => c.Log)
-                .Include(c => c.Staff).FirstOrDefaultAsync(m => m.AssignmentId == id);
+                .Include(c => c.Staff).ThenInclude(c => c.User)
+                .FirstOrDefaultAsync(m => m.AssignmentId == AssignmentId);
 
-            if (ComplaintAssignment == null)
-            {
-                return NotFound();
+                if (Company == null || ComplaintLogDetail == null || ComplaintAssignment == null)
+                {
+                    return NotFound();
+                }
             }
-           ViewData["LogId"] = new SelectList(_context.ComplaintLogDetail, "LogId", "LogId");
-           ViewData["StaffAssigned"] = new SelectList(_context.StaffAccount, "AccountId", "UserId");
+
+            // Common Functions
+            Defaults Default = new(_context);
+
+            //Initialize Permissions required
+            PermissionRequired = "Edit";
+            PermissionEntity = "Admin - Assignment";
+
+            //Check if Staff has a valid staff account
+            if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
+            {
+                return RedirectToPage("./Errors/NoActiveStaffAccount", new { Company.CompanyId });
+            }
+            else
+            {
+                StaffAccount = Default.GetStaffAccount(User.Identity.Name, Company.CompanyId);
+                // Check if Staff role has required permissions
+                StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
+            }
+
+            //Other Context Objects
+
+            PageTitle = " Admin - Edit Assign Log " + ComplaintLogDetail.LogId;
+            LogAssignAddPerm = Default.StaffHasPermission(StaffAccount, "Admin - Assignment", "Add");
+            LogAssignDeletePerm = Default.StaffHasPermission(StaffAccount, "Admin - Assignment", "Delete");
+            PreviousAssignment = await _context.ComplaintAssignment
+                .Include(c => c.Log)
+                .Include(c => c.Staff)
+                .ThenInclude(c => c.User)
+                .Where(c => c.LogId == LogId)
+                .OrderByDescending(c => c.AssignmentId)
+                .ToListAsync();
+
+            ViewData["StaffAssigned"] = _context.StaffAccount.Where(c => c.CompanyId == CompanyId).Select(a => new SelectListItem
+            {
+                Value = a.AccountId.ToString(),
+                Text = a.User.Email
+            }).ToList();
+
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int CompanyId, int LogId)
         {
             if (!ModelState.IsValid)
             {
@@ -53,6 +116,9 @@ namespace GroupCCP.Pages.site.Admin.Assignments
             }
 
             _context.Attach(ComplaintAssignment).State = EntityState.Modified;
+            ComplaintAssignment.AssignmentDate = DateTime.Now.ToString("dd/MM/yyyy hh:mm tt");
+            ComplaintAssignment.AssignmentType = "Assignment";
+            ComplaintAssignment.LogId = LogId;
 
             try
             {
@@ -69,8 +135,13 @@ namespace GroupCCP.Pages.site.Admin.Assignments
                     throw;
                 }
             }
+            Company = await _context.Company
+                .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+            ComplaintLogDetail = await _context.ComplaintLogDetail
+                .FirstOrDefaultAsync(m => m.LogId == LogId);
 
-            return RedirectToPage("./Index");
+
+            return RedirectToPage("../Logs/Details", new { Company.CompanyId, ComplaintLogDetail.LogId });
         }
 
         private bool ComplaintAssignmentExists(int id)

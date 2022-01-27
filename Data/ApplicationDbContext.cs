@@ -238,7 +238,33 @@ namespace GroupCCP.Data
                     new { PermissionId = 91, Entity = "Admin - Corrective", Permission = "List" },
                     new { PermissionId = 92, Entity = "Admin - Corrective", Permission = "Edit" },
                     new { PermissionId = 93, Entity = "Admin - Corrective", Permission = "Delete" },
-                    new { PermissionId = 94, Entity = "Admin - Corrective", Permission = "Create" }
+                    new { PermissionId = 94, Entity = "Admin - Corrective", Permission = "Create" },
+
+                    new { PermissionId = 95, Entity = "Admin - Customer", Permission = "List" },
+                    new { PermissionId = 96, Entity = "Admin - Customer", Permission = "Edit" },
+                    new { PermissionId = 97, Entity = "Admin - Customer", Permission = "Delete" },
+                    new { PermissionId = 98, Entity = "Admin - Customer", Permission = "Create" },
+                    new { PermissionId = 99, Entity = "Admin - Customer", Permission = "View" },
+
+                    new { PermissionId = 100, Entity = "Admin - Brands", Permission = "List" },
+                    new { PermissionId = 101, Entity = "Admin - Brands", Permission = "Edit" },
+                    new { PermissionId = 102, Entity = "Admin - Brands", Permission = "Delete" },
+                    new { PermissionId = 103, Entity = "Admin - Brands", Permission = "Create" },
+                    new { PermissionId = 104, Entity = "Admin - Brands", Permission = "View" },
+                    
+
+                    new { PermissionId = 105, Entity = "Admin - ReceiveMeans", Permission = "List" },
+                    new { PermissionId = 106, Entity = "Admin - ReceiveMeans", Permission = "Edit" },
+                    new { PermissionId = 107, Entity = "Admin - ReceiveMeans", Permission = "Delete" },
+                    new { PermissionId = 108, Entity = "Admin - ReceiveMeans", Permission = "Create" },
+                    new { PermissionId = 109, Entity = "Admin - ReceiveMeans", Permission = "View" },
+                    
+
+                    new { PermissionId = 110, Entity = "Admin - FollowUpTypes", Permission = "List" },
+                    new { PermissionId = 111, Entity = "Admin - FollowUpTypes", Permission = "Edit" },
+                    new { PermissionId = 112, Entity = "Admin - FollowUpTypes", Permission = "Delete" },
+                    new { PermissionId = 113, Entity = "Admin - FollowUpTypes", Permission = "Create" },
+                    new { PermissionId = 114, Entity = "Admin - FollowUpTypes", Permission = "View" }
 
                     );
             });

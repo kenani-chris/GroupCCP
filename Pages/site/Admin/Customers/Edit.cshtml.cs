@@ -23,33 +23,74 @@ namespace GroupCCP.Pages.site.Admin.Customers
         [BindProperty]
         public ComplaintCustomerInfo ComplaintCustomerInfo { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public Company Company { get; set; }
+        public string PageTitle { get; set; }
+        public bool StaffHasPerm { get; set; }
+        public StaffAccount StaffAccount { get; set; }
+        public string PermissionRequired { get; set; }
+        public string PermissionEntity { get; set; }
+        public bool CustomerEditPerm { get; set; }
+        public bool CustomerDeletePerm { get; set; }
+
+
+        public async Task<IActionResult> OnGetAsync(int? CompanyId, int? CustomerId)
         {
-            if (id == null)
+            //Check Passed Parameters if are ok
+            if (CompanyId == null || CustomerId == null)
             {
                 return NotFound();
             }
+            else
+            {
+                Company = await _context.Company
+                    .Include(c => c.Group)
+                    .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
 
+                if (Company == null)
+                {
+                    return NotFound();
+                }
+            }
+
+            // Common Functions
+            Defaults Default = new(_context);
+
+            //Initialize Permissions required
+            PermissionRequired = "Edit";
+            PermissionEntity = "Admin - Customer";
+
+            //Check if Staff has a valid staff account
+            if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
+            {
+                return RedirectToPage("./Errors/NoActiveStaffAccount", new { Company.CompanyId });
+            }
+            else
+            {
+                StaffAccount = Default.GetStaffAccount(User.Identity.Name, Company.CompanyId);
+                // Check if Staff role has required permissions
+                StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
+            }
+
+            //Other Context Objects
             ComplaintCustomerInfo = await _context.ComplaintCustomerInfo
-                .Include(c => c.Company).FirstOrDefaultAsync(m => m.CustomerId == id);
+                .Include(c => c.Company).FirstOrDefaultAsync(m => m.CustomerId == CustomerId);
+            PageTitle = "Admin - Customer Edit";
+            CustomerDeletePerm = StaffHasPerm = Default.StaffHasPermission(StaffAccount, "Admin - Customer", "Delete");
+            CustomerEditPerm = StaffHasPerm = Default.StaffHasPermission(StaffAccount, "Admin - Customer", "Edit");
 
-            if (ComplaintCustomerInfo == null)
-            {
-                return NotFound();
-            }
-           ViewData["CompanyId"] = new SelectList(_context.Company, "CompanyId", "CompanyName");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int CompanyId, int CustomerId)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            ComplaintCustomerInfo.CompanyId = CompanyId;
             _context.Attach(ComplaintCustomerInfo).State = EntityState.Modified;
 
             try
@@ -68,7 +109,7 @@ namespace GroupCCP.Pages.site.Admin.Customers
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", new {CompanyId, CustomerId});
         }
 
         private bool ComplaintCustomerInfoExists(int id)

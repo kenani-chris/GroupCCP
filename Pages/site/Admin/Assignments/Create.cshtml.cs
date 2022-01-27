@@ -9,7 +9,7 @@ using GroupCCP.Data;
 using GroupCCP.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace GroupCCP.Pages.site.Admin.Assignment
+namespace GroupCCP.Pages.site.Admin.Assignments
 {
     public class CreateModel : PageModel
     {
@@ -77,7 +77,7 @@ namespace GroupCCP.Pages.site.Admin.Assignment
 
             //Other Context Objects
 
-            PageTitle = Default.GetLogType(LogTypeId) + " Complaints - Assign Log " + ComplaintLogDetail.LogId;
+            PageTitle = "Admin - Assign Log " + ComplaintLogDetail.LogId;
             ViewData["StaffAssigned"] = _context.StaffAccount.Where(c => c.CompanyId == CompanyId).Select(a => new SelectListItem
             {
                 Value = a.AccountId.ToString(),

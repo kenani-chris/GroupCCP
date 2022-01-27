@@ -20,37 +20,79 @@ namespace GroupCCP.Pages.site.Admin.Brand
             _context = context;
         }
 
+
         [BindProperty]
-        public Brands Brands { get; set; }
+        public Brands Brand { get; set; }
+        public Company Company { get; set; }
+        public string PageTitle { get; set; }
+        public bool StaffHasPerm { get; set; }
+        public StaffAccount StaffAccount { get; set; }
+        public string PermissionRequired { get; set; }
+        public string PermissionEntity { get; set; }
+        public bool CustomerEditPerm { get; set; }
+        public bool CustomerDeletePerm { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+
+        public async Task<IActionResult> OnGetAsync(int? CompanyId, int? BrandId)
         {
-            if (id == null)
+            //Check Passed Parameters if are ok
+            if (CompanyId == null || BrandId == null)
             {
                 return NotFound();
             }
-
-            Brands = await _context.Brands
-                .Include(b => b.Company).FirstOrDefaultAsync(m => m.BrandId == id);
-
-            if (Brands == null)
+            else
             {
-                return NotFound();
+                Company = await _context.Company
+                    .Include(c => c.Group)
+                    .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+
+                Brand = await _context.Brands
+                    .Include(b => b.Company).FirstOrDefaultAsync(m => m.BrandId == BrandId);
+
+                if (Company == null || Brand == null)
+                {
+                    return NotFound();
+                }
             }
-           ViewData["CompanyId"] = new SelectList(_context.Company, "CompanyId", "CompanyName");
+
+            // Common Functions
+            Defaults Default = new(_context);
+
+            //Initialize Permissions required
+            PermissionRequired = "Edit";
+            PermissionEntity = "Admin - Brands";
+
+            //Check if Staff has a valid staff account
+            if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
+            {
+                return RedirectToPage("./Errors/NoActiveStaffAccount", new { Company.CompanyId });
+            }
+            else
+            {
+                StaffAccount = Default.GetStaffAccount(User.Identity.Name, Company.CompanyId);
+                // Check if Staff role has required permissions
+                StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
+            }
+
+            //Other Context Objects
+            PageTitle = "Admin - Brand Edit";
+            CustomerDeletePerm = StaffHasPerm = Default.StaffHasPermission(StaffAccount, "Admin - Brands", "Delete");
+            CustomerEditPerm = StaffHasPerm = Default.StaffHasPermission(StaffAccount, "Admin - Brands", "Edit");
+
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int CompanyId, int BrandId)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(Brands).State = EntityState.Modified;
+            Brand.CompanyId = CompanyId;
+            _context.Attach(Brand).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +100,7 @@ namespace GroupCCP.Pages.site.Admin.Brand
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BrandsExists(Brands.BrandId))
+                if (!BrandsExists(Brand.BrandId))
                 {
                     return NotFound();
                 }
@@ -68,12 +110,13 @@ namespace GroupCCP.Pages.site.Admin.Brand
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", new { CompanyId, BrandId });
         }
 
         private bool BrandsExists(int id)
         {
             return _context.Brands.Any(e => e.BrandId == id);
         }
+
     }
 }

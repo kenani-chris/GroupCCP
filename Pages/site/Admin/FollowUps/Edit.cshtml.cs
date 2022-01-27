@@ -22,38 +22,85 @@ namespace GroupCCP.Pages.site.Admin.FollowUps
 
         [BindProperty]
         public ComplaintFollowUp ComplaintFollowUp { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public Company Company { get; set; }
+        public string PageTitle { get; set; }
+        public ComplaintLogDetail ComplaintLogDetail { get; set; }
+        public bool StaffHasPerm { get; set; }
+        public StaffAccount StaffAccount { get; set; }
+        public string PermissionRequired { get; set; }
+        public string PermissionEntity { get; set; }
+        public bool LogFollowUpAddPerm { get; set; }
+        public bool LogFollowUpDeletePerm { get; set; }
+        public async Task<IActionResult> OnGetAsync(int? CompanyId, int? LogId, int? FollowUpId)
         {
-            if (id == null)
+            //Check Passed Parameters if are ok
+            if (CompanyId == null || LogId == null | FollowUpId == null)
             {
                 return NotFound();
             }
-
-            ComplaintFollowUp = await _context.ComplaintFollowUp
-                .Include(c => c.FollowUpCalls)
-                .Include(c => c.Log)
-                .Include(c => c.Staff).FirstOrDefaultAsync(m => m.FollowUpId == id);
-
-            if (ComplaintFollowUp == null)
+            else
             {
-                return NotFound();
+                Company = await _context.Company
+                    .Include(c => c.Group)
+                    .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+
+                ComplaintLogDetail = await _context.ComplaintLogDetail
+                    .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                    .Include(c => c.Customers)
+                    .Include(c => c.Level)
+                    .Include(c => c.Means)
+                    .Include(c => c.Status).FirstOrDefaultAsync(m => m.LogId == LogId);
+                ComplaintFollowUp = await _context.ComplaintFollowUp
+                    .Include(c => c.FollowUpCalls)
+                    .Include(c => c.Log)
+                    .Include(c => c.Staff).FirstOrDefaultAsync(m => m.FollowUpId == FollowUpId);
+                if (Company == null || ComplaintLogDetail == null || ComplaintFollowUp == null)
+                {
+                    return NotFound();
+                }
             }
-           ViewData["FollowUpTypeId"] = new SelectList(_context.FollowUpCalls, "FollowUpId", "FollowUpId");
-           ViewData["LogId"] = new SelectList(_context.ComplaintLogDetail, "LogId", "LogId");
-           ViewData["StaffId"] = new SelectList(_context.StaffAccount, "AccountId", "UserId");
+
+            // Common Functions
+            Defaults Default = new(_context);
+
+            //Initialize Permissions required
+            PermissionRequired = "Edit";
+            PermissionEntity = "Admin - FollowUp";
+
+            //Check if Staff has a valid staff account
+            if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
+            {
+                return RedirectToPage("./Errors/NoActiveStaffAccount", new { Company.CompanyId });
+            }
+            else
+            {
+                StaffAccount = Default.GetStaffAccount(User.Identity.Name, Company.CompanyId);
+                // Check if Staff role has required permissions
+                StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
+            }
+
+            //Other Context Objects
+
+            PageTitle = "Admin - Edit FollowUp Log " + ComplaintLogDetail.LogId;
+            LogFollowUpAddPerm = Default.StaffHasPermission(StaffAccount, "Admin - FollowUp", "Create");
+            LogFollowUpDeletePerm = Default.StaffHasPermission(StaffAccount, "Admin - FollowUp", "Delete");
+            ViewData["FollowUpTypeId"] = new SelectList(_context.FollowUpCalls.Where(c => c.CompanyId == CompanyId), "FollowUpId", "FollowUpType");
+
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int CompanyId, int LogId, int FollowUpId)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
+            ComplaintFollowUp.FollowUpId = FollowUpId;
+            ComplaintFollowUp.LogId = LogId;
+            ComplaintFollowUp.Staff = await _context.StaffAccount.Where(c => c.CompanyId == CompanyId).FirstOrDefaultAsync(c => c.User.UserName == User.Identity.Name);
+            ComplaintFollowUp.FollowUpDate = DateTime.Now.ToString("dd/MM/yyyy hh:mm tt");
             _context.Attach(ComplaintFollowUp).State = EntityState.Modified;
 
             try
@@ -72,7 +119,14 @@ namespace GroupCCP.Pages.site.Admin.FollowUps
                 }
             }
 
-            return RedirectToPage("./Index");
+            Company = await _context.Company
+                .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+            ComplaintLogDetail = await _context.ComplaintLogDetail
+                .FirstOrDefaultAsync(m => m.LogId == LogId);
+
+
+            return RedirectToPage("../Logs/Details", new { Company.CompanyId, ComplaintLogDetail.LogId });
+
         }
 
         private bool ComplaintFollowUpExists(int id)

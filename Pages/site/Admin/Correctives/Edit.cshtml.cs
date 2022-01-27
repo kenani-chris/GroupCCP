@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using GroupCCP.Data;
 using GroupCCP.Models;
 
-namespace GroupCCP.Pages.site.Admin.Correctives
+namespace GroupCCP.Pages.site.Admin.Corrective
 {
     public class EditModel : PageModel
     {
@@ -22,36 +22,84 @@ namespace GroupCCP.Pages.site.Admin.Correctives
 
         [BindProperty]
         public ComplaintCorrectiveInfo ComplaintCorrectiveInfo { get; set; }
+        public ComplaintLogDetail ComplaintLogDetail { get; set; }
+        public Company Company { get; set; }
+        public string PageTitle { get; set; }
+        public bool StaffHasPerm { get; set; }
+        public StaffAccount StaffAccount { get; set; }
+        public string PermissionRequired { get; set; }
+        public string PermissionEntity { get; set; }
+        public bool LogCorrectiveAddPerm { get; set; }
+        public bool LogCorrectiveDeletePerm { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? CompanyId, int? LogId, int? CorrectiveId)
         {
-            if (id == null)
+            //Check Passed Parameters if are ok
+            if (CompanyId == null || LogId == null)
             {
-                return NotFound();
+                return NotFound("Company not found");
+            }
+            else
+            {
+                Company = await _context.Company
+                    .Include(c => c.Group)
+                    .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+
+                ComplaintLogDetail = await _context.ComplaintLogDetail
+                    .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                    .Include(c => c.Customers)
+                    .Include(c => c.Level)
+                    .Include(c => c.Means)
+                    .Include(c => c.Status).FirstOrDefaultAsync(m => m.LogId == LogId);
+
+                ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo
+                    .Include(c => c.Log)
+                    .Include(c => c.StaffAccount).FirstOrDefaultAsync(m => m.CorrectiveId == CorrectiveId);
+
+                if (Company == null || ComplaintLogDetail == null || ComplaintCorrectiveInfo == null)
+                {
+                    return NotFound();
+                }
             }
 
-            ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo
-                .Include(c => c.Log)
-                .Include(c => c.StaffAccount).FirstOrDefaultAsync(m => m.CorrectiveId == id);
+            // Common Functions
+            Defaults Default = new(_context);
 
-            if (ComplaintCorrectiveInfo == null)
+            //Initialize Permissions required
+            PermissionRequired = "Edit";
+            PermissionEntity = "Admin - Corrective";
+
+            //Check if Staff has a valid staff account
+            if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
             {
-                return NotFound();
+                return RedirectToPage("./Errors/NoActiveStaffAccount", new { Company.CompanyId });
             }
-           ViewData["LogId"] = new SelectList(_context.ComplaintLogDetail, "LogId", "LogId");
-           ViewData["StaffId"] = new SelectList(_context.StaffAccount, "AccountId", "UserId");
+            else
+            {
+                StaffAccount = Default.GetStaffAccount(User.Identity.Name, Company.CompanyId);
+                // Check if Staff role has required permissions
+                StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
+            }
+
+            //Other Context Objects
+            PageTitle = "Admin - Edit Corrective Log " + ComplaintLogDetail.LogId;
+            LogCorrectiveAddPerm = Default.StaffHasPermission(StaffAccount, "Admin - Corrective", "Add");
+            LogCorrectiveDeletePerm = Default.StaffHasPermission(StaffAccount, "Admin - Corrective", "Delete");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int CompanyId, int LogId)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            ComplaintCorrectiveInfo.LogId = LogId;
+            ComplaintCorrectiveInfo.StaffAccount = await _context.StaffAccount.Where(c => c.CompanyId == CompanyId).FirstOrDefaultAsync(c => c.User.UserName == User.Identity.Name);
+            ComplaintCorrectiveInfo.CorrectiveInfoDate = DateTime.Now.ToString("dd/MM/yyyy hh:mm tt");
             _context.Attach(ComplaintCorrectiveInfo).State = EntityState.Modified;
 
             try
@@ -69,8 +117,14 @@ namespace GroupCCP.Pages.site.Admin.Correctives
                     throw;
                 }
             }
+            Company = await _context.Company
+                .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+            ComplaintLogDetail = await _context.ComplaintLogDetail
+                .FirstOrDefaultAsync(m => m.LogId == LogId);
 
-            return RedirectToPage("./Index");
+
+            return RedirectToPage("../Logs/Details", new { Company.CompanyId, ComplaintLogDetail.LogId });
+
         }
 
         private bool ComplaintCorrectiveInfoExists(int id)

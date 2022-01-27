@@ -6,46 +6,133 @@
     Layout = "~/Pages/Shared/_SystemLayout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>ComplaintFollowUp</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ComplaintFollowUp.LogId" class="control-label"></label>
-                <select asp-for="ComplaintFollowUp.LogId" class ="form-control" asp-items="ViewBag.LogId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintFollowUp.StaffId" class="control-label"></label>
-                <select asp-for="ComplaintFollowUp.StaffId" class ="form-control" asp-items="ViewBag.StaffId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintFollowUp.FollowUpTypeId" class="control-label"></label>
-                <select asp-for="ComplaintFollowUp.FollowUpTypeId" class ="form-control" asp-items="ViewBag.FollowUpTypeId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintFollowUp.FollowUpDate" class="control-label"></label>
-                <input asp-for="ComplaintFollowUp.FollowUpDate" class="form-control" />
-                <span asp-validation-for="ComplaintFollowUp.FollowUpDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintFollowUp.FollowUpFeedback" class="control-label"></label>
-                <input asp-for="ComplaintFollowUp.FollowUpFeedback" class="form-control" />
-                <span asp-validation-for="ComplaintFollowUp.FollowUpFeedback" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId">Admin</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Logs/Index" asp-route-CompanyId="@Model.Company.CompanyId">Logs</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Logs/Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogId="@Model.ComplaintLogDetail.LogId">Log @Model.ComplaintLogDetail.LogId</a></li>
+                <li class="breadcrumb-item">Add FollowUp</li>
+            </ol>
+        </div>
     </div>
-</div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div style="margin-bottom: 10px; width: 100%">
+            <partial name="menu" />
+        </div>
+        @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+                <div class="card container-fluid">
+                    <div class="card-header">
+                        <h4 class="float-left">Log @Html.DisplayFor(model => model.ComplaintLogDetail.LogId) - FollowUp Info</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintFollowUp.FollowUpTypeId" class="control-label"></label>
+                                <select asp-for="ComplaintFollowUp.FollowUpTypeId" class ="form-control" asp-items="ViewBag.FollowUpTypeId"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintFollowUp.FollowUpFeedback" class="control-label"></label>
+                                <textarea asp-for="ComplaintFollowUp.FollowUpFeedback" class="form-control"></textarea>
+                                <span asp-validation-for="ComplaintFollowUp.FollowUpFeedback" class="text-danger"></span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="float-right" style="margin:5px">
+                                    <input type="submit" value="Add FollowUp" class="btn btn-sm btn-primary py-0" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!--Follow Up info Details-->
+                <div class="card container-fluid">
+                    <div class="card-header">
+                        <h4 class="float-left">Previous Folllow Up</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Staff
+                                    </th>
+                                    <th colspan="2">
+                                        Info
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PreviousFollowUps)
+                                {
+                                    <tr>
+                                        <td rowspan="3">
+                                            @Html.DisplayFor(modelItem => item.Staff.User.Email)
+                                        </td>
+                                        <th>
+                                            Date
+                                        </th>
+                                        <td>
+                                            @item.FollowUpDate
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            FollowUp Type
+                                        </th>
+                                        <td>
+                                            @item.FollowUpCalls.FollowUpType
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Feedback
+                                        </th>
+                                        <td>
+                                            @item.FollowUpFeedback
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+    </div>
+</section>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

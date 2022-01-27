@@ -1,48 +1,83 @@
 ﻿@page
-@model GroupCCP.Pages.site.Admin.Customers.CreateModel
+@model GroupCCP.Pages.site.Logs.Customers.CreateModel
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Pages/Shared/_SystemLayout.cshtml";
+    Layout = "/Pages/Shared/_SystemLayout.cshtml";
 }
 
-<h1>Create</h1>
+<section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
 
-<h4>ComplaintCustomerInfo</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ComplaintCustomerInfo.CustomerName" class="control-label"></label>
-                <input asp-for="ComplaintCustomerInfo.CustomerName" class="form-control" />
-                <span asp-validation-for="ComplaintCustomerInfo.CustomerName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintCustomerInfo.CustomerCell" class="control-label"></label>
-                <input asp-for="ComplaintCustomerInfo.CustomerCell" class="form-control" />
-                <span asp-validation-for="ComplaintCustomerInfo.CustomerCell" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintCustomerInfo.CustomerNumber" class="control-label"></label>
-                <input asp-for="ComplaintCustomerInfo.CustomerNumber" class="form-control" />
-                <span asp-validation-for="ComplaintCustomerInfo.CustomerNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintCustomerInfo.CompanyId" class="control-label"></label>
-                <select asp-for="ComplaintCustomerInfo.CompanyId" class ="form-control" asp-items="ViewBag.CompanyId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+            </ol>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div style="margin-bottom: 10px; width: 100%">
+            <partial name="menu" />
+        </div>
+        @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="container-fluid card">
+                    <div class="card-body">
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintCustomerInfo.CustomerName" class="control-label"></label>
+                                <input asp-for="ComplaintCustomerInfo.CustomerName" class="form-control" />
+                                <span asp-validation-for="ComplaintCustomerInfo.CustomerName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintCustomerInfo.CustomerCell" class="control-label"></label>
+                                <input asp-for="ComplaintCustomerInfo.CustomerCell" class="form-control" />
+                                <span asp-validation-for="ComplaintCustomerInfo.CustomerCell" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintCustomerInfo.CustomerNumber" class="control-label"></label>
+                                <input asp-for="ComplaintCustomerInfo.CustomerNumber" class="form-control" />
+                                <span asp-validation-for="ComplaintCustomerInfo.CustomerNumber" class="text-danger"></span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="float-right" style="margin:5px">
+                                    <input type="submit" value="Add Customer" class="btn btn-sm btn-primary py-0" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+    </div>
+</section>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -21,33 +21,77 @@ namespace GroupCCP.Pages.site.Admin.Correctives
 
         [BindProperty]
         public ComplaintCorrectiveInfo ComplaintCorrectiveInfo { get; set; }
+        public Company Company { get; set; }
+        public string PageTitle { get; set; }
+        public ComplaintLogDetail ComplaintLogDetail { get; set; }
+        public bool StaffHasPerm { get; set; }
+        public StaffAccount StaffAccount { get; set; }
+        public string PermissionRequired { get; set; }
+        public string PermissionEntity { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? CompanyId, int? LogId, int? CorrectiveId)
         {
-            if (id == null)
+            //Check Passed Parameters if are ok
+            if (CompanyId == null || LogId == null)
+            {
+                return NotFound("Company not found");
+            }
+            else
+            {
+                Company = await _context.Company
+                    .Include(c => c.Group)
+                    .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+
+                ComplaintLogDetail = await _context.ComplaintLogDetail
+                    .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                    .Include(c => c.Customers)
+                    .Include(c => c.Level)
+                    .Include(c => c.Means)
+                    .Include(c => c.Status).FirstOrDefaultAsync(m => m.LogId == LogId);
+
+                ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo
+                    .Include(c => c.Log)
+                    .Include(c => c.StaffAccount).FirstOrDefaultAsync(m => m.CorrectiveId == CorrectiveId);
+
+                if (Company == null || ComplaintLogDetail == null || ComplaintCorrectiveInfo == null)
+                {
+                    return NotFound();
+                }
+            }
+
+            // Common Functions
+            Defaults Default = new(_context);
+
+            //Initialize Permissions required
+            PermissionRequired = "Delete";
+            PermissionEntity = "Admin - Corrective";
+
+            //Check if Staff has a valid staff account
+            if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
+            {
+                return RedirectToPage("./Errors/NoActiveStaffAccount", new { Company.CompanyId });
+            }
+            else
+            {
+                StaffAccount = Default.GetStaffAccount(User.Identity.Name, Company.CompanyId);
+                // Check if Staff role has required permissions
+                StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
+            }
+
+            //Other Context Objects
+            PageTitle = "Admin - Delete Corrective Log " + ComplaintLogDetail.LogId;
+            if (LogId == null || CompanyId == null || CorrectiveId == null)
             {
                 return NotFound();
             }
 
-            ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo
-                .Include(c => c.Log)
-                .Include(c => c.StaffAccount).FirstOrDefaultAsync(m => m.CorrectiveId == id);
-
-            if (ComplaintCorrectiveInfo == null)
-            {
-                return NotFound();
-            }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int CompanyId, int LogId, int CorrectiveId)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo.FindAsync(id);
+            ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo.FindAsync(CorrectiveId);
 
             if (ComplaintCorrectiveInfo != null)
             {
@@ -55,7 +99,12 @@ namespace GroupCCP.Pages.site.Admin.Correctives
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            ComplaintLogDetail = await _context.ComplaintLogDetail
+                .FirstOrDefaultAsync(m => m.LogId == LogId);
+            Company = await _context.Company
+                .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+
+            return RedirectToPage("../Logs/Details", new { Company.CompanyId, ComplaintLogDetail.LogId });
         }
     }
 }

@@ -65,7 +65,7 @@ namespace GroupCCP.Pages.site.Logs.CorrectiveInfo
 
             //Initialize Permissions required
             LogTypeId = (int)LogType;
-            PermissionRequired = "Edit";
+            PermissionRequired = "Delete";
             PermissionEntity = Default.GetLogPermissionEntity(LogTypeId, "Corrective");
 
             //Check if Staff has a valid staff account
@@ -81,7 +81,7 @@ namespace GroupCCP.Pages.site.Logs.CorrectiveInfo
             }
 
             //Other Context Objects
-            PageTitle = Default.GetLogType(LogTypeId) + " Complaint - Edit Corrective Log " + ComplaintLogDetail.LogId;
+            PageTitle = Default.GetLogType(LogTypeId) + " Complaint - Delete Corrective Log " + ComplaintLogDetail.LogId;
             if (LogId == null || CompanyId == null || LogType == null || CorrectiveId == null)
             {
                 return NotFound();

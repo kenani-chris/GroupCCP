@@ -92,6 +92,9 @@ namespace GroupCCP.Pages.site.Admin.Logs
         public async Task<IActionResult> OnPostAsync(int CompanyId, int LogId)
         {
             ComplaintLogDetail = await _context.ComplaintLogDetail.FindAsync(LogId);
+            Company = await _context.Company
+                    .Include(c => c.Group)
+                    .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
 
             if (ComplaintLogDetail != null)
             {

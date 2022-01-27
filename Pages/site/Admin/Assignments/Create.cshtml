@@ -14,8 +14,9 @@
         <div class="col-md-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
-                <li class="breadcrumb-item"><a asp-page="./Index" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId">Logs</a></li>
-                <li class="breadcrumb-item"><a asp-page="../Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId">Log @Model.ComplaintLogDetail.LogId</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId">Admin</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Logs/Index" asp-route-CompanyId="@Model.Company.CompanyId">Logs</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Logs/Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogId="@Model.ComplaintLogDetail.LogId">Log @Model.ComplaintLogDetail.LogId</a></li>
                 <li class="breadcrumb-item">Assign</li>
             </ol>
         </div>

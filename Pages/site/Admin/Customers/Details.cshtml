@@ -6,39 +6,94 @@
     Layout = "~/Pages/Shared/_SystemLayout.cshtml";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>ComplaintCustomerInfo</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ComplaintCustomerInfo.CustomerName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ComplaintCustomerInfo.CustomerName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ComplaintCustomerInfo.CustomerCell)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ComplaintCustomerInfo.CustomerCell)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ComplaintCustomerInfo.CustomerNumber)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ComplaintCustomerInfo.CustomerNumber)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ComplaintCustomerInfo.Company)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ComplaintCustomerInfo.Company.CompanyName)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.ComplaintCustomerInfo.CustomerId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
+ <section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId">Admin</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Customers/Index" asp-route-CompanyId="@Model.Company.CompanyId">Customers</a></li>
+                <li class="breadcrumb-item">Cust. Details</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row container-fluid card-body">
+            @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card card-primary container-fluid">
+                    <div class="card-header">
+                        <h3 class="card-title">Customer Table</h3>
+                    </div>
+              
+                    <div class="card-body container-fluid">
+                        <dl class="row">
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ComplaintCustomerInfo.CustomerName)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ComplaintCustomerInfo.CustomerName)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ComplaintCustomerInfo.CustomerCell)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ComplaintCustomerInfo.CustomerCell)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ComplaintCustomerInfo.CustomerNumber)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ComplaintCustomerInfo.CustomerNumber)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ComplaintCustomerInfo.Company)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ComplaintCustomerInfo.Company.CompanyName)
+                            </dd>
+                        </dl>
+                        @if (Model.CustomerDeletePerm)
+                        {
+                            <a asp-page="./Delete" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-CustomerId="@Model.ComplaintCustomerInfo.CustomerId"><div class="nav-link float-right btn btn-danger  text-white">Delete Customer</div></a>   
+                        }
+                        @if (Model.CustomerEditPerm)
+                        {
+                            <a asp-page="./Edit" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-CustomerId="@Model.ComplaintCustomerInfo.CustomerId"><div class="nav-link float-right btn btn-info  text-white">Edit Customer</div></a>   
+                        }
+                    </div>
+                </div>
+                
+            }
+        </div>
+    </div>
+</section>
