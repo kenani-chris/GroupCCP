@@ -6,44 +6,97 @@
     Layout = "~/Pages/Shared/_SystemLayout.cshtml";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+ <section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId">Admin</a></li>
+                <li class="breadcrumb-item">Levels</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row container-fluid card-body">
+            @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card card-default container-fluid">
+                    <div class="card-header">
+                        <h3 class="card-title">Levels Table</h3>
+                        @if (Model.LevelCreatePerm)
+                        {
+                            <a asp-page="./Create" asp-route-CompanyId="@Model.Company.CompanyId"><div class="nav-link float-right btn btn-info  text-white">New Level</div></a>      
+                        }
+                    </div>
+              
+                    <div class="card-body container-fluid">
+                        <table class="table table-striped" id="searchTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Level[0].LevelName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Level[0].ParentLevel)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Level[0].LevelCategory)
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        @foreach (var item in Model.Level) {
+                                <tr>
+                                    <td>
+                                        <a asp-page="./Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LevelId="@item.LevelId">@Html.DisplayFor(modelItem => item.LevelName)</a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ParentLevel.LevelName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LevelCategory.CategorName)
+                                    </td>
+                                </tr>
+                        }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Level[0].LevelName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Level[0].ParentLevel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Level[0].LevelCategory)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Level) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LevelName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParentLevel.LevelName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LevelCategory.CategorName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.LevelId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.LevelId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.LevelId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+    
 </table>

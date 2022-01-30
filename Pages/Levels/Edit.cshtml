@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "/Pages/Shared/_Layout.cshtml";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h1>Edit</h1>
@@ -22,9 +22,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Level.ParentId" class="control-label"></label>
-                <select asp-for="Level.ParentId" class="form-control" asp-items="ViewBag.ParentId">
-                    <option selected value="">----</option>
-                </select>
+                <select asp-for="Level.ParentId" class="form-control" asp-items="ViewBag.ParentId"></select>
                 <span asp-validation-for="Level.ParentId" class="text-danger"></span>
             </div>
             <div class="form-group">

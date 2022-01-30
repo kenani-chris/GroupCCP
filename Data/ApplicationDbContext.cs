@@ -264,7 +264,26 @@ namespace GroupCCP.Data
                     new { PermissionId = 111, Entity = "Admin - FollowUpTypes", Permission = "Edit" },
                     new { PermissionId = 112, Entity = "Admin - FollowUpTypes", Permission = "Delete" },
                     new { PermissionId = 113, Entity = "Admin - FollowUpTypes", Permission = "Create" },
-                    new { PermissionId = 114, Entity = "Admin - FollowUpTypes", Permission = "View" }
+                    new { PermissionId = 114, Entity = "Admin - FollowUpTypes", Permission = "View" },
+                    
+
+                    new { PermissionId = 115, Entity = "Admin - Levels", Permission = "List" },
+                    new { PermissionId = 116, Entity = "Admin - Levels", Permission = "Edit" },
+                    new { PermissionId = 117, Entity = "Admin - Levels", Permission = "Delete" },
+                    new { PermissionId = 118, Entity = "Admin - Levels", Permission = "Create" },
+                    new { PermissionId = 119, Entity = "Admin - Levels", Permission = "View" },
+                    
+                    new { PermissionId = 120, Entity = "Admin - LevelCategories", Permission = "List" },
+                    new { PermissionId = 121, Entity = "Admin - LevelCategories", Permission = "Edit" },
+                    new { PermissionId = 122, Entity = "Admin - LevelCategories", Permission = "Delete" },
+                    new { PermissionId = 123, Entity = "Admin - LevelCategories", Permission = "Create" },
+                    new { PermissionId = 124, Entity = "Admin - LevelCategories", Permission = "View" },
+
+                    new { PermissionId = 125, Entity = "Admin - StaffAccounts", Permission = "List" },
+                    new { PermissionId = 126, Entity = "Admin - StaffAccounts", Permission = "Edit" },
+                    new { PermissionId = 127, Entity = "Admin - StaffAccounts", Permission = "Delete" },
+                    new { PermissionId = 128, Entity = "Admin - StaffAccounts", Permission = "Create" },
+                    new { PermissionId = 129, Entity = "Admin - StaffAccounts", Permission = "View" }
 
                     );
             });
