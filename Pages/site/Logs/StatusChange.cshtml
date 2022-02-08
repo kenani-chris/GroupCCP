@@ -1,0 +1,111 @@
+﻿@page
+@model GroupCCP.Pages.site.Logs.StatusChangeModel
+
+@{
+    ViewData["Logs"] = "Index";
+    ViewData["Title"] = Model.PageTitle;
+    ViewData["PageTitle"] = Model.PageTitle;
+    Layout = "/Pages/Shared/_SystemLayout.cshtml";
+}
+ <section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@ViewData["PageTitle"]</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="./Index" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId">Logs</a></li>
+                <li class="breadcrumb-item"><a asp-page="./Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId">Log @Model.ComplaintLogDetail.LogId</a></li>
+                <li class="breadcrumb-item">Status Change</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div style=" width: 100%">
+            <partial name="menu" />
+        </div>
+        <div class="row container-fluid card-body">
+            @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                @if(Model.ComplaintLogDetail.LogStatusId == 4 && Model.ErrorList.Any() == false)
+                {
+                    
+                    <div class="card container-fluid">
+                        <div class="card-body" style="overflow-x: auto">
+                            <form method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="ComplaintLogDetail.LogId" />
+                                <div class="form-group">
+                                    <label asp-for="ComplaintLogDetail.LogPreventiveAction" class="control-label"></label>
+                                    <textarea asp-for="ComplaintLogDetail.LogPreventiveAction" class="form-control" required></textarea>
+                                    <span asp-validation-for="ComplaintLogDetail.LogPreventiveAction" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ComplaintLogDetail.LogKaizenAction" class="control-label"></label>
+                                    <textarea asp-for="ComplaintLogDetail.LogKaizenAction" class="form-control" required></textarea>
+                                    <span asp-validation-for="ComplaintLogDetail.LogKaizenAction" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>      
+                    </div>
+                }
+                @if(Model.ErrorList.Any() == true)
+                {
+                        <div class="card container-fluid">
+                        <div class="card-body" style="overflow-x: auto">
+                            <table class="table table-striped" id="LogTable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Change Issues - Status could not change due to the following reasons
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                            @foreach (var item in Model.ErrorList) {
+                                    <tr>
+                                        <td>
+                                            @item
+                                        </td>
+                                    </tr>
+                            }
+                                </tbody>
+                            </table>
+                        
+                            <p class="breadcrumb-item"><a asp-page="./Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId">Go back to Log @Model.ComplaintLogDetail.LogId</a></p>
+                        </div>
+                    </div>
+                }
+                
+            }
+            </div>
+    </div>
+</section>

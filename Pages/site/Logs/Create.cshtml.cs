@@ -81,6 +81,7 @@ namespace GroupCCP.Pages.site.Logs
             ViewData["PriorityId"] = new SelectList(_context.Priority, "PriorityId", "PriorityName");
             ViewData["BrandId"] = new SelectList(_context.Brands
                 .Where(x => x.Company == Company), "BrandId", "Brand");
+            ViewData["VehicleId"] = new SelectList(_context.ComplaintVehicleInfo, "VehicleId", "VehicleRegistrationNumber");
 
             return Page();
         }

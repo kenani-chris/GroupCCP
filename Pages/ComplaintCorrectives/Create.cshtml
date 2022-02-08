@@ -19,6 +19,15 @@
                 <select asp-for="ComplaintCorrectiveInfo.LogId" class ="form-control" asp-items="ViewBag.LogId"></select>
             </div>
             <div class="form-group">
+                <label asp-for="ComplaintCorrectiveInfo.CorrectiveComponentId" class="control-label"></label>
+                <select asp-for="ComplaintCorrectiveInfo.CorrectiveComponentId" class ="form-control" asp-items="ViewBag.CorrectiveComponentId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintCorrectiveInfo.ComplaintSubComponent" class="control-label"></label>
+                <input asp-for="ComplaintCorrectiveInfo.ComplaintSubComponent" class="form-control" />
+                <span asp-validation-for="ComplaintCorrectiveInfo.ComplaintSubComponent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ComplaintCorrectiveInfo.RouteCause" class="control-label"></label>
                 <input asp-for="ComplaintCorrectiveInfo.RouteCause" class="form-control" />
                 <span asp-validation-for="ComplaintCorrectiveInfo.RouteCause" class="text-danger"></span>
@@ -29,6 +38,11 @@
                 <span asp-validation-for="ComplaintCorrectiveInfo.CorrectiveAction" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ComplaintCorrectiveInfo.CorrectiveCustomerExplanation" class="control-label"></label>
+                <input asp-for="ComplaintCorrectiveInfo.CorrectiveCustomerExplanation" class="form-control" />
+                <span asp-validation-for="ComplaintCorrectiveInfo.CorrectiveCustomerExplanation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ComplaintCorrectiveInfo.StaffId" class="control-label"></label>
                 <select asp-for="ComplaintCorrectiveInfo.StaffId" class ="form-control" asp-items="ViewBag.StaffId"></select>
             </div>
@@ -36,6 +50,26 @@
                 <label asp-for="ComplaintCorrectiveInfo.CorrectiveInfoDate" class="control-label"></label>
                 <input asp-for="ComplaintCorrectiveInfo.CorrectiveInfoDate" class="form-control" />
                 <span asp-validation-for="ComplaintCorrectiveInfo.CorrectiveInfoDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintCorrectiveInfo.CorrectiveDiagnosisTimeTaken" class="control-label"></label>
+                <input asp-for="ComplaintCorrectiveInfo.CorrectiveDiagnosisTimeTaken" class="form-control" />
+                <span asp-validation-for="ComplaintCorrectiveInfo.CorrectiveDiagnosisTimeTaken" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintCorrectiveInfo.CorrectiveRectifyTimeTaken" class="control-label"></label>
+                <input asp-for="ComplaintCorrectiveInfo.CorrectiveRectifyTimeTaken" class="form-control" />
+                <span asp-validation-for="ComplaintCorrectiveInfo.CorrectiveRectifyTimeTaken" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintCorrectiveInfo.CorrectivePartsCostKSH" class="control-label"></label>
+                <input asp-for="ComplaintCorrectiveInfo.CorrectivePartsCostKSH" class="form-control" />
+                <span asp-validation-for="ComplaintCorrectiveInfo.CorrectivePartsCostKSH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintCorrectiveInfo.CorrectiveOtherCostKSH" class="control-label"></label>
+                <input asp-for="ComplaintCorrectiveInfo.CorrectiveOtherCostKSH" class="form-control" />
+                <span asp-validation-for="ComplaintCorrectiveInfo.CorrectiveOtherCostKSH" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

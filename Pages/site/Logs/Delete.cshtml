@@ -22,7 +22,7 @@
                     @Html.DisplayNameFor(model => model.ComplaintLogDetail.Customers)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.ComplaintLogDetail.Customers.CustomerId)
+                    @Html.DisplayFor(model => model.ComplaintLogDetail.Customers.Customer)
                 </dd>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.ComplaintLogDetail.CustomerComplaint)
@@ -37,6 +37,12 @@
                     @Html.DisplayFor(model => model.ComplaintLogDetail.CustomerRequest)
                 </dd>
                 <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ComplaintLogDetail.ComplaintVehicleInfo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ComplaintLogDetail.ComplaintVehicleInfo.VehicleRegistrationNumber)
+                </dd>
+                <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.ComplaintLogDetail.Means)
                 </dt>
                 <dd class="col-sm-10">
@@ -49,16 +55,58 @@
                     @Html.DisplayFor(model => model.ComplaintLogDetail.Level.LevelName)
                 </dd>
                 <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ComplaintLogDetail.VehicleOnSite)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ComplaintLogDetail.VehicleOnSite)
+                </dd>
+                <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.ComplaintLogDetail.Status)
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.ComplaintLogDetail.Status.Status)
                 </dd>
                 <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ComplaintLogDetail.StaffAccount)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ComplaintLogDetail.StaffAccount.User.Email)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ComplaintLogDetail.Priority)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ComplaintLogDetail.Priority.PriorityName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ComplaintLogDetail.StatusSubmitDate)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ComplaintLogDetail.StatusSubmitDate)
+                </dd>
+                <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.ComplaintLogDetail.StatusClosedDate)
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.ComplaintLogDetail.StatusClosedDate)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ComplaintLogDetail.LogCustomerSatisfied)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ComplaintLogDetail.LogCustomerSatisfied)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ComplaintLogDetail.LogPreventiveAction)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ComplaintLogDetail.LogPreventiveAction)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ComplaintLogDetail.LogKaizenAction)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ComplaintLogDetail.LogKaizenAction)
                 </dd>
             </dl>
     

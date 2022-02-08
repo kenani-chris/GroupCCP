@@ -74,24 +74,15 @@
                             </div>
                             <br />
                             <hr />
-                            <div class="row">
-                                <div class="form-group col-md-4">
-                                    <label asp-for="ComplaintLogDetail.RegistrationNumber" class="control-label"></label>
-                                    <input asp-for="ComplaintLogDetail.RegistrationNumber" class="form-control" />
-                                    <span asp-validation-for="ComplaintLogDetail.RegistrationNumber" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label asp-for="ComplaintLogDetail.BrandId" class="control-label"></label>
-                                    <select asp-for="ComplaintLogDetail.BrandId" class="form-control" asp-items="ViewBag.BrandId">
-                                        <option value="">----</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label asp-for="ComplaintLogDetail.Model" class="control-label"></label>
-                                    <input asp-for="ComplaintLogDetail.Model" class="form-control" />
-                                    <span asp-validation-for="ComplaintLogDetail.Model" class="text-danger"></span>
-                                </div>
+                            <div class="input-group">
+                                <select data-live-search="true" asp-for="ComplaintLogDetail.VehicleId" class="form-control my-select selectpicker" asp-items="ViewBag.VehicleId">
+                                    <option value="">- Select Vehicle -</option>
+                                </select>
+                                <span class="input-group-append">
+                                    <a class="btn btn-info btn-flat" asp-page="./Vehicle/create" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId=0 asp-route-Redirect="new"><i class="fas fa-user-plus"></i> New Vehicle</a>
+                                </span>
                             </div>
+                            <br />
                             <hr />
                             <div class="form-group">
                                 <label asp-for="ComplaintLogDetail.CustomerComplaint" class="control-label"></label>
@@ -113,6 +104,12 @@
                                 <div class="form-group col-md-4">
                                     <label asp-for="ComplaintLogDetail.LogLevelId" class="control-label"></label>
                                     <select asp-for="ComplaintLogDetail.LogLevelId" class="form-control" asp-items="ViewBag.LogLevelId">
+                                        <option value="">----</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label">Priority</label>
+                                    <select asp-for="ComplaintLogDetail.PriorityId" class="form-control" asp-items="ViewBag.PriorityId">
                                         <option value="">----</option>
                                     </select>
                                 </div>

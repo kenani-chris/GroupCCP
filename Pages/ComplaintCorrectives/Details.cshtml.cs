@@ -29,6 +29,7 @@ namespace GroupCCP.Pages.ComplaintCorrectives
             }
 
             ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo
+                .Include(c => c.ComplaintProductComponent)
                 .Include(c => c.Log)
                 .Include(c => c.StaffAccount).FirstOrDefaultAsync(m => m.CorrectiveId == id);
 

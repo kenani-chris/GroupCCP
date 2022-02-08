@@ -77,6 +77,7 @@ namespace GroupCCP.Pages.site.Logs.CorrectiveInfo
 
             //Other Context Objects
             PageTitle = Default.GetLogType(LogTypeId) + " Complaint - Corrective Log " + ComplaintLogDetail.LogId;
+            ViewData["CorrectiveComponentId"] = new SelectList(_context.ComplaintProductComponent, "ProductID", "ProductComponent");
             PreviousCorrectivrInfo = await _context.ComplaintCorrectiveInfo
                 .Include(c => c.StaffAccount).ThenInclude(c => c.User)
                 .Where(c => c.LogId == LogId).OrderByDescending(c => c.CorrectiveId).ToListAsync();

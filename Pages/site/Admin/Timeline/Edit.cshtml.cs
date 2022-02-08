@@ -22,36 +22,75 @@ namespace GroupCCP.Pages.site.Admin.Timeline
 
         [BindProperty]
         public Timelines Timelines { get; set; }
+        public Company Company { get; set; }
+        public string PageTitle { get; set; }
+        public bool StaffHasPerm { get; set; }
+        public StaffAccount StaffAccount { get; set; }
+        public string PermissionRequired { get; set; }
+        public string PermissionEntity { get; set; }
+        public bool CustomerEditPerm { get; set; }
+        public bool CustomerDeletePerm { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+
+        public async Task<IActionResult> OnGetAsync(int? CompanyId, int? TimelineId)
         {
-            if (id == null)
+            //Check Passed Parameters if are ok
+            if (CompanyId == null || TimelineId == null)
             {
                 return NotFound();
             }
-
-            Timelines = await _context.Timelines
-                .Include(t => t.Company)
-                .Include(t => t.Priority).FirstOrDefaultAsync(m => m.TimeLineId == id);
-
-            if (Timelines == null)
+            else
             {
-                return NotFound();
+                Company = await _context.Company
+                    .Include(c => c.Group)
+                    .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+
+
+                Timelines = await _context.Timelines
+                    .Include(t => t.Company)
+                    .Include(t => t.Priority).FirstOrDefaultAsync(m => m.TimeLineId == TimelineId);
+
+                if (Company == null || Timelines == null)
+                {
+                    return NotFound();
+                }
             }
-           ViewData["CompanyId"] = new SelectList(_context.Company, "CompanyId", "CompanyName");
-           ViewData["PriorityId"] = new SelectList(_context.Priority, "PriorityId", "PriorityId");
+
+            // Common Functions
+            Defaults Default = new(_context);
+
+            //Initialize Permissions required
+            PermissionRequired = "Edit";
+            PermissionEntity = "Admin - Timelines";
+
+            //Check if Staff has a valid staff account
+            if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
+            {
+                return RedirectToPage("./Errors/NoActiveStaffAccount", new { Company.CompanyId });
+            }
+            else
+            {
+                StaffAccount = Default.GetStaffAccount(User.Identity.Name, Company.CompanyId);
+                // Check if Staff role has required permissions
+                StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
+            }
+
+            //Other Context Objects
+            PageTitle = "Admin - Timeline Edit";
+            ViewData["PriorityId"] = new SelectList(_context.Priority, "PriorityId", "PriorityId");
+
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int CompanyId, int TimelineId)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
+            Timelines.CompanyId = CompanyId;
             _context.Attach(Timelines).State = EntityState.Modified;
 
             try
@@ -70,12 +109,13 @@ namespace GroupCCP.Pages.site.Admin.Timeline
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", new { CompanyId, TimelineId });
         }
 
         private bool TimelinesExists(int id)
         {
             return _context.Timelines.Any(e => e.TimeLineId == id);
         }
+
     }
 }

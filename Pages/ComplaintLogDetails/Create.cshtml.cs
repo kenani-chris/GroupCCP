@@ -21,7 +21,7 @@ namespace GroupCCP.Pages.ComplaintLogDetails
 
         public IActionResult OnGet()
         {
-        ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId");
+        ViewData["VehicleId"] = new SelectList(_context.ComplaintVehicleInfo, "VehicleId", "VehicleId");
         ViewData["LogCustomerId"] = new SelectList(_context.ComplaintCustomerInfo, "CustomerId", "CustomerId");
         ViewData["LogLevelId"] = new SelectList(_context.Level, "LevelId", "LevelName");
         ViewData["LogMeansId"] = new SelectList(_context.ComplaintReceiveMeans, "MeansId", "Means");

@@ -81,6 +81,7 @@ namespace GroupCCP.Pages.site.Admin.LevelCategories
                 return Page();
             }
 
+            LevelCategory.CompanyId = CompanyId;
             _context.LevelCategory.Add(LevelCategory);
             await _context.SaveChangesAsync();
 

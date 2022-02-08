@@ -73,6 +73,17 @@
                         <form method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
+                                <label asp-for="ComplaintCorrectiveInfo.CorrectiveComponentId" class="control-label"></label>
+                                <select asp-for="ComplaintCorrectiveInfo.CorrectiveComponentId" class ="form-control" asp-items="ViewBag.CorrectiveComponentId">
+                                    <option value="">----</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label asp-for="ComplaintCorrectiveInfo.ComplaintSubComponent" class="control-label"></label>
+                                <input asp-for="ComplaintCorrectiveInfo.ComplaintSubComponent" class="form-control" />
+                                <span asp-validation-for="ComplaintCorrectiveInfo.ComplaintSubComponent" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
                                 <label asp-for="ComplaintCorrectiveInfo.RouteCause" class="control-label"></label>
                                 <textarea asp-for="ComplaintCorrectiveInfo.RouteCause" class="form-control"></textarea>
                                 <span asp-validation-for="ComplaintCorrectiveInfo.RouteCause" class="text-danger"></span>
@@ -81,6 +92,31 @@
                                 <label asp-for="ComplaintCorrectiveInfo.CorrectiveAction" class="control-label"></label>
                                 <textarea asp-for="ComplaintCorrectiveInfo.CorrectiveAction" class="form-control"></textarea>
                                 <span asp-validation-for="ComplaintCorrectiveInfo.CorrectiveAction" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintCorrectiveInfo.CorrectiveCustomerExplanation" class="control-label"></label>
+                                <input asp-for="ComplaintCorrectiveInfo.CorrectiveCustomerExplanation" class="form-control" />
+                                <span asp-validation-for="ComplaintCorrectiveInfo.CorrectiveCustomerExplanation" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintCorrectiveInfo.CorrectiveDiagnosisTimeTaken" class="control-label"></label>
+                                <input asp-for="ComplaintCorrectiveInfo.CorrectiveDiagnosisTimeTaken" class="form-control" />
+                                <span asp-validation-for="ComplaintCorrectiveInfo.CorrectiveDiagnosisTimeTaken" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintCorrectiveInfo.CorrectiveRectifyTimeTaken" class="control-label"></label>
+                                <input asp-for="ComplaintCorrectiveInfo.CorrectiveRectifyTimeTaken" class="form-control" />
+                                <span asp-validation-for="ComplaintCorrectiveInfo.CorrectiveRectifyTimeTaken" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintCorrectiveInfo.CorrectivePartsCostKSH" class="control-label"></label>
+                                <input asp-for="ComplaintCorrectiveInfo.CorrectivePartsCostKSH" class="form-control" />
+                                <span asp-validation-for="ComplaintCorrectiveInfo.CorrectivePartsCostKSH" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintCorrectiveInfo.CorrectiveOtherCostKSH" class="control-label"></label>
+                                <input asp-for="ComplaintCorrectiveInfo.CorrectiveOtherCostKSH" class="form-control" />
+                                <span asp-validation-for="ComplaintCorrectiveInfo.CorrectiveOtherCostKSH" class="text-danger"></span>
                             </div>
                             <div class="card-footer">
                                 <div class="float-right" style="margin:5px">

@@ -13,6 +13,18 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.ComplaintProductComponent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.ComplaintProductComponent.ProductID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.ComplaintSubComponent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.ComplaintSubComponent)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.Log)
         </dt>
         <dd class="col-sm-10">
@@ -31,6 +43,12 @@
             @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.CorrectiveAction)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.CorrectiveCustomerExplanation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.CorrectiveCustomerExplanation)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.StaffAccount)
         </dt>
         <dd class="col-sm-10">
@@ -41,6 +59,30 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.CorrectiveInfoDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.CorrectiveDiagnosisTimeTaken)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.CorrectiveDiagnosisTimeTaken)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.CorrectiveRectifyTimeTaken)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.CorrectiveRectifyTimeTaken)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.CorrectivePartsCostKSH)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.CorrectivePartsCostKSH)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo.CorrectiveOtherCostKSH)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintCorrectiveInfo.CorrectiveOtherCostKSH)
         </dd>
     </dl>
 </div>

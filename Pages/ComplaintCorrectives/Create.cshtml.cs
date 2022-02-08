@@ -21,6 +21,7 @@ namespace GroupCCP.Pages.ComplaintCorrectives
 
         public IActionResult OnGet()
         {
+        ViewData["CorrectiveComponentId"] = new SelectList(_context.ComplaintProductComponent, "ProductID", "ProductID");
         ViewData["LogId"] = new SelectList(_context.ComplaintLogDetail, "LogId", "LogId");
         ViewData["StaffId"] = new SelectList(_context.StaffAccount, "AccountId", "UserId");
             return Page();

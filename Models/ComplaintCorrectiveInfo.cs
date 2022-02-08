@@ -10,6 +10,9 @@ namespace GroupCCP.Models
     {
         public int CorrectiveId { get; set; }
         public int LogId { get; set; }
+        public int CorrectiveComponentId { get; set; }
+        public ComplaintProductComponent ComplaintProductComponent { get; set;}
+        public string ComplaintSubComponent { get; set; }
         public ComplaintLogDetail Log { get; set; }
         [Display(Name = "Route Cause Summary")]
         [StringLength(400)]
@@ -17,9 +20,15 @@ namespace GroupCCP.Models
         [Display(Name = "Corrective Action Summary")]
         [StringLength(400)]
         public string CorrectiveAction { get; set; }
+        public string CorrectiveCustomerExplanation { get; set; }
         public int StaffId { get; set; }
         public StaffAccount StaffAccount { get; set; }
         [DataType(DataType.DateTime)]
         public string CorrectiveInfoDate { get; set; }
+        public string CorrectiveDiagnosisTimeTaken {get; set; }
+        public string CorrectiveRectifyTimeTaken { get; set; }
+        public float CorrectivePartsCostKSH { get; set; }
+        public float CorrectiveOtherCostKSH { get; set; }
+
     }
 }

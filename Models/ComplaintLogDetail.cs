@@ -19,16 +19,15 @@ namespace GroupCCP.Models
         [Display(Name = "Customer Request")]
         public string CustomerRequest { get; set; }
         [Display(Name = "Registration Number")]
-        public string RegistrationNumber { get; set; }
-        public int BrandId { get; set; }
-        public Brands Brands { get; set; }
-        public string Model { get; set; }
+        public int VehicleId { get; set; }
+        public ComplaintVehicleInfo ComplaintVehicleInfo { get; set; }
         [Display(Name = "Receive Means")]
         public int LogMeansId { get; set; } 
         public ComplaintReceiveMeans Means { get; set; }
         [Display(Name = "Level")]
         public int LogLevelId { get; set; }
         public Level Level { get; set; }
+        public string VehicleOnSite { get; set; }
         [Display(Name = "Status")]
         public int LogStatusId { get; set; }
         public  ComplaintLogStatus Status { get; set; }
@@ -42,7 +41,11 @@ namespace GroupCCP.Models
         [Display(Name = "Log Close Date")]
         [DataType(DataType.DateTime)]
         public string StatusClosedDate { get; set; }
+        public bool LogCustomerSatisfied { get; set; }
+        public string LogPreventiveAction { get; set; }
+        public string LogKaizenAction { get; set; }
         
+        public ICollection<ComplaintResponsibility>  ComplaintResponsibilities { get; set; }
         public ICollection<ComplaintAssignment> Assignments { get; set; }
         public ICollection<ComplaintCorrectiveInfo> Correctives { get; set; }
         public ICollection<ComplaintFollowUp> FollowUps { get; set; }

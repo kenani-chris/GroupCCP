@@ -6,56 +6,104 @@
     Layout = "~/Pages/Shared/_SystemLayout.cshtml";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Company[0].CompanyName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Company[0].CompanyNameAbbreviation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Company[0].CompanyCreateDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Company[0].CompanyActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Company[0].Group)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Company) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyNameAbbreviation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyCreateDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Group.GroupName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.CompanyId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.CompanyId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.CompanyId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+ <section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId">Admin</a></li>
+                <li class="breadcrumb-item">Companies</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row container-fluid card-body">
+            @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card card-default container-fluid">
+                    <div class="card-header">
+                        <h3 class="card-title">Companies Table</h3>
+                        @if (Model.CompanyCreatePerm)
+                        {
+                            <a asp-page="./Create" asp-route-CompanyId="@Model.Company.CompanyId"><div class="nav-link float-right btn btn-info  text-white">New Company</div></a>      
+                        }
+                    </div>
+              
+                    <div class="card-body container-fluid">
+                        <table class="table table-striped" id="searchTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Companies[0].CompanyName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Companies[0].CompanyNameAbbreviation)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Companies[0].CompanyCreateDate)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Companies[0].CompanyActive)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Companies[0].Group)
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        @foreach (var item in Model.Companies) {
+                                <tr>
+                                    <td>
+                                        <a asp-page="./Details"  asp-route-CompanyId="@Model.Company.CompanyId" asp-route-SelectCompanyId="@item.CompanyId">@Html.DisplayFor(modelItem => item.CompanyName)</a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CompanyNameAbbreviation)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CompanyCreateDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CompanyActive)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Group.GroupName)
+                                    </td>
+                                </tr>
+                        }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

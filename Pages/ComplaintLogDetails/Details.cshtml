@@ -31,22 +31,10 @@
             @Html.DisplayFor(model => model.ComplaintLogDetail.CustomerRequest)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ComplaintLogDetail.RegistrationNumber)
+            @Html.DisplayNameFor(model => model.ComplaintLogDetail.ComplaintVehicleInfo)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ComplaintLogDetail.RegistrationNumber)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ComplaintLogDetail.Brands)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ComplaintLogDetail.Brands.BrandId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ComplaintLogDetail.Model)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ComplaintLogDetail.Model)
+            @Html.DisplayFor(model => model.ComplaintLogDetail.ComplaintVehicleInfo.VehicleId)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ComplaintLogDetail.Means)
@@ -59,6 +47,12 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ComplaintLogDetail.Level.LevelName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintLogDetail.VehicleOnSite)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintLogDetail.VehicleOnSite)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ComplaintLogDetail.Status)
@@ -89,6 +83,24 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ComplaintLogDetail.StatusClosedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintLogDetail.LogCustomerSatisfied)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintLogDetail.LogCustomerSatisfied)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintLogDetail.LogPreventiveAction)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintLogDetail.LogPreventiveAction)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplaintLogDetail.LogKaizenAction)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplaintLogDetail.LogKaizenAction)
         </dd>
     </dl>
 </div>

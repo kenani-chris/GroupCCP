@@ -29,18 +29,8 @@
                 <span asp-validation-for="ComplaintLogDetail.CustomerRequest" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ComplaintLogDetail.RegistrationNumber" class="control-label"></label>
-                <input asp-for="ComplaintLogDetail.RegistrationNumber" class="form-control" />
-                <span asp-validation-for="ComplaintLogDetail.RegistrationNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.BrandId" class="control-label"></label>
-                <select asp-for="ComplaintLogDetail.BrandId" class ="form-control" asp-items="ViewBag.BrandId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComplaintLogDetail.Model" class="control-label"></label>
-                <input asp-for="ComplaintLogDetail.Model" class="form-control" />
-                <span asp-validation-for="ComplaintLogDetail.Model" class="text-danger"></span>
+                <label asp-for="ComplaintLogDetail.VehicleId" class="control-label"></label>
+                <select asp-for="ComplaintLogDetail.VehicleId" class ="form-control" asp-items="ViewBag.VehicleId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="ComplaintLogDetail.LogMeansId" class="control-label"></label>
@@ -49,6 +39,11 @@
             <div class="form-group">
                 <label asp-for="ComplaintLogDetail.LogLevelId" class="control-label"></label>
                 <select asp-for="ComplaintLogDetail.LogLevelId" class ="form-control" asp-items="ViewBag.LogLevelId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.VehicleOnSite" class="control-label"></label>
+                <input asp-for="ComplaintLogDetail.VehicleOnSite" class="form-control" />
+                <span asp-validation-for="ComplaintLogDetail.VehicleOnSite" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ComplaintLogDetail.LogStatusId" class="control-label"></label>
@@ -71,6 +66,21 @@
                 <label asp-for="ComplaintLogDetail.StatusClosedDate" class="control-label"></label>
                 <input asp-for="ComplaintLogDetail.StatusClosedDate" class="form-control" />
                 <span asp-validation-for="ComplaintLogDetail.StatusClosedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ComplaintLogDetail.LogCustomerSatisfied" /> @Html.DisplayNameFor(model => model.ComplaintLogDetail.LogCustomerSatisfied)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.LogPreventiveAction" class="control-label"></label>
+                <input asp-for="ComplaintLogDetail.LogPreventiveAction" class="form-control" />
+                <span asp-validation-for="ComplaintLogDetail.LogPreventiveAction" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.LogKaizenAction" class="control-label"></label>
+                <input asp-for="ComplaintLogDetail.LogKaizenAction" class="form-control" />
+                <span asp-validation-for="ComplaintLogDetail.LogKaizenAction" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

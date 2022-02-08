@@ -26,6 +26,7 @@ namespace GroupCCP.Pages.site.Logs
         public IList<ComplaintAssignment> ComplaintAssignment { get; set; }
         public IList<ComplaintCorrectiveInfo> ComplaintCorrectiveInfo { get; set; }
         public IList<ComplaintFollowUp> ComplaintFollowUp { get; set; }
+        public IList<ComplaintResponsibility> ComplaintResponsibilities { get; set; }
         public bool StaffHasPerm { get; set; }
         public StaffAccount StaffAccount { get; set; }
         public string PermissionRequired { get; set; }
@@ -40,6 +41,9 @@ namespace GroupCCP.Pages.site.Logs
         public bool LogCorrectiveViewPerm { get; set; }
         public bool LogCorrectiveAddPerm { get; set; }
         public bool LogCorrectiveEditPerm { get; set; }
+        public bool LogResponsibilityViewPerm { get; set; }
+        public bool LogResponsibilityAddPerm { get; set; }
+        public bool LogResponsibilityEditPerm { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? CompanyId, int? LogType, int? LogId)
         {
@@ -56,6 +60,8 @@ namespace GroupCCP.Pages.site.Logs
 
                 ComplaintLogDetail = await _context.ComplaintLogDetail
                     .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                    .Include(c => c.Priority)
+                    .Include(c => c.ComplaintVehicleInfo)
                     .Include(c => c.Customers)
                     .Include(c => c.Level)
                     .Include(c => c.Means)
@@ -97,6 +103,7 @@ namespace GroupCCP.Pages.site.Logs
 
             ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo
                 .Include(c => c.Log)
+                .Include(c => c.ComplaintProductComponent)
                 .Include(c => c.StaffAccount)
                 .ThenInclude(c => c.User)
                 .Where(c => c.LogId == LogId)
@@ -118,6 +125,10 @@ namespace GroupCCP.Pages.site.Logs
                 .OrderByDescending(c => c.FollowUpId)
                 .ToListAsync();
 
+            ComplaintResponsibilities = await _context.ComplaintResponsibility
+                .Where(c => c.LogId == LogId)
+                .ToListAsync();
+
             // Check other permissions
             LogEditPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, "Edit");
 
@@ -132,6 +143,10 @@ namespace GroupCCP.Pages.site.Logs
             LogCorrectiveViewPerm = Default.StaffHasPermission(StaffAccount, Default.GetLogPermissionEntity(LogTypeId, "Corrective"), "View");
             LogCorrectiveAddPerm = Default.StaffHasPermission(StaffAccount, Default.GetLogPermissionEntity(LogTypeId, "Corrective"), "Add");
             LogCorrectiveEditPerm = Default.StaffHasPermission(StaffAccount, Default.GetLogPermissionEntity(LogTypeId, "Corrective"), "Edit");
+
+            LogResponsibilityViewPerm = Default.StaffHasPermission(StaffAccount, Default.GetLogPermissionEntity(LogTypeId, "Responsibility"), "View");
+            LogResponsibilityAddPerm = Default.StaffHasPermission(StaffAccount, Default.GetLogPermissionEntity(LogTypeId, "Responsibility"), "Add");
+            LogResponsibilityEditPerm = Default.StaffHasPermission(StaffAccount, Default.GetLogPermissionEntity(LogTypeId, "Responsibility"), "Edit");
            
 
             return Page();

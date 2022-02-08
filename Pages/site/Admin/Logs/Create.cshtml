@@ -61,25 +61,6 @@
                             </div>
                             <br />
                             <hr />
-                            <div class="row">
-                                <div class="form-group col-md-4">
-                                    <label asp-for="ComplaintLogDetail.RegistrationNumber" class="control-label"></label>
-                                    <input asp-for="ComplaintLogDetail.RegistrationNumber" class="form-control" />
-                                    <span asp-validation-for="ComplaintLogDetail.RegistrationNumber" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label asp-for="ComplaintLogDetail.BrandId" class="control-label"></label>
-                                    <select asp-for="ComplaintLogDetail.BrandId" class="form-control" asp-items="ViewBag.BrandId">
-                                        <option value="">----</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label asp-for="ComplaintLogDetail.Model" class="control-label"></label>
-                                    <input asp-for="ComplaintLogDetail.Model" class="form-control" />
-                                    <span asp-validation-for="ComplaintLogDetail.Model" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <hr />
                             <div class="form-group">
                                 <label asp-for="ComplaintLogDetail.CustomerComplaint" class="control-label"></label>
                                 <textarea asp-for="ComplaintLogDetail.CustomerComplaint" class="form-control"></textarea>

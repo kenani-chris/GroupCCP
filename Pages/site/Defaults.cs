@@ -128,6 +128,7 @@ namespace GroupCCP.Pages.site
             if(LogTypeId == 1)
             {
                 return _context.ComplaintLogDetail
+                    .Include(c => c.ComplaintVehicleInfo)
                     .Include(c => c.Status)
                     .Include(c => c.Means)
                     .Include(c => c.Level)
@@ -161,13 +162,14 @@ namespace GroupCCP.Pages.site
             
             var Assignments = _context.ComplaintAssignment
                 .Include(c => c.Staff)
-                
                 .Where(c => c.StaffAssigned == StaffId)
                 .Where(c => c.AssignmentType == AssignemntType)
                 .ToList();
             var AllAssignments = _context.ComplaintAssignment
                 .Include(c => c.Staff)
                 .Include(c => c.Log)
+                .Include(c => c.Log)
+                .ThenInclude(c => c.ComplaintVehicleInfo)
                 .Include(c => c.Log)
                 .ThenInclude(c => c.Customers)
                 .Include(c => c.Log)
@@ -211,6 +213,13 @@ namespace GroupCCP.Pages.site
                 foreach(var LevelDown in LevelsDown)
                 {
                     var Logs = _context.ComplaintLogDetail
+                        .Include(c => c.ComplaintVehicleInfo)
+                        .Include(c => c.Status)
+                        .Include(c => c.Means)
+                        .Include(c => c.Level)
+                        .Include(c => c.Customers)
+                        .Include(c => c.Priority)
+                        .Include(c => c.StaffAccount).ThenInclude(c => c.User)
                         .Where(c => c.Level == LevelDown)
                         .ToList();
                     if(Logs != null)

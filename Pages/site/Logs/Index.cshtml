@@ -62,13 +62,13 @@
                                         Customer
                                     </th>
                                     <th>
-                                        Reg
-                                    </th>
-                                    <th>
                                         Means
                                     </th>
                                     <th>
                                         Level
+                                    </th>
+                                    <th>
+                                        Vehicle
                                     </th>
                                     <th>
                                         Status
@@ -94,13 +94,13 @@
                                         @Html.DisplayFor(modelItem => item.Customers.CustomerName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.RegistrationNumber)
-                                    </td>
-                                    <td>
                                         @Html.DisplayFor(modelItem => item.Means.Means)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Level.LevelName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ComplaintVehicleInfo.VehicleRegistrationNumber)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Status.Status)

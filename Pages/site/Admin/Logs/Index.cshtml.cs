@@ -65,7 +65,6 @@ namespace GroupCCP.Pages.site.Admin.Logs
             //Other Context Objects
             PageTitle = "Admin - Logs";
             ComplaintLogDetail = await _context.ComplaintLogDetail
-                .Include(c => c.Brands)
                 .Include(c => c.Customers)
                 .Include(c => c.Level).ThenInclude(c => c.LevelCategory).ThenInclude(c => c.Company)
                 .Include(c => c.Means)

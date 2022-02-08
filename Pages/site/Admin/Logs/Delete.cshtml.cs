@@ -47,7 +47,6 @@ namespace GroupCCP.Pages.site.Admin.Logs
                     .Include(c => c.Level)
                     .Include(c => c.Means)
                     .Include(c => c.Priority)
-                    .Include(c => c.Brands)
                     .Include(c => c.Priority)
                     .Include(c => c.Status).FirstOrDefaultAsync(m => m.LogId == LogId);
                 if (Company == null || ComplaintLogDetail == null)

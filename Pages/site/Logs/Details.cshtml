@@ -52,6 +52,25 @@
                 <div class="card container-fluid">
                     <div class="card-header">
                         <h4 class="float-left">Log @Html.DisplayFor(model => model.ComplaintLogDetail.LogId)</h4>
+                        
+                        <button type="button" class="text-white float-right btn btn-info dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            Status Change
+                        </button>
+                        <ul class="dropdown-menu" style="">
+                            @if(Model.ComplaintLogDetail.Status.Status == "Assigned")
+                            {
+                                <li class="dropdown-item"><a asp-page="StatusChange" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" asp-route-StatusId="3">WIP</a></li>
+                            }
+                            @if(Model.ComplaintLogDetail.Status.Status == "WIP")
+                            {
+                                <li class="dropdown-item"><a asp-page="StatusChange" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" asp-route-StatusId="4">Resolved</a></li>
+                            }
+                            @if(Model.ComplaintLogDetail.Status.Status == "Resolved")
+                            {
+                                <li class="dropdown-item"><a asp-page="StatusChange" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" asp-route-StatusId="5">Closed</a></li>
+                            }
+                        </ul>
+                        
                         @if(Model.LogEditPerm)
                         {
                             <a asp-page="Edit" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" class="text-white"><div class="nav-link float-right btn btn-warning  text-white">Edit Log</div></a>
@@ -82,12 +101,37 @@
                                     <td>@Html.DisplayFor(model => model.ComplaintLogDetail.StatusClosedDate)</td>
                                 </tr>
                                 <tr>
+                                    <th>Vehicle</th>
+                                    <th>Satisfied</th>
+                                    <th>Priority</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.ComplaintVehicleInfo.VehicleRegistrationNumber)</td>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.LogCustomerSatisfied)</td>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.Priority.PriorityName)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
                                     <th>Customer Complaint</th>
                                     <td colspan="5">@Html.DisplayFor(model => model.ComplaintLogDetail.CustomerComplaint)</td>
                                 </tr>
                                 <tr>
                                     <th>Customer Request</th>
                                     <td colspan="5">@Html.DisplayFor(model => model.ComplaintLogDetail.CustomerRequest)</td>
+                                </tr>
+                                <tr>
+                                    <th>Prevention Action</th>
+                                    <td colspan="5">@Html.DisplayFor(model => model.ComplaintLogDetail.LogPreventiveAction)</td>
+                                </tr>
+                                <tr>
+                                    <th>Kaizen Action</th>
+                                    <td colspan="5">@Html.DisplayFor(model => model.ComplaintLogDetail.LogKaizenAction)</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -147,7 +191,7 @@
                         </div>
                     </div>
                 }
-
+                
                 @if (Model.LogCorrectiveViewPerm)
                 {
                     <!--Corrective info Details-->
@@ -209,6 +253,46 @@
                                                 @item.CorrectiveAction
                                             </td>
 
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+                @if (Model.LogResponsibilityViewPerm)
+                {
+                    <!--Corrective info Details-->
+                    <div class="card container-fluid">
+                        <div class="card-header">
+                            <h4 class="float-left">Log Responsibility Info</h4>
+                            @if(Model.LogCorrectiveAddPerm)
+                            {
+                                <a asp-page="Responsibility/Create" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" class="text-white"><div class="nav-link float-right btn btn-info  text-white">Add Responsibility</div></a>    
+                            }
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            PIC
+                                        </th>
+                                        <th>
+                                            Level
+                                        </th>
+                                        <th>
+                                            Reason
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ComplaintResponsibilities)
+                                    {
+                                        <tr>
+                                            <td><a asp-page="Responsibility/Edit" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" asp-route-ResponsibilityId="@item.ResponsibilityId">@item.ResponsibilityPIC</a></td>
+                                            <td>@item.ResponsibilityLevel</td>
+                                            <td>@item.ResponsibilityReason</td>
                                         </tr>
                                     }
                                 </tbody>

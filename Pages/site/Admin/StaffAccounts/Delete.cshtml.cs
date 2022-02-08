@@ -20,42 +20,76 @@ namespace GroupCCP.Pages.site.Admin.StaffAccounts
         }
 
         [BindProperty]
+        public StaffAccount StaffAccounts { get; set; }
+        public Company Company { get; set; }
+        public string PageTitle { get; set; }
+        public bool StaffHasPerm { get; set; }
         public StaffAccount StaffAccount { get; set; }
+        public string PermissionRequired { get; set; }
+        public string PermissionEntity { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+
+        public async Task<IActionResult> OnGetAsync(int? CompanyId, int? AccountId)
         {
-            if (id == null)
+            //Check Passed Parameters if are ok
+            if (CompanyId == null || AccountId == null)
             {
                 return NotFound();
             }
-
-            StaffAccount = await _context.StaffAccount
-                .Include(s => s.Company)
-                .Include(s => s.User).FirstOrDefaultAsync(m => m.AccountId == id);
-
-            if (StaffAccount == null)
+            else
             {
-                return NotFound();
+                Company = await _context.Company
+                    .Include(c => c.Group)
+                    .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+
+
+                StaffAccounts = await _context.StaffAccount
+                    .Include(s => s.Company)
+                    .Include(s => s.User).FirstOrDefaultAsync(m => m.AccountId == AccountId);
+
+                if (Company == null || StaffAccounts == null)
+                {
+                    return NotFound();
+                }
             }
+
+            // Common Functions
+            Defaults Default = new(_context);
+
+            //Initialize Permissions required
+            PermissionRequired = "Delete";
+            PermissionEntity = "Admin - StaffAccounts";
+
+            //Check if Staff has a valid staff account
+            if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
+            {
+                return RedirectToPage("./Errors/NoActiveStaffAccount", new { Company.CompanyId });
+            }
+            else
+            {
+                StaffAccount = Default.GetStaffAccount(User.Identity.Name, Company.CompanyId);
+                // Check if Staff role has required permissions
+                StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
+            }
+
+            //Other Context Objects
+            PageTitle = "Admin - StaffAccounts Delete";
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int CompanyId, int AccountId)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            StaffAccount = await _context.StaffAccount.FindAsync(id);
+            StaffAccounts = await _context.StaffAccount.FindAsync(AccountId);
 
-            if (StaffAccount != null)
+            if (StaffAccounts != null)
             {
-                _context.StaffAccount.Remove(StaffAccount);
+                _context.StaffAccount.Remove(StaffAccounts);
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { CompanyId });
         }
     }
 }

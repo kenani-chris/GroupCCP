@@ -46,7 +46,7 @@ namespace GroupCCP.Pages.site.Admin.Levels
                     .Where(c => c.LevelCategory.CompanyId == CompanyId)
                     .Include(l => l.ParentLevel).ToListAsync();
 
-                if (Company == null || Level == null)
+                if (Company == null)
                 {
                     return NotFound();
                 }

@@ -24,19 +24,16 @@
                 @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].CustomerRequest)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].RegistrationNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Brands)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Model)
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].ComplaintVehicleInfo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Means)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Level)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].VehicleOnSite)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].Status)
@@ -52,6 +49,15 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].StatusClosedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].LogCustomerSatisfied)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].LogPreventiveAction)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintLogDetail[0].LogKaizenAction)
             </th>
             <th></th>
         </tr>
@@ -69,19 +75,16 @@
                 @Html.DisplayFor(modelItem => item.CustomerRequest)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RegistrationNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brands.BrandId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
+                @Html.DisplayFor(modelItem => item.ComplaintVehicleInfo.VehicleId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Means.Means)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Level.LevelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleOnSite)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status.Status)
@@ -97,6 +100,15 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StatusClosedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LogCustomerSatisfied)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LogPreventiveAction)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LogKaizenAction)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.LogId">Edit</a> |

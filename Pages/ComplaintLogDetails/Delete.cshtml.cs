@@ -30,7 +30,7 @@ namespace GroupCCP.Pages.ComplaintLogDetails
             }
 
             ComplaintLogDetail = await _context.ComplaintLogDetail
-                .Include(c => c.Brands)
+                .Include(c => c.ComplaintVehicleInfo)
                 .Include(c => c.Customers)
                 .Include(c => c.Level)
                 .Include(c => c.Means)

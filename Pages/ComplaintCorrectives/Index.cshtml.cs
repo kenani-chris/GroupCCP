@@ -24,6 +24,7 @@ namespace GroupCCP.Pages.ComplaintCorrectives
         public async Task OnGetAsync()
         {
             ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo
+                .Include(c => c.ComplaintProductComponent)
                 .Include(c => c.Log)
                 .Include(c => c.StaffAccount).ToListAsync();
         }

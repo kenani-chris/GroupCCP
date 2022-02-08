@@ -22,30 +22,64 @@ namespace GroupCCP.Pages.site.Admin.LevelCategories
 
         [BindProperty]
         public LevelCategory LevelCategory { get; set; }
+        public Company Company { get; set; }
+        public string PageTitle { get; set; }
+        public bool StaffHasPerm { get; set; }
+        public StaffAccount StaffAccount { get; set; }
+        public string PermissionRequired { get; set; }
+        public string PermissionEntity { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+
+        public async Task<IActionResult> OnGetAsync(int? CompanyId, int? LevelCategoryId)
         {
-            if (id == null)
+            //Check Passed Parameters if are ok
+            if (CompanyId == null || LevelCategoryId == null)
             {
                 return NotFound();
             }
-
-            LevelCategory = await _context.LevelCategory
-                .Include(l => l.Company)
-                .Include(l => l.ParentCategory).FirstOrDefaultAsync(m => m.LevelCategoryId == id);
-
-            if (LevelCategory == null)
+            else
             {
-                return NotFound();
+                Company = await _context.Company
+                    .Include(c => c.Group)
+                    .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+
+                LevelCategory = await _context.LevelCategory
+                    .Include(l => l.Company)
+                    .Include(l => l.ParentCategory).FirstOrDefaultAsync(m => m.LevelCategoryId == LevelCategoryId);
+
+                if (Company == null || LevelCategory == null)
+                {
+                    return NotFound();
+                }
             }
-           ViewData["CompanyId"] = new SelectList(_context.Company, "CompanyId", "CompanyName");
-           ViewData["ParentId"] = new SelectList(_context.LevelCategory, "LevelCategoryId", "CategorName");
+
+            // Common Functions
+            Defaults Default = new(_context);
+
+            //Initialize Permissions required
+            PermissionRequired = "Edit";
+            PermissionEntity = "Admin - LevelCategories";
+
+            //Check if Staff has a valid staff account
+            if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
+            {
+                return RedirectToPage("./Errors/NoActiveStaffAccount", new { Company.CompanyId });
+            }
+            else
+            {
+                StaffAccount = Default.GetStaffAccount(User.Identity.Name, Company.CompanyId);
+                // Check if Staff role has required permissions
+                StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
+            }
+
+            //Other Context Objects
+            PageTitle = "Admin - LevelCats. Edit";
+            ViewData["ParentId"] = new SelectList(_context.LevelCategory.Where(c => c.CompanyId == CompanyId), "LevelCategoryId", "CategorName");
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int CompanyId, int LevelCategoryId)
         {
             if (!ModelState.IsValid)
             {
@@ -53,6 +87,7 @@ namespace GroupCCP.Pages.site.Admin.LevelCategories
             }
 
             _context.Attach(LevelCategory).State = EntityState.Modified;
+            LevelCategory.CompanyId = CompanyId;
 
             try
             {
@@ -70,12 +105,13 @@ namespace GroupCCP.Pages.site.Admin.LevelCategories
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", new { CompanyId, LevelCategoryId });
         }
 
         private bool LevelCategoryExists(int id)
         {
             return _context.LevelCategory.Any(e => e.LevelCategoryId == id);
         }
+
     }
 }

@@ -178,11 +178,32 @@ namespace GroupCCP.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CorrectiveId"), 1L, 1);
 
+                    b.Property<string>("ComplaintSubComponent")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CorrectiveAction")
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
+                    b.Property<int>("CorrectiveComponentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CorrectiveCustomerExplanation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CorrectiveDiagnosisTimeTaken")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CorrectiveInfoDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("CorrectiveOtherCostKSH")
+                        .HasColumnType("real");
+
+                    b.Property<float>("CorrectivePartsCostKSH")
+                        .HasColumnType("real");
+
+                    b.Property<string>("CorrectiveRectifyTimeTaken")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LogId")
@@ -196,6 +217,8 @@ namespace GroupCCP.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("CorrectiveId");
+
+                    b.HasIndex("CorrectiveComponentId");
 
                     b.HasIndex("LogId");
 
@@ -219,11 +242,20 @@ namespace GroupCCP.Migrations
                         .HasMaxLength(14)
                         .HasColumnType("nvarchar(14)");
 
+                    b.Property<string>("CustomerCompany")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerEmail")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CustomerName")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("CustomerNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerOccupation")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
@@ -275,9 +307,6 @@ namespace GroupCCP.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LogId"), 1L, 1);
 
-                    b.Property<int>("BrandId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CustomerComplaint")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -289,23 +318,26 @@ namespace GroupCCP.Migrations
                     b.Property<int>("LogCustomerId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("LogCustomerSatisfied")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LogKaizenAction")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("LogLevelId")
                         .HasColumnType("int");
 
                     b.Property<int>("LogMeansId")
                         .HasColumnType("int");
 
+                    b.Property<string>("LogPreventiveAction")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("LogStatusId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Model")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("PriorityId")
                         .HasColumnType("int");
-
-                    b.Property<string>("RegistrationNumber")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StaffId")
                         .HasColumnType("int");
@@ -316,9 +348,13 @@ namespace GroupCCP.Migrations
                     b.Property<string>("StatusSubmitDate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("LogId");
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("BrandId");
+                    b.Property<string>("VehicleOnSite")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LogId");
 
                     b.HasIndex("LogCustomerId");
 
@@ -331,6 +367,8 @@ namespace GroupCCP.Migrations
                     b.HasIndex("PriorityId");
 
                     b.HasIndex("StaffId");
+
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("ComplaintLogDetail");
                 });
@@ -389,6 +427,94 @@ namespace GroupCCP.Migrations
                         });
                 });
 
+            modelBuilder.Entity("GroupCCP.Models.ComplaintProductComponent", b =>
+                {
+                    b.Property<int>("ProductID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductID"), 1L, 1);
+
+                    b.Property<string>("ProductComponent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductID");
+
+                    b.ToTable("ComplaintProductComponent");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductID = 1,
+                            ProductComponent = "Unknown"
+                        },
+                        new
+                        {
+                            ProductID = 2,
+                            ProductComponent = "Engine"
+                        },
+                        new
+                        {
+                            ProductID = 3,
+                            ProductComponent = "Clutch and Transmission"
+                        },
+                        new
+                        {
+                            ProductID = 4,
+                            ProductComponent = "Chasis"
+                        },
+                        new
+                        {
+                            ProductID = 5,
+                            ProductComponent = "Steering and Tyre"
+                        },
+                        new
+                        {
+                            ProductID = 6,
+                            ProductComponent = "Brake"
+                        },
+                        new
+                        {
+                            ProductID = 7,
+                            ProductComponent = "Body"
+                        },
+                        new
+                        {
+                            ProductID = 8,
+                            ProductComponent = "Body Interior"
+                        },
+                        new
+                        {
+                            ProductID = 9,
+                            ProductComponent = "Door/Window/Sunroof"
+                        },
+                        new
+                        {
+                            ProductID = 10,
+                            ProductComponent = "Electrical"
+                        },
+                        new
+                        {
+                            ProductID = 11,
+                            ProductComponent = "Hybrid ElectVehicle"
+                        },
+                        new
+                        {
+                            ProductID = 12,
+                            ProductComponent = "Special Vehicle"
+                        },
+                        new
+                        {
+                            ProductID = 13,
+                            ProductComponent = "Accessories"
+                        },
+                        new
+                        {
+                            ProductID = 14,
+                            ProductComponent = "Other"
+                        });
+                });
+
             modelBuilder.Entity("GroupCCP.Models.ComplaintReceiveMeans", b =>
                 {
                     b.Property<int>("MeansId")
@@ -422,6 +548,63 @@ namespace GroupCCP.Migrations
                             MeansId = 3,
                             Means = "Call"
                         });
+                });
+
+            modelBuilder.Entity("GroupCCP.Models.ComplaintResponsibility", b =>
+                {
+                    b.Property<int>("ResponsibilityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResponsibilityId"), 1L, 1);
+
+                    b.Property<int>("LogId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ResponsibilityLevel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResponsibilityPIC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResponsibilityReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ResponsibilityId");
+
+                    b.HasIndex("LogId");
+
+                    b.ToTable("ComplaintResponsibility");
+                });
+
+            modelBuilder.Entity("GroupCCP.Models.ComplaintVehicleInfo", b =>
+                {
+                    b.Property<int>("VehicleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleId"), 1L, 1);
+
+                    b.Property<int>("VehicleBrandId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VehicleModel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehiclePurchaseDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleRegistrationNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehilcleVIN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VehicleId");
+
+                    b.HasIndex("VehicleBrandId");
+
+                    b.ToTable("ComplaintVehicleInfo");
                 });
 
             modelBuilder.Entity("GroupCCP.Models.FollowUpCalls", b =>
@@ -764,6 +947,30 @@ namespace GroupCCP.Migrations
                         },
                         new
                         {
+                            PermissionId = 161,
+                            Entity = "Responsibility - Submitted Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 162,
+                            Entity = "Responsibility - Submitted Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 163,
+                            Entity = "Responsibility - Submitted Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 164,
+                            Entity = "Responsibility - Submitted Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
                             PermissionId = 16,
                             Entity = "Complaint - My Complaints",
                             Permission = "List"
@@ -868,6 +1075,30 @@ namespace GroupCCP.Migrations
                         {
                             PermissionId = 30,
                             Entity = "Assignment - My Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 165,
+                            Entity = "Responsibility - My Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 166,
+                            Entity = "Responsibility - My Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 167,
+                            Entity = "Responsibility - My Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 168,
+                            Entity = "Responsibility - My Complaints",
                             Permission = "Delete"
                         },
                         new
@@ -980,6 +1211,30 @@ namespace GroupCCP.Migrations
                         },
                         new
                         {
+                            PermissionId = 169,
+                            Entity = "Responsibility - Escallated Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 170,
+                            Entity = "Responsibility - Escallated Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 171,
+                            Entity = "Responsibility - Escallated Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 172,
+                            Entity = "Responsibility - Escallated Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
                             PermissionId = 46,
                             Entity = "Complaint - Level Down Complaints",
                             Permission = "List"
@@ -1088,6 +1343,30 @@ namespace GroupCCP.Migrations
                         },
                         new
                         {
+                            PermissionId = 173,
+                            Entity = "Responsibility - Level Down Complaints",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 174,
+                            Entity = "Responsibility - Level Down Complaints",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 175,
+                            Entity = "Responsibility - Level Down Complaints",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 176,
+                            Entity = "Responsibility - Level Down Complaints",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
                             PermissionId = 61,
                             Entity = "Complaint",
                             Permission = "Add"
@@ -1096,6 +1375,12 @@ namespace GroupCCP.Migrations
                         {
                             PermissionId = 62,
                             Entity = "Customer",
+                            Permission = "Add"
+                        },
+                        new
+                        {
+                            PermissionId = 160,
+                            Entity = "Vehicle",
                             Permission = "Add"
                         },
                         new
@@ -1414,6 +1699,186 @@ namespace GroupCCP.Migrations
                         {
                             PermissionId = 129,
                             Entity = "Admin - StaffAccounts",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 130,
+                            Entity = "Admin - LevelMemberships",
+                            Permission = "List"
+                        },
+                        new
+                        {
+                            PermissionId = 131,
+                            Entity = "Admin - LevelMemberships",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 132,
+                            Entity = "Admin - LevelMemberships",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 133,
+                            Entity = "Admin - LevelMemberships",
+                            Permission = "Create"
+                        },
+                        new
+                        {
+                            PermissionId = 134,
+                            Entity = "Admin - LevelMemberships",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 135,
+                            Entity = "Admin - RoleAssignments",
+                            Permission = "List"
+                        },
+                        new
+                        {
+                            PermissionId = 136,
+                            Entity = "Admin - RoleAssignments",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 137,
+                            Entity = "Admin - RoleAssignments",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 138,
+                            Entity = "Admin - RoleAssignments",
+                            Permission = "Create"
+                        },
+                        new
+                        {
+                            PermissionId = 139,
+                            Entity = "Admin - RoleAssignments",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 140,
+                            Entity = "Admin - PermissionAssignments",
+                            Permission = "List"
+                        },
+                        new
+                        {
+                            PermissionId = 141,
+                            Entity = "Admin - PermissionAssignments",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 142,
+                            Entity = "Admin - PermissionAssignments",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 143,
+                            Entity = "Admin - PermissionAssignments",
+                            Permission = "Create"
+                        },
+                        new
+                        {
+                            PermissionId = 144,
+                            Entity = "Admin - PermissionAssignments",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 145,
+                            Entity = "Admin - Timelines",
+                            Permission = "List"
+                        },
+                        new
+                        {
+                            PermissionId = 146,
+                            Entity = "Admin - Timelines",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 147,
+                            Entity = "Admin - Timelines",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 148,
+                            Entity = "Admin - Timelines",
+                            Permission = "Create"
+                        },
+                        new
+                        {
+                            PermissionId = 149,
+                            Entity = "Admin - Timelines",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 150,
+                            Entity = "Admin - Companies",
+                            Permission = "List"
+                        },
+                        new
+                        {
+                            PermissionId = 151,
+                            Entity = "Admin - Companies",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 152,
+                            Entity = "Admin - Companies",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 153,
+                            Entity = "Admin - Companies",
+                            Permission = "Create"
+                        },
+                        new
+                        {
+                            PermissionId = 154,
+                            Entity = "Admin - Companies",
+                            Permission = "View"
+                        },
+                        new
+                        {
+                            PermissionId = 155,
+                            Entity = "Admin - Roles",
+                            Permission = "List"
+                        },
+                        new
+                        {
+                            PermissionId = 156,
+                            Entity = "Admin - Roles",
+                            Permission = "Edit"
+                        },
+                        new
+                        {
+                            PermissionId = 157,
+                            Entity = "Admin - Roles",
+                            Permission = "Delete"
+                        },
+                        new
+                        {
+                            PermissionId = 158,
+                            Entity = "Admin - Roles",
+                            Permission = "Create"
+                        },
+                        new
+                        {
+                            PermissionId = 159,
+                            Entity = "Admin - Roles",
                             Permission = "View"
                         });
                 });
@@ -1777,6 +2242,12 @@ namespace GroupCCP.Migrations
 
             modelBuilder.Entity("GroupCCP.Models.ComplaintCorrectiveInfo", b =>
                 {
+                    b.HasOne("GroupCCP.Models.ComplaintProductComponent", "ComplaintProductComponent")
+                        .WithMany("ComplaintCorrectiveInfos")
+                        .HasForeignKey("CorrectiveComponentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("GroupCCP.Models.ComplaintLogDetail", "Log")
                         .WithMany("Correctives")
                         .HasForeignKey("LogId")
@@ -1788,6 +2259,8 @@ namespace GroupCCP.Migrations
                         .HasForeignKey("StaffId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("ComplaintProductComponent");
 
                     b.Navigation("Log");
 
@@ -1834,12 +2307,6 @@ namespace GroupCCP.Migrations
 
             modelBuilder.Entity("GroupCCP.Models.ComplaintLogDetail", b =>
                 {
-                    b.HasOne("GroupCCP.Models.Brands", "Brands")
-                        .WithMany("ComplaintLogDetails")
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("GroupCCP.Models.ComplaintCustomerInfo", "Customers")
                         .WithMany("Logs")
                         .HasForeignKey("LogCustomerId")
@@ -1876,7 +2343,13 @@ namespace GroupCCP.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Brands");
+                    b.HasOne("GroupCCP.Models.ComplaintVehicleInfo", "ComplaintVehicleInfo")
+                        .WithMany("Logs")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ComplaintVehicleInfo");
 
                     b.Navigation("Customers");
 
@@ -1889,6 +2362,27 @@ namespace GroupCCP.Migrations
                     b.Navigation("StaffAccount");
 
                     b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("GroupCCP.Models.ComplaintResponsibility", b =>
+                {
+                    b.HasOne("GroupCCP.Models.ComplaintLogDetail", "Log")
+                        .WithMany("ComplaintResponsibilities")
+                        .HasForeignKey("LogId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Log");
+                });
+
+            modelBuilder.Entity("GroupCCP.Models.ComplaintVehicleInfo", b =>
+                {
+                    b.HasOne("GroupCCP.Models.Brands", "Brands")
+                        .WithMany("complaintVehicleInfos")
+                        .HasForeignKey("VehicleBrandId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Brands");
                 });
 
             modelBuilder.Entity("GroupCCP.Models.FollowUpCalls", b =>
@@ -2132,7 +2626,7 @@ namespace GroupCCP.Migrations
 
             modelBuilder.Entity("GroupCCP.Models.Brands", b =>
                 {
-                    b.Navigation("ComplaintLogDetails");
+                    b.Navigation("complaintVehicleInfos");
                 });
 
             modelBuilder.Entity("GroupCCP.Models.Company", b =>
@@ -2159,6 +2653,8 @@ namespace GroupCCP.Migrations
                 {
                     b.Navigation("Assignments");
 
+                    b.Navigation("ComplaintResponsibilities");
+
                     b.Navigation("Correctives");
 
                     b.Navigation("FollowUps");
@@ -2171,7 +2667,17 @@ namespace GroupCCP.Migrations
                     b.Navigation("Logs");
                 });
 
+            modelBuilder.Entity("GroupCCP.Models.ComplaintProductComponent", b =>
+                {
+                    b.Navigation("ComplaintCorrectiveInfos");
+                });
+
             modelBuilder.Entity("GroupCCP.Models.ComplaintReceiveMeans", b =>
+                {
+                    b.Navigation("Logs");
+                });
+
+            modelBuilder.Entity("GroupCCP.Models.ComplaintVehicleInfo", b =>
                 {
                     b.Navigation("Logs");
                 });

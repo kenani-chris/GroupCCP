@@ -26,6 +26,9 @@ namespace GroupCCP.Models
         public string CustomerCell { get; set; }
         [Display(Name = "Customer Number")]
         public string CustomerNumber { get; set; }
+        public string CustomerEmail { get; set; }
+        public string CustomerOccupation { get; set; }
+        public string CustomerCompany { get; set; }
         public int CompanyId { get; set; }
         public Company Company { get; set; }
         public ICollection<ComplaintLogDetail> Logs { get; set; }

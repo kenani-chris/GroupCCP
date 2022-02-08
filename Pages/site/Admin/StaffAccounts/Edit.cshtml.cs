@@ -21,38 +21,80 @@ namespace GroupCCP.Pages.site.Admin.StaffAccounts
         }
 
         [BindProperty]
+        public StaffAccount StaffAccounts { get; set; }
+        public Company Company { get; set; }
+        public string PageTitle { get; set; }
+        public bool StaffHasPerm { get; set; }
         public StaffAccount StaffAccount { get; set; }
+        public string PermissionRequired { get; set; }
+        public string PermissionEntity { get; set; }
+        public bool CustomerEditPerm { get; set; }
+        public bool CustomerDeletePerm { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+
+        public async Task<IActionResult> OnGetAsync(int? CompanyId, int? AccountId)
         {
-            if (id == null)
+            //Check Passed Parameters if are ok
+            if (CompanyId == null || AccountId == null)
             {
                 return NotFound();
             }
-
-            StaffAccount = await _context.StaffAccount
-                .Include(s => s.Company)
-                .Include(s => s.User).FirstOrDefaultAsync(m => m.AccountId == id);
-
-            if (StaffAccount == null)
+            else
             {
-                return NotFound();
+                Company = await _context.Company
+                    .Include(c => c.Group)
+                    .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
+
+
+                StaffAccounts = await _context.StaffAccount
+                    .Include(s => s.Company)
+                    .Include(s => s.User).FirstOrDefaultAsync(m => m.AccountId == AccountId);
+
+                if (Company == null || StaffAccounts == null)
+                {
+                    return NotFound();
+                }
             }
-           ViewData["CompanyId"] = new SelectList(_context.Company, "CompanyId", "CompanyName");
-           ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+
+            // Common Functions
+            Defaults Default = new(_context);
+
+            //Initialize Permissions required
+            PermissionRequired = "Edit";
+            PermissionEntity = "Admin - StaffAccounts";
+
+            //Check if Staff has a valid staff account
+            if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
+            {
+                return RedirectToPage("./Errors/NoActiveStaffAccount", new { Company.CompanyId });
+            }
+            else
+            {
+                StaffAccount = Default.GetStaffAccount(User.Identity.Name, Company.CompanyId);
+                // Check if Staff role has required permissions
+                StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
+            }
+
+            //Other Context Objects
+            PageTitle = "Admin - StaffAccounts Edit";
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email");
+
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int CompanyId, int AccountId)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
-            _context.Attach(StaffAccount).State = EntityState.Modified;
+            StaffAccounts.CompanyId = CompanyId;
+            StaffAccounts.IsActive = true;
+            StaffAccounts.IsSuperUser = false;
+            
+            _context.Attach(StaffAccounts).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +102,7 @@ namespace GroupCCP.Pages.site.Admin.StaffAccounts
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StaffAccountExists(StaffAccount.AccountId))
+                if (!StaffAccountExists(StaffAccounts.AccountId))
                 {
                     return NotFound();
                 }
@@ -70,12 +112,14 @@ namespace GroupCCP.Pages.site.Admin.StaffAccounts
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", new { CompanyId, AccountId });
         }
 
         private bool StaffAccountExists(int id)
         {
             return _context.StaffAccount.Any(e => e.AccountId == id);
         }
+
     }
 }
+

@@ -85,6 +85,7 @@ namespace GroupCCP.Pages.site.Logs.CorrectiveInfo
 
             //Other Context Objects
             PageTitle = Default.GetLogType(LogTypeId) + " Complaint - Edit Corrective Log " + ComplaintLogDetail.LogId;
+            ViewData["CorrectiveComponentId"] = new SelectList(_context.ComplaintProductComponent, "ProductID", "ProductComponent");
             LogCorrectiveAddPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, "Add");
             LogCorrectiveDeletePerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, "Delete");
             return Page();

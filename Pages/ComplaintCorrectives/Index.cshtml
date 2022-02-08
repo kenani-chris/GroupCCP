@@ -15,6 +15,12 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo[0].ComplaintProductComponent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo[0].ComplaintSubComponent)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo[0].Log)
             </th>
             <th>
@@ -24,10 +30,25 @@
                 @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo[0].CorrectiveAction)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo[0].CorrectiveCustomerExplanation)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo[0].StaffAccount)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo[0].CorrectiveInfoDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo[0].CorrectiveDiagnosisTimeTaken)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo[0].CorrectiveRectifyTimeTaken)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo[0].CorrectivePartsCostKSH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintCorrectiveInfo[0].CorrectiveOtherCostKSH)
             </th>
             <th></th>
         </tr>
@@ -35,6 +56,12 @@
     <tbody>
 @foreach (var item in Model.ComplaintCorrectiveInfo) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComplaintProductComponent.ProductID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComplaintSubComponent)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Log.LogId)
             </td>
@@ -45,10 +72,25 @@
                 @Html.DisplayFor(modelItem => item.CorrectiveAction)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.CorrectiveCustomerExplanation)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.StaffAccount.UserId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CorrectiveInfoDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorrectiveDiagnosisTimeTaken)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorrectiveRectifyTimeTaken)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorrectivePartsCostKSH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorrectiveOtherCostKSH)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.CorrectiveId">Edit</a> |

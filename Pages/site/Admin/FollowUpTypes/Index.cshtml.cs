@@ -46,7 +46,7 @@ namespace GroupCCP.Pages.site.Admin.FollowUpTypes
                     .Where(c => c.CompanyId == CompanyId)
                     .ToListAsync();
 
-                if (Company == null || FollowUpCalls == null)
+                if (Company == null)
                 {
                     return NotFound();
                 }

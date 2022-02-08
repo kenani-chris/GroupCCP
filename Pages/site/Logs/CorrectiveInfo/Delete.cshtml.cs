@@ -52,6 +52,7 @@ namespace GroupCCP.Pages.site.Logs.CorrectiveInfo
 
                 ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo
                     .Include(c => c.Log)
+                    .Include(c => c.ComplaintProductComponent)
                     .Include(c => c.StaffAccount).FirstOrDefaultAsync(m => m.CorrectiveId == CorrectiveId);
 
                 if (Company == null || ComplaintLogDetail == null || ComplaintCorrectiveInfo == null)
@@ -66,7 +67,7 @@ namespace GroupCCP.Pages.site.Logs.CorrectiveInfo
             //Initialize Permissions required
             LogTypeId = (int)LogType;
             PermissionRequired = "Delete";
-            PermissionEntity = Default.GetLogPermissionEntity(LogTypeId, "Corrective");
+            PermissionEntity = Default.GetLogPermissionEntity(LogTypeId, "Responsibility");
 
             //Check if Staff has a valid staff account
             if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
@@ -82,10 +83,6 @@ namespace GroupCCP.Pages.site.Logs.CorrectiveInfo
 
             //Other Context Objects
             PageTitle = Default.GetLogType(LogTypeId) + " Complaint - Delete Corrective Log " + ComplaintLogDetail.LogId;
-            if (LogId == null || CompanyId == null || LogType == null || CorrectiveId == null)
-            {
-                return NotFound();
-            }
 
             return Page();
         }

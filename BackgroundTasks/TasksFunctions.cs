@@ -1,6 +1,7 @@
 ﻿using GroupCCP.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -418,6 +419,187 @@ namespace GroupCCP
             notification.IsSent = false;
             _context.Notification.Add(notification);
             _context.SaveChanges();
+        }
+
+        public bool StatusChange(int LogId, int Status, IList<string> Errors, int CompanyId)
+        {
+            var Log = _context.ComplaintLogDetail
+                .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                .Include(c => c.Priority)
+                .Include(c => c.ComplaintVehicleInfo)
+                .Include(c => c.Customers)
+                .Include(c => c.Level)
+                .Include(c => c.Means)
+                .FirstOrDefault(c => c.LogId == LogId);
+            bool StatusCanChange = false;
+
+            if (Log != null)
+            {
+                if (Status == 3 || Status == 2 || Status == 1 || Status == 6 || Status == 7)
+                {
+                    StatusCanChange = true;
+                }
+                if (Status == 4)
+                {
+                    var FollowUpDone = CheckFollowUpDone(LogId, Errors, CompanyId);
+                    var CorrectiveDone = CheckCorrective(LogId, Errors);
+
+                    if (FollowUpDone == true &&  CorrectiveDone == true)
+                    {
+                        StatusCanChange = true;
+                    }
+                }
+                if (Status == 5)
+                {
+                    var FollowUpDone = CheckFollowUpDone(LogId, Errors, CompanyId);
+                    var CorrectiveDone = CheckCorrective(LogId, Errors);
+                    var AllFieldsDone = CheckAllFields(LogId, Errors);
+                    var ResponsibilityDone = CheckResponsibility(LogId, Errors);
+
+                    if(FollowUpDone  == true &&  CorrectiveDone == true && AllFieldsDone == true && ResponsibilityDone == true)
+                    {
+                        StatusCanChange = true;
+                    }
+                }
+
+            }
+            return StatusCanChange;
+            
+        }
+        public bool CheckAllFields(int LogId, IList<string> ErrorList)
+        {
+            var Log = _context.ComplaintLogDetail
+                .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                .Include(c => c.Priority)
+                .Include(c => c.ComplaintVehicleInfo)
+                .Include(c => c.Customers)
+                .Include(c => c.Level)
+                .Include(c => c.Means)
+                .FirstOrDefault(c => c.LogId == LogId);
+            Console.WriteLine("the log number is " + Log.LogId.ToString());
+            var TestPassed = true;
+            if (string.IsNullOrEmpty(Log.CustomerComplaint))
+            {
+                ErrorList.Add("Log : The field Customer is Blank");
+                TestPassed = false;
+            }
+            if (string.IsNullOrEmpty(Log.CustomerRequest))
+            {
+                ErrorList.Add("Log : The field Customer is Blank");
+                TestPassed = false;
+            }
+
+            return TestPassed;
+        }
+
+
+        public bool CheckFollowUpDone(int LogId, IList<string> ErrorList, int CompanyId)
+        {
+            var Log = _context.ComplaintLogDetail
+                .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                .Include(c => c.Priority)
+                .Include(c => c.ComplaintVehicleInfo)
+                .Include(c => c.Customers)
+                .Include(c => c.Level)
+                .Include(c => c.Means)
+                .FirstOrDefault(c => c.LogId == LogId);
+            var FollowUps = _context.FollowUpCalls
+                .Where(c => c.CompanyId == CompanyId)
+                .Where(c => c.FollowUpMandatory == true)
+                .ToList();
+            var DoneFollowUps = _context.ComplaintFollowUp
+                .Where(c => c.LogId == LogId);
+
+            var TestPassed = true;
+            if (DoneFollowUps.Any() == false)
+            {
+                TestPassed = false;
+                ErrorList.Add("FollowUp : No followups done");
+            }
+            else
+            {
+                foreach(var FollowUp in FollowUps)
+                {
+                    var FollowUPPresent = DoneFollowUps.Where(c => c.FollowUpTypeId == FollowUp.FollowUpId);
+                    if(FollowUPPresent.Any() == false)
+                    {
+                        TestPassed = false;
+                        ErrorList.Add("FollowUp : One or more required Followups are not submitted");
+                    }
+
+                }
+            }
+
+            return TestPassed;
+
+        }
+
+        public bool CheckCorrective(int LogId, IList<string> ErrorList)
+        {
+            var Log = _context.ComplaintLogDetail
+                .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                .Include(c => c.Priority)
+                .Include(c => c.ComplaintVehicleInfo)
+                .Include(c => c.Customers)
+                .Include(c => c.Level)
+                .Include(c => c.Means)
+                .FirstOrDefault(c => c.LogId == LogId);
+            var Correctives = _context.ComplaintCorrectiveInfo
+                .Where(c => c.LogId == LogId)
+                .Any();
+            bool TestPassed = true;
+            if(Correctives == false)
+            {
+                TestPassed = false;
+                ErrorList.Add("Correctives : Corrective Information for the Log has not been submitted");
+            }
+
+            return TestPassed;
+        }
+
+        public bool CheckResponsibility(int LogId, IList<string> ErrorList)
+        {
+            var Log = _context.ComplaintLogDetail
+               .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+               .Include(c => c.Priority)
+               .Include(c => c.ComplaintVehicleInfo)
+               .Include(c => c.Customers)
+               .Include(c => c.Level)
+               .Include(c => c.Means)
+               .FirstOrDefault(c => c.LogId == LogId);
+            bool TestPassed = true;
+
+            var CustomerResponsibility = _context.ComplaintResponsibility
+                .Where(c => c.LogId == LogId)
+                .Where(c => c.ResponsibilityPIC == "Customer")
+                .Any();
+            
+            if (CustomerResponsibility == false)
+            {
+                TestPassed = false;
+                ErrorList.Add("Responsibility : Customer responsibility Information for the Log has not been submitted");
+            }
+
+            var VehicleResponsibility = _context.ComplaintResponsibility
+                .Where(c => c.LogId == LogId)
+                .Where(c => c.ResponsibilityPIC == "Vehicle")
+                .Any();
+            if (VehicleResponsibility == false)
+            {
+                TestPassed = false;
+                ErrorList.Add("Responsibility : Vehicle responsibility Information for the Log has not been submitted");
+            }
+            var DealerResponsibility = _context.ComplaintResponsibility
+                .Where(c => c.LogId == LogId)
+                .Where(c => c.ResponsibilityPIC == "Dealer")
+                .Any();
+            if (DealerResponsibility == false)
+            {
+                TestPassed = false;
+                ErrorList.Add("Responsibility : Dealer responsibility Information for the Log has not been submitted");
+            }
+
+            return TestPassed;
         }
 
     }

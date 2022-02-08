@@ -57,6 +57,12 @@ namespace GroupCCP.Data
                     .HasForeignKey(x => x.StaffId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
+
+                entity.HasOne(x => x.ComplaintProductComponent)
+                    .WithMany(x => x.ComplaintCorrectiveInfos)
+                    .HasForeignKey(x => x.CorrectiveComponentId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
             });
 
             modelBuilder.Entity<FollowUpCalls>(entity =>
@@ -105,6 +111,27 @@ namespace GroupCCP.Data
                 entity.HasKey(x => x.AccountId);
             });
 
+            modelBuilder.Entity<ComplaintProductComponent>(entity =>
+            {
+                entity.HasKey(x => x.ProductID);
+                entity.HasData(
+                    new { ProductID = 1, ProductComponent = "Unknown" },
+                    new { ProductID = 2, ProductComponent = "Engine" },
+                    new { ProductID = 3, ProductComponent = "Clutch and Transmission" },
+                    new { ProductID = 4, ProductComponent = "Chasis" },
+                    new { ProductID = 5, ProductComponent = "Steering and Tyre" },
+                    new { ProductID = 6, ProductComponent = "Brake" },
+                    new { ProductID = 7, ProductComponent = "Body" },
+                    new { ProductID = 8, ProductComponent = "Body Interior" },
+                    new { ProductID = 9, ProductComponent = "Door/Window/Sunroof" },
+                    new { ProductID = 10, ProductComponent = "Electrical" },
+                    new { ProductID = 11, ProductComponent = "Hybrid ElectVehicle" },
+                    new { ProductID = 12, ProductComponent = "Special Vehicle" },
+                    new { ProductID = 13, ProductComponent = "Accessories" },
+                    new { ProductID = 14, ProductComponent = "Other" }
+                    );
+            });
+
             modelBuilder.Entity<Roles>(entity =>
             {
                 entity.HasKey(x => x.RoleId);
@@ -141,6 +168,11 @@ namespace GroupCCP.Data
                     new { PermissionId = 14, Entity = "Assignment - Submitted Complaints", Permission = "Edit" },
                     new { PermissionId = 15, Entity = "Assignment - Submitted Complaints", Permission = "Delete" },
 
+                    new { PermissionId = 161, Entity = "Responsibility - Submitted Complaints", Permission = "View" },
+                    new { PermissionId = 162, Entity = "Responsibility - Submitted Complaints", Permission = "Add" },
+                    new { PermissionId = 163, Entity = "Responsibility - Submitted Complaints", Permission = "Edit" },
+                    new { PermissionId = 164, Entity = "Responsibility - Submitted Complaints", Permission = "Delete" },
+
 
                     
                     new { PermissionId = 16, Entity = "Complaint - My Complaints", Permission = "List"},
@@ -166,7 +198,13 @@ namespace GroupCCP.Data
                     new { PermissionId = 30, Entity = "Assignment - My Complaints", Permission = "Delete" },
 
 
-                    
+                    new { PermissionId = 165, Entity = "Responsibility - My Complaints", Permission = "View" },
+                    new { PermissionId = 166, Entity = "Responsibility - My Complaints", Permission = "Add" },
+                    new { PermissionId = 167, Entity = "Responsibility - My Complaints", Permission = "Edit" },
+                    new { PermissionId = 168, Entity = "Responsibility - My Complaints", Permission = "Delete" },
+
+
+
                     new { PermissionId = 31, Entity = "Complaint - Escallated Complaints", Permission = "List"},
                     new { PermissionId = 32, Entity = "Complaint - Escallated Complaints", Permission = "Close"},
                     new { PermissionId = 33, Entity = "Complaint - Escallated Complaints", Permission = "Edit"},
@@ -189,8 +227,13 @@ namespace GroupCCP.Data
                     new { PermissionId = 44, Entity = "Assignment - Escallated Complaints", Permission = "Edit" },
                     new { PermissionId = 45, Entity = "Assignment - Escallated Complaints", Permission = "Delete" },
 
+                    new { PermissionId = 169, Entity = "Responsibility - Escallated Complaints", Permission = "View" },
+                    new { PermissionId = 170, Entity = "Responsibility - Escallated Complaints", Permission = "Add" },
+                    new { PermissionId = 171, Entity = "Responsibility - Escallated Complaints", Permission = "Edit" },
+                    new { PermissionId = 172, Entity = "Responsibility - Escallated Complaints", Permission = "Delete" },
 
-                    
+
+
                     new { PermissionId = 46, Entity = "Complaint - Level Down Complaints", Permission = "List"},
                     new { PermissionId = 47, Entity = "Complaint - Level Down Complaints", Permission = "Close"},
                     new { PermissionId = 48, Entity = "Complaint - Level Down Complaints", Permission = "Edit"},
@@ -213,8 +256,15 @@ namespace GroupCCP.Data
                     new { PermissionId = 59, Entity = "Assignment - Level Down Complaints", Permission = "Edit" },
                     new { PermissionId = 60, Entity = "Assignment - Level Down Complaints", Permission = "Delete" },
 
+                    new { PermissionId = 173, Entity = "Responsibility - Level Down Complaints", Permission = "View" },
+                    new { PermissionId = 174, Entity = "Responsibility - Level Down Complaints", Permission = "Add" },
+                    new { PermissionId = 175, Entity = "Responsibility - Level Down Complaints", Permission = "Edit" },
+                    new { PermissionId = 176, Entity = "Responsibility - Level Down Complaints", Permission = "Delete" },
+
+
                     new { PermissionId = 61, Entity = "Complaint", Permission = "Add" },
                     new { PermissionId = 62, Entity = "Customer", Permission = "Add" },
+                    new { PermissionId = 160, Entity = "Vehicle", Permission = "Add" },
 
                     // Admin Permissions
                     new { PermissionId = 77, Entity = "Admin - Home", Permission = "View" },
@@ -283,7 +333,43 @@ namespace GroupCCP.Data
                     new { PermissionId = 126, Entity = "Admin - StaffAccounts", Permission = "Edit" },
                     new { PermissionId = 127, Entity = "Admin - StaffAccounts", Permission = "Delete" },
                     new { PermissionId = 128, Entity = "Admin - StaffAccounts", Permission = "Create" },
-                    new { PermissionId = 129, Entity = "Admin - StaffAccounts", Permission = "View" }
+                    new { PermissionId = 129, Entity = "Admin - StaffAccounts", Permission = "View" },
+
+                    new { PermissionId = 130, Entity = "Admin - LevelMemberships", Permission = "List" },
+                    new { PermissionId = 131, Entity = "Admin - LevelMemberships", Permission = "Edit" },
+                    new { PermissionId = 132, Entity = "Admin - LevelMemberships", Permission = "Delete" },
+                    new { PermissionId = 133, Entity = "Admin - LevelMemberships", Permission = "Create" },
+                    new { PermissionId = 134, Entity = "Admin - LevelMemberships", Permission = "View" },
+
+                    new { PermissionId = 135, Entity = "Admin - RoleAssignments", Permission = "List" },
+                    new { PermissionId = 136, Entity = "Admin - RoleAssignments", Permission = "Edit" },
+                    new { PermissionId = 137, Entity = "Admin - RoleAssignments", Permission = "Delete" },
+                    new { PermissionId = 138, Entity = "Admin - RoleAssignments", Permission = "Create" },
+                    new { PermissionId = 139, Entity = "Admin - RoleAssignments", Permission = "View" },
+
+                    new { PermissionId = 140, Entity = "Admin - PermissionAssignments", Permission = "List" },
+                    new { PermissionId = 141, Entity = "Admin - PermissionAssignments", Permission = "Edit" },
+                    new { PermissionId = 142, Entity = "Admin - PermissionAssignments", Permission = "Delete" },
+                    new { PermissionId = 143, Entity = "Admin - PermissionAssignments", Permission = "Create" },
+                    new { PermissionId = 144, Entity = "Admin - PermissionAssignments", Permission = "View" },
+
+                    new { PermissionId = 145, Entity = "Admin - Timelines", Permission = "List" },
+                    new { PermissionId = 146, Entity = "Admin - Timelines", Permission = "Edit" },
+                    new { PermissionId = 147, Entity = "Admin - Timelines", Permission = "Delete" },
+                    new { PermissionId = 148, Entity = "Admin - Timelines", Permission = "Create" },
+                    new { PermissionId = 149, Entity = "Admin - Timelines", Permission = "View" },
+
+                    new { PermissionId = 150, Entity = "Admin - Companies", Permission = "List" },
+                    new { PermissionId = 151, Entity = "Admin - Companies", Permission = "Edit" },
+                    new { PermissionId = 152, Entity = "Admin - Companies", Permission = "Delete" },
+                    new { PermissionId = 153, Entity = "Admin - Companies", Permission = "Create" },
+                    new { PermissionId = 154, Entity = "Admin - Companies", Permission = "View" },
+
+                    new { PermissionId = 155, Entity = "Admin - Roles", Permission = "List" },
+                    new { PermissionId = 156, Entity = "Admin - Roles", Permission = "Edit" },
+                    new { PermissionId = 157, Entity = "Admin - Roles", Permission = "Delete" },
+                    new { PermissionId = 158, Entity = "Admin - Roles", Permission = "Create" },
+                    new { PermissionId = 159, Entity = "Admin - Roles", Permission = "View" }
 
                     );
             });
@@ -336,6 +422,16 @@ namespace GroupCCP.Data
                     .IsRequired(true);
             });
 
+            modelBuilder.Entity<ComplaintResponsibility>(entity =>
+            {
+                entity.HasKey(x => x.ResponsibilityId);
+                entity.HasOne(x => x.Log)
+                    .WithMany(x => x.ComplaintResponsibilities)
+                    .HasForeignKey(x => x.LogId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+            });
+
             modelBuilder.Entity<LevelCategory>(entity =>
             {
                 entity.HasKey(x => x.LevelCategoryId);
@@ -354,6 +450,16 @@ namespace GroupCCP.Data
                 entity.HasOne(x => x.ParentLevel)
                     .WithMany(x => x.ChildLevels)
                     .HasForeignKey(x => x.ParentId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(false);
+            });
+
+            modelBuilder.Entity<ComplaintVehicleInfo>(entity =>
+            {
+                entity.HasKey(x => x.VehicleId);
+                entity.HasOne(x => x.Brands)
+                    .WithMany(x => x.complaintVehicleInfos)
+                    .HasForeignKey(x => x.VehicleBrandId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(false);
             });
@@ -403,9 +509,9 @@ namespace GroupCCP.Data
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
 
-                entity.HasOne(x => x.Brands)
-                    .WithMany(x => x.ComplaintLogDetails)
-                    .HasForeignKey(x => x.BrandId)
+                entity.HasOne(x => x.ComplaintVehicleInfo)
+                    .WithMany(x => x.Logs)
+                    .HasForeignKey(x => x.VehicleId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
 
@@ -515,6 +621,9 @@ namespace GroupCCP.Data
         public DbSet<GroupCCP.Models.Timelines> Timelines { get; set; }
         public DbSet<GroupCCP.Models.OverdueReminder> OverdueReminder { get; set; }
         public DbSet<GroupCCP.Models.Priority> Priority { get; set; }
+        public DbSet<GroupCCP.Models.ComplaintProductComponent>  ComplaintProductComponent{ get; set; }
+        public DbSet<GroupCCP.Models.ComplaintVehicleInfo> ComplaintVehicleInfo { get; set; }
+        public DbSet<GroupCCP.Models.ComplaintResponsibility> ComplaintResponsibility { get; set; }
         
     }
 }

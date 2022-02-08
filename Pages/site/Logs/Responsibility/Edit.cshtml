@@ -1,0 +1,113 @@
+﻿@page
+@model GroupCCP.Pages.site.Logs.Responsibility.EditModel
+
+@{
+    ViewData["PageTitle"] = Model.PageTitle;
+    Layout = "~/Pages/Shared/_SystemLayout.cshtml";
+}
+
+<section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="./Index" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId">Logs</a></li>
+                <li class="breadcrumb-item"><a asp-page="../Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId">Log @Model.ComplaintLogDetail.LogId</a></li>
+                <li class="breadcrumb-item">Edit Responsibility</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div style="margin-bottom: 10px; width: 100%">
+            <partial name="menu" />
+        </div>
+        @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+
+                <!--Assignment Assignment Details-->
+                <div class="card container-fluid">
+                    <div class="card-header">
+                        <h4 class="float-left">Log @Model.ComplaintLogDetail.LogId Responsibility</h4>
+                        @if(Model.LogResponsibilityDeletePerm)
+                        {
+                            <a asp-page="./Delete" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId" asp-route-ResponsibilityId="@Model.ComplaintResponsibility.ResponsibilityId"><div class="nav-link float-right btn btn-danger  text-white">Delete</div></a>    
+                        }
+                        @if(Model.LogResponsibilityAddPerm)
+                        {
+                            <a asp-page="./Create" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogType="@Model.LogTypeId" asp-route-LogId="@Model.ComplaintLogDetail.LogId"><div class="nav-link float-right btn btn-info  text-white">New</div></a>
+                        }
+                    
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="ComplaintResponsibility.ResponsibilityId" />
+                            <div class="form-group">
+                                <label asp-for="ComplaintResponsibility.ResponsibilityPIC" class="control-label"></label>
+                                <select asp-for="ComplaintResponsibility.ResponsibilityPIC" class ="form-control">
+                                    <option value="">----</option>
+                                    <option value="Customer">Customer</option>
+                                    <option value="Vehicle">Vehicle</option>
+                                    <option value="Dealer">Dealer</option>
+                                </select>
+                                <span asp-validation-for="ComplaintResponsibility.ResponsibilityPIC" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintResponsibility.ResponsibilityLevel" class="control-label"></label>
+                                <select asp-for="ComplaintResponsibility.ResponsibilityLevel" class ="form-control">
+                                    <option value="">----</option>
+                                    <option value="None">None</option>
+                                    <option value="Small">Small</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Large">Large</option>
+                                </select>
+                                <span asp-validation-for="ComplaintResponsibility.ResponsibilityLevel" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintResponsibility.ResponsibilityReason" class="control-label"></label>
+                                <input asp-for="ComplaintResponsibility.ResponsibilityReason" class="form-control" />
+                                <span asp-validation-for="ComplaintResponsibility.ResponsibilityReason" class="text-danger"></span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="float-right" style="margin:5px">
+                                    <input type="submit" value="Update Corrective" class="btn btn-sm btn-primary py-0" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+    </div>
+</section>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

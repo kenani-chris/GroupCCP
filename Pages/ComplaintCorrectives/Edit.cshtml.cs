@@ -31,6 +31,7 @@ namespace GroupCCP.Pages.ComplaintCorrectives
             }
 
             ComplaintCorrectiveInfo = await _context.ComplaintCorrectiveInfo
+                .Include(c => c.ComplaintProductComponent)
                 .Include(c => c.Log)
                 .Include(c => c.StaffAccount).FirstOrDefaultAsync(m => m.CorrectiveId == id);
 
@@ -38,6 +39,7 @@ namespace GroupCCP.Pages.ComplaintCorrectives
             {
                 return NotFound();
             }
+           ViewData["CorrectiveComponentId"] = new SelectList(_context.ComplaintProductComponent, "ProductID", "ProductID");
            ViewData["LogId"] = new SelectList(_context.ComplaintLogDetail, "LogId", "LogId");
            ViewData["StaffId"] = new SelectList(_context.StaffAccount, "AccountId", "UserId");
             return Page();

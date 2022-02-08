@@ -31,7 +31,7 @@ namespace GroupCCP.Pages.ComplaintLogDetails
             }
 
             ComplaintLogDetail = await _context.ComplaintLogDetail
-                .Include(c => c.Brands)
+                .Include(c => c.ComplaintVehicleInfo)
                 .Include(c => c.Customers)
                 .Include(c => c.Level)
                 .Include(c => c.Means)
@@ -43,7 +43,7 @@ namespace GroupCCP.Pages.ComplaintLogDetails
             {
                 return NotFound();
             }
-           ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId");
+           ViewData["VehicleId"] = new SelectList(_context.ComplaintVehicleInfo, "VehicleId", "VehicleId");
            ViewData["LogCustomerId"] = new SelectList(_context.ComplaintCustomerInfo, "CustomerId", "CustomerId");
            ViewData["LogLevelId"] = new SelectList(_context.Level, "LevelId", "LevelName");
            ViewData["LogMeansId"] = new SelectList(_context.ComplaintReceiveMeans, "MeansId", "Means");

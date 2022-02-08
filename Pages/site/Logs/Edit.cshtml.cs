@@ -46,6 +46,7 @@ namespace GroupCCP.Pages.site.Logs
 
                 ComplaintLogDetail = await _context.ComplaintLogDetail
                     .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                    .Include(c => c.ComplaintVehicleInfo)
                     .Include(c => c.Customers)
                     .Include(c => c.Level)
                     .Include(c => c.Means)
@@ -81,6 +82,8 @@ namespace GroupCCP.Pages.site.Logs
 
             ViewData["LogCustomerId"] = new SelectList(_context.ComplaintCustomerInfo
                 .Where(c => c.Company == Company), "CustomerId", "Customer");
+            ViewData["VehicleId"] = new SelectList(_context.ComplaintVehicleInfo, "VehicleId", "VehicleRegistrationNumber");
+            ViewData["PriorityId"] = new SelectList(_context.Priority, "PriorityId", "PriorityName");
             ViewData["LogLevelId"] = new SelectList(_context.Level
                 .Include(c => c.LevelCategory)
                 .ThenInclude(c => c.Company)
