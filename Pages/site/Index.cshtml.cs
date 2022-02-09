@@ -31,6 +31,7 @@ namespace GroupCCP.Pages.site
         public string PermissionEntity {get; set;}
         public bool StaffHasPerm { get; set; }
         public IList<string> PageLists { get; set; }
+        public IList<int> WeekResults { get; set; }
         public async Task<IActionResult> OnGetAsync(int? CompanyId)
         {
             //Check Passed Parameters if are ok
@@ -70,6 +71,23 @@ namespace GroupCCP.Pages.site
             }
             
             MyLogs = await _context.ComplaintAssignment.Where(c => c.Staff == StaffAccount).ToListAsync();
+            WeekResults = new List<int>();
+            var ThisLogs = await _context.ComplaintLogDetail.Where(c => c.StaffAccount == StaffAccount).ToListAsync();
+
+            for (int i = 1; i < 8; i++)
+            {
+                var TheDate = DateTime.Now - TimeSpan.FromDays(i);
+                var DayStart = TheDate.Date.Add(new TimeSpan(0, 0, 0));
+                var DayEnd = TheDate.Date.Add(new TimeSpan(23, 59, 59));
+
+                var TheLogs = ThisLogs
+                    .Where(c => DateTime.Parse(c.StatusSubmitDate) >= DayStart)
+                    .Where(c => DateTime.Parse(c.StatusSubmitDate) <= DayEnd);
+
+                Console.WriteLine(TheDate.ToString() + " - " + i.ToString() + " - " + TheLogs.Count().ToString());
+                WeekResults.Add(TheLogs.Count());
+            }
+            
             MyAssignedLogs = await _context.ComplaintAssignment.Include(c => c.Log).ThenInclude(c => c.Status).Where(c => c.Staff == StaffAccount).ToListAsync();
             
             foreach (var item in MyLogs)
@@ -92,7 +110,7 @@ namespace GroupCCP.Pages.site
                 {
                     MyUnAttendedLogs.Add(item);
                 }
-                if (item.Log.Status.Status == "Wip")
+                if (item.Log.Status.Status == "WIP")
                 {
                     MyWIPLogs.Add(item);
                 }

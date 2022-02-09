@@ -191,7 +191,7 @@
         $('.my-select').selectpicker();
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jquery.vmap.min.js" integrity="sha512-Zk7h8Wpn6b9LpplWXq1qXpnzJl8gHPfZFf8+aR4aO/4bcOD5+/Si4iNu9qE38/t/j1qFKJ08KWX34d2xmG0jrA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js" integrity="sha512-NhRZzPdzMOMf005Xmd4JonwPftz4Pe99mRVcFeRDcdCtfjv46zPIi/7ZKScbpHD/V0HB1Eb+ZWigMqw94VUVaw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -243,6 +243,88 @@
                 "autoWidth": false,
                 "responsive": true,
             });
+        });
+    </script>
+    <script>
+        var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+        
+        var date = new Date();
+        date.setDate(date.getDate() - 1);
+        var Day1 = days[date.getDay()];
+        
+        var date = new Date();
+        date.setDate(date.getDate() - 2);
+        var Day2 = days[date.getDay()];
+        
+        var date = new Date();
+        date.setDate(date.getDate() - 3);
+        var Day3 = days[date.getDay()];
+        
+        var date = new Date();
+        date.setDate(date.getDate() - 4);
+        var Day4 = days[date.getDay()];
+        
+        var date = new Date();
+        date.setDate(date.getDate() - 5);
+        var Day5 = days[date.getDay()];
+        
+        var date = new Date();
+        date.setDate(date.getDate() - 6);
+        var Day6 = days[date.getDay()];
+        
+        var date = new Date();
+        date.setDate(date.getDate() - 7);
+        var Day7 = days[date.getDay()];
+        
+        const labels = [Day7, Day6, Day5, Day4, Day3, Day2, Day1];
+        const ctx = document.getElementById('myChart').getContext('2d');
+       
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'My First Dataset',
+                    data: [@ViewData["Day7"], @ViewData["Day7"], @ViewData["Day6"], @ViewData["Day5"], @ViewData["Day4"], @ViewData["Day3"], @ViewData["Day2"], @ViewData["Day1"]],
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        const ctx2 = document.getElementById('myChart2').getContext('2d');
+        const labels2 = [
+            'Closed',
+            'Resolved',
+            'WIP',
+            'Unattended'
+          ];
+        const myChart2 = new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: labels2,
+                datasets: [{
+                    label: 'My First Dataset',
+                    data: [@ViewData["MyLogs"], @ViewData["ResolvedLogs"], @ViewData["WIPLogs"], @ViewData["UnAttendedLogs"]],
+                    fill: false,
+                    backgroundColor: [
+                        'rgb(40,167,69)',
+                        'rgb(32,201,151)',
+                        'rgb(255,193,7)',
+                        'rgb(220,53,69)'
+                    ],
+                    hoverOffset: 4
+                }]
+            }
         });
     </script>
     @await RenderSectionAsync("Scripts", required: false)

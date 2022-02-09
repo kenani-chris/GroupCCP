@@ -4,6 +4,21 @@
     ViewData["Title"] = "Dashboard";
     ViewData["PageTitle"] = "Dashboard";
     Layout = "/Pages/Shared/_SystemLayout.cshtml";
+
+    ViewData["MyLogs"] = Model.MyAssignedLogs.Count();
+    ViewData["ResolvedLogs"] = Model.MyResolvedLogs.Count();
+    ViewData["WIPLogs"] = Model.MyWIPLogs.Count();
+    ViewData["UnAttendedLogs"] = Model.MyUnAttendedLogs.Count();
+
+    ViewData["Day1"] = Model.WeekResults[1];
+    ViewData["Day2"] = Model.WeekResults[2];
+    ViewData["Day3"] = Model.WeekResults[3];
+    ViewData["Day4"] = Model.WeekResults[4];
+    ViewData["Day5"] = Model.WeekResults[5];
+    ViewData["Day6"] = Model.WeekResults[6];
+    ViewData["Day7"] = Model.WeekResults[7];
+
+    
 }
  <section class="content-header container-fluid">
     <div class="container-fluid row">
@@ -31,7 +46,6 @@ else
         <div class="small-box bg-info">
             <div class="inner">
             <h3>@Model.MyAssignedLogs.Count</h3>
-
             <p>My Logs</p>
             </div>
             <div class="icon">
@@ -84,88 +98,53 @@ else
         <!-- ./col -->
     </div>
     <div class="container-fluid row">
-        <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header border-0">
-            <div class="d-flex justify-content-between">
-                <h3 class="card-title">Customer Complaints</h3>
-                <a href="javascript:void(0);">View Report</a>
-            </div>
-            </div>
-            <div class="card-body">
-            <div class="d-flex">
-                <p class="d-flex flex-column">
-                <span class="text-bold text-lg">0</span>
-                <span>Complaints Over Time</span>
-                </p>
-                <p class="ml-auto d-flex flex-column text-right">
-                <span class="text-success">
-                    <i class="fas fa-arrow-up"></i> 0%
-                </span>
-                <span class="text-muted">Since last week</span>
-                </p>
-            </div>
-            <!-- /.d-flex -->
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
+                </div>
+                </div>
+                <div class="card-body">
+                <div class="d-flex">
+                    <p class="d-flex flex-column">
+                    <span class="text-bold text-lg">0</span>
+                    <span>Complaints Over Time</span>
+                    </p>
+                    <p class="ml-auto d-flex flex-column text-right">
+                    <span class="text-success">
+                        <i class="fas fa-arrow-up"></i> 0%
+                    </span>
+                    <span class="text-muted">Since last week</span>
+                    </p>
+                </div>
+                <!-- /.d-flex -->
 
-            <div class="position-relative mb-4">
-                <canvas id="visitors-chart" height="200"></canvas>
-            </div>
+                <div class="position-relative mb-4">
+                    <canvas id="myChart" height="100"></canvas>
+                </div>
 
-            <div class="d-flex flex-row justify-content-end">
-                <span class="mr-2">
-                <i class="fas fa-square text-primary"></i> This Week
-                </span>
-
-                <span>
-                <i class="fas fa-square text-gray"></i> Last Week
-                </span>
+                
+                </div>
             </div>
-            </div>
-        </div>
         <!-- /.card -->
         </div>
         <!-- /.col-md-6 -->
-        <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header border-0">
-            <div class="d-flex justify-content-between">
-                <h3 class="card-title">Closed Customer Complaints</h3>
-                <a href="javascript:void(0);">View Report</a>
-            </div>
-            </div>
-            <div class="card-body">
-            <div class="d-flex">
-                <p class="d-flex flex-column">
-                <span class="text-bold text-lg">0</span>
-                <span>Closed Over Time</span>
-                </p>
-                <p class="ml-auto d-flex flex-column text-right">
-                <span class="text-success">
-                    <i class="fas fa-arrow-up"></i> 0%
-                </span>
-                <span class="text-muted">Since last month</span>
-                </p>
-            </div>
-            <!-- /.d-flex -->
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
+                </div>
+                </div>
+                <div class="card-body">
 
-            <div class="position-relative mb-4">
-                <canvas id="sales-chart" height="200"></canvas>
+                    <div class="position-relative mb-4">
+                        <canvas id="myChart2" height="10"></canvas>
+                    </div>
+                </div>
             </div>
-
-            <div class="d-flex flex-row justify-content-end">
-                <span class="mr-2">
-                <i class="fas fa-square text-primary"></i> This year
-                </span>
-
-                <span>
-                <i class="fas fa-square text-gray"></i> Last year
-                </span>
-            </div>
-            </div>
-        </div>
-        <!-- /.card -->
+            <!-- /.card -->
 
         </div>
         <!-- /.col-md-6 -->
     </div>
-}
+} 
