@@ -74,7 +74,7 @@ namespace GroupCCP.Pages.site
             WeekResults = new List<int>();
             var ThisLogs = await _context.ComplaintLogDetail.Where(c => c.StaffAccount == StaffAccount).ToListAsync();
 
-            for (int i = 1; i < 8; i++)
+            for (int i = 0; i < 8; i++)
             {
                 var TheDate = DateTime.Now - TimeSpan.FromDays(i);
                 var DayStart = TheDate.Date.Add(new TimeSpan(0, 0, 0));

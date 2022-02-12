@@ -71,7 +71,7 @@ namespace GroupCCP.Pages.site.Logs
 
             //Other Context Objects
             PageTitle = Default.GetLogType(LogTypeId) + " Complaints - List";
-            ComplaintLogDetail = (IList<ComplaintLogDetail>)Default.GetLog(LogTypeId, StaffAccount.AccountId).OrderByDescending(c => c.LogId).ToList();
+            ComplaintLogDetail = (IList<ComplaintLogDetail>)Default.GetLog(LogTypeId, StaffAccount.AccountId).OrderByDescending(c => c.StatusSubmitDate).ToList();
     
             return Page();
         }

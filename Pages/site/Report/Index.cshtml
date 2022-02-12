@@ -1,0 +1,102 @@
+﻿@page
+@model GroupCCP.Pages.site.Report.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_SystemLayout.cshtml";
+}
+
+
+ <section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item">Report</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row container-fluid card-body">
+            @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card card-default container-fluid">
+              
+                    <div class="card-body container-fluid" style="overflow-x: auto">
+                        <table id="ReportTable" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Received Date</th>
+                                    <th>Means</th>
+                                    <th>Level</th>
+                                    <th>PIC</th>
+                                    <th>CR Support</th>
+                                    <th>Reg</th>
+                                    <th>Model</th>
+                                    <th>Customer</th>
+                                    <th>Customer Cell</th>
+                                    <th>Complainr</th>
+                                    <th>Request</th>
+                                    <th>Root Cause</th>
+                                    <th>Corrective Action</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Progress Update</th>
+                                    <th>Customer Discussion</th>
+                                    <th>Kaizen/OCR</th>
+                                    <th>Satisfaction 24hrs</th>
+                                    <th>Satisfaction 48hrs</th>
+                                    <th>Satisfaction 72hrs</th>
+                                    <th>Close Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var record in Model.Records)
+                                {
+                                    <tr>
+                                        @foreach (var item in record)
+                                        {
+                                            <td>
+                                                @item
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+    

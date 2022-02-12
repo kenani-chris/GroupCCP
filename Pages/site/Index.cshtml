@@ -10,13 +10,14 @@
     ViewData["WIPLogs"] = Model.MyWIPLogs.Count();
     ViewData["UnAttendedLogs"] = Model.MyUnAttendedLogs.Count();
 
-    ViewData["Day1"] = Model.WeekResults[1];
-    ViewData["Day2"] = Model.WeekResults[2];
-    ViewData["Day3"] = Model.WeekResults[3];
-    ViewData["Day4"] = Model.WeekResults[4];
-    ViewData["Day5"] = Model.WeekResults[5];
-    ViewData["Day6"] = Model.WeekResults[6];
-    ViewData["Day7"] = Model.WeekResults[7];
+    ViewData["Day1"] = Model.WeekResults[0];
+    ViewData["Day2"] = Model.WeekResults[1];
+    ViewData["Day3"] = Model.WeekResults[2];
+    ViewData["Day4"] = Model.WeekResults[3];
+    ViewData["Day5"] = Model.WeekResults[4];
+    ViewData["Day6"] = Model.WeekResults[5];
+    ViewData["Day7"] = Model.WeekResults[6];
+    ViewData["Day0"] = Model.WeekResults[7];
 
     
 }

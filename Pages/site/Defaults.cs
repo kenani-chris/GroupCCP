@@ -231,6 +231,43 @@ namespace GroupCCP.Pages.site
             return LogDetails;
 
         }
+        public IList<ComplaintLogDetail> GetLevelAndLevelDownLogs(int StaffId)
+        {
+            var Memberships = _context.LevelMemberships
+                .Include(c => c.Level)
+                .Where(c => c.LevelId == StaffId)
+                .First();
+
+            IList <Level> LevelsDown = GetLevelDown(StaffId);
+            if(Memberships != null)
+            {
+                LevelsDown.Add(Memberships.Level);
+            }
+            
+            IList<ComplaintLogDetail> LogDetails = new List<ComplaintLogDetail>();
+            if (LevelsDown != null)
+            {
+                foreach(var LevelDown in LevelsDown)
+                {
+                    var Logs = _context.ComplaintLogDetail
+                        .Include(c => c.ComplaintVehicleInfo)
+                        .Include(c => c.Status)
+                        .Include(c => c.Means)
+                        .Include(c => c.Level)
+                        .Include(c => c.Customers)
+                        .Include(c => c.Priority)
+                        .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                        .Where(c => c.Level == LevelDown)
+                        .ToList();
+                    if(Logs != null)
+                    {
+                        LogDetails.AddRange(Logs);
+                    }
+                }
+            }
+            return LogDetails;
+
+        }
 
         public IList<Level> GetLevelDown(int StaffId)
         {
@@ -263,6 +300,70 @@ namespace GroupCCP.Pages.site
                     RecursiveLevelDown(child, Levels);
                 }
             }
+        }
+
+
+        public StaffAccount GetStaffAssignedLog(int LogId)
+        {
+            return _context.ComplaintAssignment
+                .Include(c => c.Staff).ThenInclude(c => c.User)
+                .Where(c => c.LogId == LogId)
+                .OrderByDescending(c => c.AssignmentId)
+                .FirstOrDefault().Staff;
+        }
+
+        public IList<string> GetCorrectives(int LogId)
+        {
+            var Summary = "";
+            var Correctives = _context.ComplaintCorrectiveInfo
+                .Where(c => c.LogId == LogId);
+
+            IList<string> CorrectivesList = new List<string>();
+            var RootCause = "";
+            var CorrectiveAction = "";
+
+            foreach (var Corrective in Correctives)
+            {
+                RootCause  += "\n" + Corrective.RouteCause;
+                CorrectiveAction += "\n" + Corrective.CorrectiveAction;
+            }
+
+            CorrectivesList.Add(RootCause);
+            CorrectivesList.Add(CorrectiveAction);
+
+            return CorrectivesList;
+        }
+
+        public IList<ComplaintFollowUp> GetLogFollowUps(int LogId)
+        {
+            return _context.ComplaintFollowUp
+                .Include(c => c.FollowUpCalls)
+                .Where(c => c.LogId == LogId)
+                .ToList();
+        }
+
+        public string GetLogSummaryDiscussion(int LogId)
+        {
+            var Discussion = "";
+            foreach(var Summary in GetLogFollowUps(LogId))
+            {
+                Discussion = "\n" + Summary.FollowUpFeedback;
+            }
+            return Discussion;
+        }
+
+        public string SatisfactionCheck(int LogId, string Satisfaction)
+        {
+            var FollowUps = GetLogFollowUps(LogId).Where(c => c.FollowUpCalls.FollowUpType == Satisfaction);
+            if(FollowUps  == null)
+            {
+                return "Yes";
+            }
+            else
+            {
+                return "No";
+            }
+
         }
 
     }
