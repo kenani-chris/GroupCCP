@@ -1,13 +1,21 @@
 ﻿@page
 @model GroupCCP.Pages.site.Report.OCRModel
 @{
+    
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_SystemLayout.cshtml";
 }
+<style>
+    tr{
+        height: 10px;
+    }
+</style>
 
 <table>
     <thead>
 
     </thead>
-    <tbody>
+    <tbody class="table table-bordered">
         <tr></tr>
         <tr>
             <td colspan="6"><h1>OCR For General Complaint Handling</h1></td>
@@ -179,6 +187,121 @@
             <td colspan="14">CAUSE OF PROBLEM *Description given of further investigation results and level of responsibility</td>
             <td></td>
         </tr>
+        <tr>
+            <td colspan="16"></td>
+        </tr>
+        
+        <tr>
+            <td colspan="16">level of responsibility</td>
+        </tr>
+        <tr>
+            <td colspan="5">Customer</td>
+            <td colspan="5">Vehicle</td>
+            <td colspan="6">Distributor/Dealer</td>
+        </tr>
+        <tr>
+            <td colspan="3">Responsibility</td>
+            <td colspan="3"></td>
+            <td colspan="3">Responsibility</td>
+            <td colspan="3"></td>
+            <td colspan="3">Responsibility</td>
+            <td colspan="4"></td>
+        </tr>
+        <tr>
+            <td colspan="3">Reason</td>
+            <td colspan="3"></td>
+            <td colspan="3">Reason</td>
+            <td colspan="3"></td>
+            <td colspan="3">Reason</td>
+            <td colspan="4"></td>
+        </tr>
+        
+        <tr>
+            <td colspan="16">Suggested Correction</td>
+        </tr>
+        <tr>
+            <td colspan="16"></td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td colspan="14"></td>
+        </tr>
+        
+        <tr>
+            <td colspan="16">Action Taken to Date</td>
+        </tr>
+        <tr>
+            <td colspan="12" rowspan="2"></td>
+            <td>Complaint Status
+                <td>Date</td>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        
+        <tr>
+            <td colspan="16">Difficulty in Complaint handling</td>
+        </tr>
+        <tr>
+            <td colspan="2">Request support for CRM</td>
+            <td colspam="6"></td>
+            <td >OR</td>
+            <td colspan="2">Handover Complaint to distributor CRM</td>
+            <td colspam="6"></td>
+        </tr>
+        <tr>
+            <td colspan="2">Comment</td>
+            <td colspan="14"></td>
+        </tr>
+        <tr>
+            <td colspan="16">Followup on complaint</td>
+        </tr>
+        <tr>
+            <td colspan="2">Date of Call</td>
+            <td colspan="6"></td>
+            <td colspan="2">Time Taken</td>
+            <td colspan="6"></td>
+        </tr>
+        <tr>
+            <td colspan="2">Customer Satisfied</td>
+            <td colspan="6"></td>
+            <td colspan="2">Parts cost</td>
+            <td colspan="6"></td>
+        </tr>
+        <tr>
+            <td colspan="2">Date Closed</td>
+            <td colspan="6"></td>
+            <td colspan="2">Other cost</td>
+            <td colspan="6"></td>
+        </tr>
+
+        
+        <tr>
+            <td colspan="16">Steps to prevent reccurence</td>
+        </tr>
+        <tr>
+            <td colspan="16"></td>
+        </tr>
+        <tr>
+            <td colspan="16">Kaizen Action</td>
+        </tr>
+        <tr>
+            <td colspan="16"></td>
+        </tr>
+
+        <tr class="text-left">
+            <td colspan="16">Branch Dept Manager Name                                       </td>
+        </tr>
+        <tr>
+            <td colspan="16">Signature                                      </td>
+        </tr>
+        <tr>
+            <td colspan="16">Date                                           </td>
+        </tr>
+
+
 
     </tbody>
 </table>

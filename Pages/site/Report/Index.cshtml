@@ -86,7 +86,14 @@
                                         @foreach (var item in record)
                                         {
                                             <td>
-                                                @item
+                                                @if(item == record[0])
+                                                {
+                                                    <a asp-page="./OCR" asp-route-CompanyId="@Model.CompanyId" asp-route-LogId="@Model.ComplaintLogDetail">item</a>
+                                                }
+                                                else
+                                                {
+                                                    @item   
+                                                }
                                             </td>
                                         }
                                     </tr>
