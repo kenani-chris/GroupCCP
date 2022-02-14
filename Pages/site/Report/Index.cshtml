@@ -88,7 +88,15 @@
                                             <td>
                                                 @if(item == record[0])
                                                 {
-                                                    <a asp-page="./OCR" asp-route-CompanyId="@Model.CompanyId" asp-route-LogId="@Model.ComplaintLogDetail">item</a>
+                                                    @if(record[14]=="Resolved")
+                                                    {
+                                                        <a asp-page="./OCR" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogId="@item">Log @item</a>
+                                                    }
+                                                   else
+                                                    {
+                                                        @item
+                                                    }
+
                                                 }
                                                 else
                                                 {

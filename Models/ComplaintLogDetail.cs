@@ -21,6 +21,7 @@ namespace GroupCCP.Models
         [Display(Name = "Registration Number")]
         public int VehicleId { get; set; }
         public ComplaintVehicleInfo ComplaintVehicleInfo { get; set; }
+        public string VehicleMileage { get; set; }
         [Display(Name = "Receive Means")]
         public int LogMeansId { get; set; } 
         public ComplaintReceiveMeans Means { get; set; }
@@ -44,7 +45,9 @@ namespace GroupCCP.Models
         public bool LogCustomerSatisfied { get; set; }
         public string LogPreventiveAction { get; set; }
         public string LogKaizenAction { get; set; }
-        
+        [DataType(DataType.Date)]
+        public string LogKaizenImplememntDate { get; set; }
+
         public ICollection<ComplaintResponsibility>  ComplaintResponsibilities { get; set; }
         public ICollection<ComplaintAssignment> Assignments { get; set; }
         public ICollection<ComplaintCorrectiveInfo> Correctives { get; set; }

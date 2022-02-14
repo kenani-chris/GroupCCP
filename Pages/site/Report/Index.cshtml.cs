@@ -114,7 +114,7 @@ namespace GroupCCP.Pages.site.Report
 
                 IList<string> OneRecord = new List<string>
                 {
-                    "Log " + log.LogId.ToString(), DateReceived, ReceivedMeans, Level, PIC, CRSupportMember, Registration, Model, Customer, CustomerCell, Complaint, Request, RootCause, CorrectiveAction, Status, StatusDate, ProgressUpdate, CustomerDiscussion, KaizenOCR, Satisfaction24, Satisfaction48, Satisfaction72, CloseDate
+                    log.LogId.ToString(), DateReceived, ReceivedMeans, Level, PIC, CRSupportMember, Registration, Model, Customer, CustomerCell, Complaint, Request, RootCause, CorrectiveAction, Status, StatusDate, ProgressUpdate, CustomerDiscussion, KaizenOCR, Satisfaction24, Satisfaction48, Satisfaction72, CloseDate
                 };
 
                 Records.Add(OneRecord);

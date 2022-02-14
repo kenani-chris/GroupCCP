@@ -4,6 +4,7 @@ using GroupCCP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupCCP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220214123023_14022022_1529")]
+    partial class _14022022_1529
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -325,9 +327,6 @@ namespace GroupCCP.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LogKaizenAction")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogKaizenImplememntDate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LogLevelId")

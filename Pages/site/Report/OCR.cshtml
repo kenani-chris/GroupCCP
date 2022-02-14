@@ -6,302 +6,316 @@
     Layout = "~/Pages/Shared/_SystemLayout.cshtml";
 }
 <style>
+    table
+    {
+      table-layout:fixed;
+    }
     tr{
-        height: 10px;
+        height: 40px;
+        width:40px;
+    }
+    td{
+        width:40px;
+        overflow:hidden;
+        word-wrap:break-word;
     }
 </style>
 
-<table>
-    <thead>
-
-    </thead>
-    <tbody class="table table-bordered">
-        <tr></tr>
-        <tr>
-            <td colspan="6"><h1>OCR For General Complaint Handling</h1></td>
-            <td colspan="4"></td>
-            <td colspan="4"></td>
-            <td colspan="6" rowspan="2" class="table-bordered">Note: All Area's in white must be completed by Branch / Dealer Department Manager</td>
-        </tr>
-        <tr></tr>
-        <tr></tr>
-        <tr>
-            <td colspan="16"><h1>OWNER CONTACT REPORT</h1></td>
-        </tr>
-        <tr></tr>
-        <tr></tr>
-        <tr>
-            <td></td>
-            <td class="table-bordered">Ref. No.</td>
-            <td class="table-bordered"></td>
-            <td colspan="2"></td>
-            <td>Initial</td>
-            <td>Update</td>
-            <td>Final</td>
-        </tr>
-        <tr>
-            <td colspan="5"></td>
-            <td>X</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr></tr>
-        <tr class="table-bordered">
-            <td></td>
-            <td>Distributor</td>
-            <td colspan="2">Branch/Dealer</td>
-            <td colspan="2">Department</td>
-            <td colspan="2">Official Vehicle</td>
-            <td colspan="2" rowspan="2">Receipt Date of Customer Complaint:</td>
-            <td colspan="2" rowspan="2"></td>
-            <td rowspan="2">Date OCR Sent to Distributor</td>
-            <td rowspan="2">7 STEPS Complaint Process</td>
-            <td></td>
-        </tr>
-        <tr class="table-bordered">
-            <td></td>
-            <td></td>
-            <td colspan="2"></td>
-            <td colspan="2"></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr class="table-bordered">
-            <td></td>
-            <td colspan="6" class="table-bordered">CUSTOMER INFORMATION</td>
-            <td colspan="7" class="table-bordered">VEHICLE INFORMATION</td>
-            <td></td>
-        </tr>
-        <tr class="table-bordered">
-            <td rowspan="2"></td>
-            <td rowspan="2">Name:</td>
-            <td rowspan="2" colspan="5"></td>
-            <td rowspan="2">Model Year:</td>
-            <td rowspan="2" colspan="2"></td>
-            <td rowspan="2" >Model:</td>
-            <td rowspan="2" colspan="3"></td>
-            <td rowspan="2"></td>
-        </tr>
-        <tr></tr>
-        <tr>
-            <td rowspan="4">Address</td>
-            <td rowspan="4" colspan="5"></td>
-            <td rowspan="2">VIN:</td>
-            <td rowspan="2" colspan="6"></td>
-            <td rowspan="2"></td>
-        </tr>
-        <tr></tr>
-        <tr>
-            <td rowspan="2">Mileage</td>
-            <td rowspan="2"></td>
-            <td colspan="2">KM</td>
-            <td rowspan="2">Date Purchased</td>
-            <td colspan="2" rowspan="2"></td>
-            <td rowspan=2></td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-        <tr class="table-bordered">
-            <td>Tel:</td>
-            <td colspan="2"></td>
-            <td>Company</td>
-            <td colspan="2"></td>
-            <td colspan="2">Reg Number</td>
-            <td colspan="2">Date of Last Service</td>
-            <td colspan="3">Staff Member dealing with Complaint</td>
-            <td></td>
-        </tr>
-        <tr class="table-bordered">
-            <td>Email:</td>
-            <td colspan="5"></td>
-            <td colspan="2"></td>
-            <td colspan="2"></td>
-            <td colspan="3"></td>
-            <td></td>
-        </tr>
-        <tr class="table-bordered">
-            <td></td>
-            <td colspan="14">SUBJECT *Summary of customer’s complaint and request(s)</td>
-            <td></td>
-        </tr>
-        <tr class="table-bordered">
-            <td rowspan="3"></td>
-            <td rowspan="3">Complaint:</td>
-            <td rowspan="3" colspan="13"></td>
-            <td rowspan="3"></td>
-        </tr>
-        <tr></tr>
-        <tr></tr>
-        <tr class="table-bordered">
-            <td rowspan="3"></td>
-            <td rowspan="3">Request:</td>
-            <td rowspan="3" colspan="13"></td>
-            <td rowspan="3"></td>
-        </tr>
-        <tr></tr>
-        <tr></tr>
-        <tr class="table-bordered">
-            <td></td>
-            <td colspan="14">REMARKS *Information included that identified type of customer</td>
-            <td></td>
-        </tr>
-        
-        <tr class="table-bordered">
-            <td rowspan="3"></td>
-            <td rowspan="3">Customer occupation, background or relationship with Toyota:</td>
-            <td rowspan="3" colspan="13"></td>
-            <td rowspan="3"></td>
-        </tr>
-        <tr></tr>
-        <tr></tr>
-        <tr class="table-bordered">
-            <td></td>
-            <td colspan="14">BACKGROUND OF THE CASE * Description given of what happened up including when distributor/dealer did go and see activity and phenomenon of customer’s vehicle</td>
-            <td></td>
-        </tr>
-        <tr class="table-bordered">
-            <td rowspan="2">Has the vehicle / customer come in for an onsite fact Check?</td>
-            <td></td>
-            <td>Date</td>
-            <td>Date</td>
-            <td colspan="9">Product Component</td>
-            <td rowspan="2"></td>
-        </tr>
-        <tr class="table-bordered">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td colspan="9"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td colspan="4" rowspan="2"></td>
-            <td rowspan="2">Sub Component</td>
-            <td colspan="8" rowspan="2"></td> 
-            <td rowspan="2"></td>
-        </tr>
-        <tr></tr>
-        <tr>
-            <td></td>
-            <td colspan="14">CAUSE OF PROBLEM *Description given of further investigation results and level of responsibility</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td colspan="16"></td>
-        </tr>
-        
-        <tr>
-            <td colspan="16">level of responsibility</td>
-        </tr>
-        <tr>
-            <td colspan="5">Customer</td>
-            <td colspan="5">Vehicle</td>
-            <td colspan="6">Distributor/Dealer</td>
-        </tr>
-        <tr>
-            <td colspan="3">Responsibility</td>
-            <td colspan="3"></td>
-            <td colspan="3">Responsibility</td>
-            <td colspan="3"></td>
-            <td colspan="3">Responsibility</td>
-            <td colspan="4"></td>
-        </tr>
-        <tr>
-            <td colspan="3">Reason</td>
-            <td colspan="3"></td>
-            <td colspan="3">Reason</td>
-            <td colspan="3"></td>
-            <td colspan="3">Reason</td>
-            <td colspan="4"></td>
-        </tr>
-        
-        <tr>
-            <td colspan="16">Suggested Correction</td>
-        </tr>
-        <tr>
-            <td colspan="16"></td>
-        </tr>
-        <tr>
-            <td colspan="2"></td>
-            <td colspan="14"></td>
-        </tr>
-        
-        <tr>
-            <td colspan="16">Action Taken to Date</td>
-        </tr>
-        <tr>
-            <td colspan="12" rowspan="2"></td>
-            <td>Complaint Status
-                <td>Date</td>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-        </tr>
-        
-        <tr>
-            <td colspan="16">Difficulty in Complaint handling</td>
-        </tr>
-        <tr>
-            <td colspan="2">Request support for CRM</td>
-            <td colspam="6"></td>
-            <td >OR</td>
-            <td colspan="2">Handover Complaint to distributor CRM</td>
-            <td colspam="6"></td>
-        </tr>
-        <tr>
-            <td colspan="2">Comment</td>
-            <td colspan="14"></td>
-        </tr>
-        <tr>
-            <td colspan="16">Followup on complaint</td>
-        </tr>
-        <tr>
-            <td colspan="2">Date of Call</td>
-            <td colspan="6"></td>
-            <td colspan="2">Time Taken</td>
-            <td colspan="6"></td>
-        </tr>
-        <tr>
-            <td colspan="2">Customer Satisfied</td>
-            <td colspan="6"></td>
-            <td colspan="2">Parts cost</td>
-            <td colspan="6"></td>
-        </tr>
-        <tr>
-            <td colspan="2">Date Closed</td>
-            <td colspan="6"></td>
-            <td colspan="2">Other cost</td>
-            <td colspan="6"></td>
-        </tr>
-
-        
-        <tr>
-            <td colspan="16">Steps to prevent reccurence</td>
-        </tr>
-        <tr>
-            <td colspan="16"></td>
-        </tr>
-        <tr>
-            <td colspan="16">Kaizen Action</td>
-        </tr>
-        <tr>
-            <td colspan="16"></td>
-        </tr>
-
-        <tr class="text-left">
-            <td colspan="16">Branch Dept Manager Name                                       </td>
-        </tr>
-        <tr>
-            <td colspan="16">Signature                                      </td>
-        </tr>
-        <tr>
-            <td colspan="16">Date                                           </td>
-        </tr>
 
 
+ <section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item">Report</li>
+            </ol>
+        </div>
+    </div>
+</section>
 
-    </tbody>
-</table>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row container-fluid card-body">
+            @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card card-default container-fluid">
+              
+                    <div class="card-body container-fluid" style="overflow-x: auto">
+
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th colspan="10">OCR For General Complaint Handling</th>
+                                    <td colspan="6" class="table-bordered">Note: All Area's in white must be completed by Branch / Dealer Department Manager</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="16" class="text-center table-bordered">OWNER CONTACT REPORT</th>
+                                </tr>
+                                <tr>
+                                    <td class="table-bordered" colspan="16"></td>>
+                                </tr>
+                                <tr>
+                                    <td class="table-bordered bg-secondary">Ref. No.</td>
+                                    <td class="table-bordered">@Html.Raw(Model.ComplaintLogDetail.LogId)</td>
+                                    <td colspan="2" class="table-borderless"></td>
+                                    <td class="table-bordered bg-secondary" >Initial</td>
+                                    <td class="table-bordered bg-secondary">Update</td>
+                                    <td class="table-bordered bg-secondary">Final</td>
+                                    <td colspan="9" class="table-bordered"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td class="table-bordered text-center">X</td>
+                                    <td class="table-bordered text-center"></td>
+                                    <td class="table-bordered text-center"></td>
+                                    <td colspan="9" class="table-bordered"></td>
+                                </tr>
+                                
+                                <tr class="table-bordered bg-secondary">
+                                    <th colspan="2">Distributor</th>
+                                    <th colspan="2">Branch/Dealer</th>
+                                    <th colspan="2">Department</th>
+                                    <th colspan="2">Official Vehicle</th>
+                                    <th colspan="2" rowspan="2">Receipt Date of Customer Complaint:</th>
+                                    <th colspan="2" rowspan="2" class="bg-white">@Html.Raw(Model.ComplaintLogDetail.StatusSubmitDate)</th>
+                                    <th colspan="2" rowspan="2">Date OCR Sent to Distributor</th>
+                                    <th colspan="2" rowspan="2" class="bg-white"></th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <td colspan="2">@Html.Raw(Model.Company.CompanyName)</td>
+                                    <td colspan="2">@Html.Raw(Model.ComplaintLogDetail.Level.LevelName)</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="2"></td>
+                                    <td colspan="2"></td>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th colspan="8" class="table-bordered bg-secondary">CUSTOMER INFORMATION</th>
+                                    <th colspan="8" class="table-bordered bg-secondary">VEHICLE INFORMATION</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <td class="bg-secondary">Name:</td>
+                                    <td colspan="5">@Html.Raw(Model.ComplaintLogDetail.Customers.CustomerName)</td>
+                                    <td colspan="2" class="bg-secondary">Model Year:</td>
+                                    <td colspan="2">@Html.Raw(Model.ComplaintLogDetail.ComplaintVehicleInfo.VehiclePurchaseDate)</td>
+                                    <td colspan="2" class="bg-secondary">Model:</td>
+                                    <td colspan="4">@Html.Raw(Model.ComplaintLogDetail.ComplaintVehicleInfo.VehicleModel)</td>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th rowspan="4" class="bg-secondary">Address</th>
+                                    <td rowspan="4" colspan="5">@Html.Raw(Model.ComplaintLogDetail.Customers.CustomerAddress)</td>
+                                    <th rowspan="2" class="bg-secondary">VIN:</th>
+                                    <td rowspan="2" colspan="9">@Html.Raw(Model.ComplaintLogDetail.ComplaintVehicleInfo.VehilcleVIN)</td>
+                                </tr>
+                                <tr class="table-bordered"></tr>
+                                <tr class="table-bordered">
+                                    <th rowspan="2" colspan="2" class="bg-secondary">Mileage</th>
+                                    <td colspan="2">KM</td>
+                                    <th rowspan="2" colspan="2" class="bg-secondary">Date Purchased</th>
+                                    <td colspan="4" rowspan="2">@Html.Raw(Model.ComplaintLogDetail.ComplaintVehicleInfo.VehiclePurchaseDate)</td>
+                                </tr>
+                                <tr></tr>
+                                <tr class="table-bordered">
+                                    <th class="bg-secondary">Tel:</th>
+                                    <td colspan="2">@Html.Raw(Model.ComplaintLogDetail.Customers.CustomerCell)</td>
+                                    <th class="bg-secondary">Company</th>
+                                    <td colspan="3">@Html.Raw(Model.ComplaintLogDetail.Customers.CustomerCompany)</td>
+                                    <th class="bg-secondary" colspan="3">Reg Number</th>
+                                    <th class="bg-secondary" colspan="3">Date of Last Service</th>
+                                    <th class="bg-secondary" colspan="3">Staff Member dealing with Complaint</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th class="bg-secondary">Email:</th>
+                                    <td colspan="6">@Html.Raw(Model.ComplaintLogDetail.Customers.CustomerEmail)</td>
+                                    <td colspan="3">@Html.Raw(Model.ComplaintLogDetail.ComplaintVehicleInfo.VehicleRegistrationNumber)</td>
+                                    <td colspan="3"></td>
+                                    <td colspan="3">thus</td>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th class="bg-secondary" colspan="16">SUBJECT *Summary of customer’s complaint and request(s)</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th rowspan="3" class="bg-secondary">Complaint:</th>
+                                    <td rowspan="3" colspan="15">@Html.Raw(Model.ComplaintLogDetail.CustomerComplaint)</td>
+                                </tr>
+                                <tr></tr>
+                                <tr></tr>
+                                <tr class="table-bordered">
+                                    <th rowspan="3" class="bg-secondary">Request:</th>
+                                    <td rowspan="3" colspan="15">@Html.Raw(Model.ComplaintLogDetail.CustomerRequest)</td>
+                                </tr>
+                                <tr></tr>
+                                <tr></tr>
+                                <tr class="table-bordered">
+                                    <th class="bg-secondary" colspan="16">REMARKS *Information included that identified type of customer</th>
+                                </tr>
+        
+                                <tr class="table-bordered">
+                                    <th class="bg-secondary" rowspan="3">Customer occupation, background or relationship with Toyota:</th>
+                                    <td rowspan="3" colspan="15">@Html.Raw(Model.ComplaintLogDetail.Customers.CustomerOccupation)</td>
+                                </tr>
+                                <tr></tr>
+                                <tr></tr>
+                                <tr class="table-bordered">
+                                    <th class="bg-secondary" colspan="16">BACKGROUND OF THE CASE * Description given of what happened up including when distributor/dealer did go and see activity and phenomenon of customer’s vehicle</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <td rowspan="2" class="bg-secondary">Has the vehicle / customer come in for an onsite fact Check?</td>
+                                    <td></td>
+                                    <th class="bg-secondary">Date</th>
+                                    <td></td>
+                                    <th class="bg-secondary">Product Component</th>
+                                    <td colspan="11">@Html.Raw(Model.OCRValues[0])</td>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <td colspan="3"></td>
+                                    <th class="bg-secondary">Sub Component</th>
+                                    <td colspan="11">@Html.Raw(Model.OCRValues[1])</td> 
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th colspan="16" class="bg-secondary">CAUSE OF PROBLEM *Description given of further investigation results and level of responsibility</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <td colspan="16">@Html.Raw(Model.OCRValues[2])</td>
+                                </tr>
+        
+                                <tr class="table-bordered">
+                                    <th colspan="16" class="bg-secondary">level of responsibility</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th  class="bg-secondary" colspan="5">Customer</th>
+                                    <th  class="bg-secondary" colspan="5">Vehicle</th>
+                                    <th  class="bg-secondary" colspan="6">Distributor/Dealer</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th colspan="2">Responsibility</th>
+                                    <td colspan="3">@Html.Raw(Model.OCRValues[3])</td>
+                                    <th colspan="2">Responsibility</th>
+                                    <td colspan="3">@Html.Raw(Model.OCRValues[5])</td>
+                                    <th colspan="2">Responsibility</th>
+                                    <td colspan="4">@Html.Raw(Model.OCRValues[7])</td>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th colspan="2">Reason</th>
+                                    <td colspan="3">@Html.Raw(Model.OCRValues[4])</td>
+                                    <th colspan="2">Reason</th>
+                                    <td colspan="3">@Html.Raw(Model.OCRValues[6])</td>
+                                    <th colspan="2">Reason</th>
+                                    <td colspan="4">@Html.Raw(Model.OCRValues[8])</td>
+                                </tr>
+        
+                                <tr class="table-bordered bg-secondary ">
+                                    <th colspan="16" class="bg-secondary" >Suggested Correction</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <td colspan="16">@Html.Raw(Model.OCRValues[9])</td>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th colspan="2">Explanation to Customer:</th>
+                                    <td colspan="14">@Html.Raw(Model.OCRValues[10])</td>
+                                </tr>
+                                <tr class="table-bordered"  class="bg-secondary">
+                                    <th colspan="16">Action Taken to Date</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <td colspan="12" rowspan="2"></td>
+                                    <th colspan="2">Complaint Status</th>
+                                    <th colspan="2">Date</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <td colspan="2">@Html.Raw(Model.ComplaintLogDetail.Status.Status)</td>
+                                    <td colspan="2">@Html.Raw(Model.ComplaintLogDetail.StatusClosedDate)</td>
+                                </tr>
+        
+                                <tr class="table-bordered">
+                                    <th class="bg-secondary" colspan="16">Difficulty in Complaint handling</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th class="bg-secondary" colspan="2">Request support for CRM</th>
+                                    <td colspan="5"></td>
+                                    <td class="bg-secondary" >OR</td>
+                                    <th class="bg-secondary" colspan="2">Handover Complaint to distributor CRM</th>
+                                    <td colspan="6"></td>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th class="bg-secondary"  colspan="2">Comment</th>
+                                    <td colspan="14"></td>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th class="bg-secondary"  colspan="16">Followup on complaint</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th class="bg-secondary" colspan="2">Date of Call</th>
+                                    <td colspan="6">@Html.Raw(Model.OCRValues[12])</td>
+                                    <th class="bg-secondary"  colspan="2">Time Taken</th>
+                                    <td colspan="6">@Html.Raw(Model.OCRValues[14])</td>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <th class="bg-secondary" colspan="2">Customer Satisfied</th>
+                                    <td colspan="6">@Html.Raw(Model.ComplaintLogDetail.LogCustomerSatisfied.ToString())</td>
+                                    <th class="bg-secondary" colspan="2">Parts cost</th>
+                                    <td colspan="6">@Html.Raw(Model.OCRValues[15])</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-secondary"  colspan="2">Date Closed</th>
+                                    <td colspan="6">@Html.Raw(Model.ComplaintLogDetail.StatusClosedDate)</td>
+                                    <th class="bg-secondary"  colspan="2">Other cost</th>
+                                    <td colspan="6">@Html.Raw(Model.OCRValues[16])</td>
+                                </tr>
+
+        
+                                <tr class="table-bordered bg-secondary">
+                                    <th colspan="16">Steps to prevent reccurence</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <td colspan="16">@Html.Raw(Model.ComplaintLogDetail.LogPreventiveAction)</td>
+                                </tr>
+                                <tr class="table-bordered bg-secondary">
+                                    <th colspan="16">Kaizen Action</th>
+                                </tr>
+                                <tr class="table-bordered">
+                                    <td colspan="16">@Html.Raw(Model.ComplaintLogDetail.LogKaizenAction)</td>
+                                </tr>
+
+                                <tr class="text-left">
+                                    <td colspan="16">Branch Dept Manager Name</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="16">Signature</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="16">Date</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
