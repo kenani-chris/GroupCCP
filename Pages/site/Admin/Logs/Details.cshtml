@@ -85,8 +85,21 @@
                                     <td>@Html.DisplayFor(model => model.ComplaintLogDetail.StatusClosedDate)</td>
                                 </tr>
                                 <tr>
+                                    <th>Vehicle</th>
+                                    <th>Mileage</th>
+                                    <th>Vehicle on Site</th>
+                                    <th>Satisfied</th>
                                     <th>Priority</th>
-                                    <td colspan="5">@Model.ComplaintLogDetail.Priority.PriorityName</td>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.ComplaintVehicleInfo.VehicleRegistrationNumber)</td>
+                                    <td>@Model.ComplaintLogDetail.VehicleMileage</td>
+                                    <td>@Model.ComplaintLogDetail.VehicleOnSite</td>
+                                    <td>@Model.ComplaintLogDetail.LogCustomerSatisfied</td>
+                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.Priority.PriorityName)</td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <th>Customer Complaint</th>
@@ -95,6 +108,14 @@
                                 <tr>
                                     <th>Customer Request</th>
                                     <td colspan="5">@Html.DisplayFor(model => model.ComplaintLogDetail.CustomerRequest)</td>
+                                </tr>
+                                <tr>
+                                    <th>Prevention Action</th>
+                                    <td colspan="5">@Html.DisplayFor(model => model.ComplaintLogDetail.LogPreventiveAction)</td>
+                                </tr>
+                                <tr>
+                                    <th>Kaizen Action</th>
+                                    <td colspan="5">@Html.DisplayFor(model => model.ComplaintLogDetail.LogKaizenAction)</td>
                                 </tr>
                             </tbody>
                         </table>

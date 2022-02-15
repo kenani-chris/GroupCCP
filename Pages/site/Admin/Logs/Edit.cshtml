@@ -55,19 +55,33 @@
                     <div class="card-body">
                         <form method="post">
                         <div class="card-body">
-                            <input type="hidden" asp-for="ComplaintLogDetail.LogId" />
-                            <input type="hidden" asp-for="ComplaintLogDetail.StaffId" />
-                            <input type="hidden" asp-for="ComplaintLogDetail.LogStatusId" />
-                            <input type="hidden" asp-for="ComplaintLogDetail.StatusSubmitDate" />
+
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <label asp-for="ComplaintLogDetail.LogCustomerId" class="control-label"></label>
                             <div class="input-group">
+                                
                                 <select data-live-search="true" asp-for="ComplaintLogDetail.LogCustomerId" class="form-control my-select selectpicker" asp-items="ViewBag.LogCustomerId">
-                                    <option value="">----</option>
+                                    <option value="">- Select Customer -</option>
                                 </select>
                             </div>
                             <br />
                             <hr />
+                            
+                            <div class="input-group">
+                                <select data-live-search="true" asp-for="ComplaintLogDetail.VehicleId" class="form-control my-select selectpicker" asp-items="ViewBag.VehicleId">
+                                    <option value="">- Select Vehicle -</option>
+                                </select>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <label asp-for="ComplaintLogDetail.VehicleMileage" class="control-label"></label>
+                                <input asp-for="ComplaintLogDetail.VehicleMileage" class="form-control" />
+                                <span asp-validation-for="ComplaintLogDetail.VehicleMileage" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ComplaintLogDetail.VehicleOnSite" class="control-label"></label>
+                                <input asp-for="ComplaintLogDetail.VehicleOnSite" class="form-control" />
+                                <span asp-validation-for="ComplaintLogDetail.VehicleOnSite" class="text-danger"></span>
+                            </div>
                             <hr />
                             <div class="form-group">
                                 <label asp-for="ComplaintLogDetail.CustomerComplaint" class="control-label"></label>
@@ -92,21 +106,17 @@
                                         <option value="">----</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="ComplaintLogDetail.PriorityId" class="control-label"></label>
-                                <select asp-for="ComplaintLogDetail.PriorityId" class="form-control" asp-items="ViewBag.PriorityId"></select>
-                                <span asp-validation-for="ComplaintLogDetail.PriorityId" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="ComplaintLogDetail.StatusClosedDate" class="control-label"></label>
-                                <input asp-for="ComplaintLogDetail.StatusClosedDate" class="form-control" />
-                                <span asp-validation-for="ComplaintLogDetail.StatusClosedDate" class="text-danger"></span>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label">Priority</label>
+                                    <select asp-for="ComplaintLogDetail.PriorityId" class="form-control" asp-items="ViewBag.PriorityId">
+                                        <option value="">----</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="card-footer">
                             <div class="float-right" style="margin:5px">
-                                <input type="submit" value="Update" class="btn btn-sm btn-primary py-0" />
+                                <input type="submit" value="Add Complaint" class="btn btn-sm btn-primary py-0" />
                             </div>
                         </div>
                     </form>

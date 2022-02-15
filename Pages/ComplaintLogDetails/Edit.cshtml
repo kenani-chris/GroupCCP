@@ -36,6 +36,11 @@
                 <span asp-validation-for="ComplaintLogDetail.VehicleId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ComplaintLogDetail.VehicleMileage" class="control-label"></label>
+                <input asp-for="ComplaintLogDetail.VehicleMileage" class="form-control" />
+                <span asp-validation-for="ComplaintLogDetail.VehicleMileage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ComplaintLogDetail.LogMeansId" class="control-label"></label>
                 <select asp-for="ComplaintLogDetail.LogMeansId" class="form-control" asp-items="ViewBag.LogMeansId"></select>
                 <span asp-validation-for="ComplaintLogDetail.LogMeansId" class="text-danger"></span>
@@ -89,6 +94,11 @@
                 <label asp-for="ComplaintLogDetail.LogKaizenAction" class="control-label"></label>
                 <input asp-for="ComplaintLogDetail.LogKaizenAction" class="form-control" />
                 <span asp-validation-for="ComplaintLogDetail.LogKaizenAction" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintLogDetail.LogKaizenImplememntDate" class="control-label"></label>
+                <input asp-for="ComplaintLogDetail.LogKaizenImplememntDate" class="form-control" />
+                <span asp-validation-for="ComplaintLogDetail.LogKaizenImplememntDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

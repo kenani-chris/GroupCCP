@@ -102,18 +102,19 @@
                                 </tr>
                                 <tr>
                                     <th>Vehicle</th>
+                                    <th>Mileage</th>
+                                    <th>Vehicle on Site</th>
                                     <th>Satisfied</th>
                                     <th>Priority</th>
-                                    <th></th>
-                                    <th></th>
                                     <th></th>
                                     
                                 </tr>
                                 <tr>
                                     <td>@Html.DisplayFor(model => model.ComplaintLogDetail.ComplaintVehicleInfo.VehicleRegistrationNumber)</td>
-                                    <td>@Html.DisplayFor(model => model.ComplaintLogDetail.LogCustomerSatisfied)</td>
+                                    <td>@Model.ComplaintLogDetail.VehicleMileage</td>
+                                    <td>@Model.ComplaintLogDetail.VehicleOnSite</td>
+                                    <td>@Model.ComplaintLogDetail.LogCustomerSatisfied</td>
                                     <td>@Html.DisplayFor(model => model.ComplaintLogDetail.Priority.PriorityName)</td>
-                                    <td></td>
                                     <td></td>
                                     <td></td>
                                 </tr>

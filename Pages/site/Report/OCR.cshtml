@@ -67,7 +67,7 @@
                 <div class="card card-default container-fluid">
               
                     <div class="card-body container-fluid" style="overflow-x: auto">
-
+                        <button id="btnExport" onclick="exportReportToExcel(this)">EXPORT REPORT</button>
                         <table>
                             <tbody>
                                 <tr>
@@ -78,7 +78,7 @@
                                     <th colspan="16" class="text-center table-bordered">OWNER CONTACT REPORT</th>
                                 </tr>
                                 <tr>
-                                    <td class="table-bordered" colspan="16"></td>>
+                                    <td class="table-bordered" colspan="16"></td>
                                 </tr>
                                 <tr>
                                     <td class="table-bordered bg-secondary">Ref. No.</td>
@@ -277,7 +277,7 @@
                                 </tr>
                                 <tr class="table-bordered">
                                     <th class="bg-secondary" colspan="2">Customer Satisfied</th>
-                                    <td colspan="6">@Html.Raw(Model.ComplaintLogDetail.LogCustomerSatisfied.ToString())</td>
+                                    <td colspan="6">@Html.Raw(Model.ComplaintLogDetail.LogCustomerSatisfied)</td>
                                     <th class="bg-secondary" colspan="2">Parts cost</th>
                                     <td colspan="6">@Html.Raw(Model.OCRValues[15])</td>
                                 </tr>

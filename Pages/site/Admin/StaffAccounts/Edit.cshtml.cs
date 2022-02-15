@@ -91,8 +91,6 @@ namespace GroupCCP.Pages.site.Admin.StaffAccounts
                 return Page();
             }
             StaffAccounts.CompanyId = CompanyId;
-            StaffAccounts.IsActive = true;
-            StaffAccounts.IsSuperUser = false;
             
             _context.Attach(StaffAccounts).State = EntityState.Modified;
 

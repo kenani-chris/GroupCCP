@@ -42,7 +42,9 @@ namespace GroupCCP.Pages.site.Admin.StaffAccounts
 
                 StaffAccounts = await _context.StaffAccount
                     .Include(s => s.Company)
-                    .Include(s => s.User).ToListAsync();
+                    .Include(s => s.User)
+                    .Where(s => s.CompanyId == CompanyId)
+                    .ToListAsync();
 
                 if (Company == null)
                 {

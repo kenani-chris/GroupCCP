@@ -45,7 +45,7 @@
             }
             else
             {
-                <div class="container-fluid row">
+                /*<div class="container-fluid row">
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-info">
                             <div class="inner">
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <!-- ./col -->
-                </div>
+                </div>*/
                 <div class="card card-primary container-fluid">
                     <div class="card-header">
                         <h3 class="card-title">Admin Operations - You've got supercow powers</h3>
@@ -105,16 +105,16 @@
                             <strong><i class="fas fa-book mr-1"></i> Accounts/Permissions/Roles</strong>
                             <hr>
                             <ul class="text-muted">
-                              <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Accounts</a></li>
-                              <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Roles & Permissions</a></li>
+                              <li><a asp-page="/site/Admin/StaffAccounts/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Accounts</a></li>
+                              <li><a asp-page="/site/Admin/Role/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Roles & Permissions</a></li>
                             </ul>
                         </div>
                         <div class="col-md-3">
                             <strong><i class="fas fa-book mr-1"></i> Settings</strong>
                             <hr>
                             <ul class="text-muted">
-                              <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Timelines</a></li>
-                              <li><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Company</a></li>
+                              <li><a asp-page="/site/Admin/Timelines/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Timelines</a></li>
+                              <li><a asp-page="/site/Admin/Companies/Index" asp-route-CompanyId="@Model.Company.CompanyId" class="card-link">Company</a></li>
                             </ul>
                         </div>
                     </div>

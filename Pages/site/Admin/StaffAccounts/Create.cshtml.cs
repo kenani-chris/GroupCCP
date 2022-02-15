@@ -81,6 +81,7 @@ namespace GroupCCP.Pages.site.Admin.StaffAccounts
                 return Page();
             }
             StaffAccounts.CompanyId = CompanyId;
+            StaffAccounts.CreateDate = DateTime.Now.ToString("dd/MM/yyyy hh:mm tt");
             _context.StaffAccount.Add(StaffAccounts);
             await _context.SaveChangesAsync();
 
