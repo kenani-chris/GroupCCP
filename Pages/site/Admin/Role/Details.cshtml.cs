@@ -27,6 +27,8 @@ namespace GroupCCP.Pages.site.Admin.Role
         public string PermissionEntity { get; set; }
         public bool RoleEditPerm { get; set; }
         public bool RoleDeletePerm { get; set; }
+        public IList<PermissionAssignment> RolePermissions { get; set; }
+        public IList<Permissions> AllPermissions { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync(int? CompanyId, int? RoleId)
@@ -74,6 +76,13 @@ namespace GroupCCP.Pages.site.Admin.Role
             PageTitle = "Admin - Role Details";
             RoleDeletePerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, "Delete");
             RoleEditPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, "Edit");
+            AllPermissions = await _context.Permissions.ToListAsync();
+
+            RolePermissions = await _context.PermissionAssignment
+                .Include(c => c.Roles)
+                .Include(c => c.Permissions)
+                .Where(c => c.RoleId == RoleId)
+                .ToListAsync();
 
             return Page();
         }

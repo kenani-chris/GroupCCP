@@ -9,6 +9,7 @@ using GroupCCP.Data;
 using GroupCCP.Models;
 
 using System.Collections;
+using System.Globalization;
 
 namespace GroupCCP.Pages.site
 {
@@ -61,7 +62,7 @@ namespace GroupCCP.Pages.site
             //Check if Staff has a valid staff account
             if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
             {
-                return RedirectToPage("./Errors/NoActiveStaffAccount", new { CompanyId = Company.CompanyId });
+                return RedirectToPage("./Errors/NoActiveStaffAccount", new { Company.CompanyId });
             }
             else
             {
@@ -79,10 +80,10 @@ namespace GroupCCP.Pages.site
                 var TheDate = DateTime.Now - TimeSpan.FromDays(i);
                 var DayStart = TheDate.Date.Add(new TimeSpan(0, 0, 0));
                 var DayEnd = TheDate.Date.Add(new TimeSpan(23, 59, 59));
-
+                CultureInfo provider = CultureInfo.InvariantCulture;
                 var TheLogs = ThisLogs
-                    .Where(c => DateTime.Parse(c.StatusSubmitDate) >= DayStart)
-                    .Where(c => DateTime.Parse(c.StatusSubmitDate) <= DayEnd);
+                    .Where(c => DateTime.ParseExact(c.StatusSubmitDate, "dd/MM/yyyy hh:mm tt", provider) >= DayStart)
+                    .Where(c => DateTime.ParseExact(c.StatusSubmitDate, "dd/MM/yyyy hh:mm tt", provider) <= DayEnd);
 
                 Console.WriteLine(TheDate.ToString() + " - " + i.ToString() + " - " + TheLogs.Count().ToString());
                 WeekResults.Add(TheLogs.Count());

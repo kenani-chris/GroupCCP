@@ -6,7 +6,15 @@
     Layout = "~/Pages/Shared/_SystemLayout.cshtml";
 }
 
+<style>
+    
 
+    .table td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+</style>
  <section class="content-header container-fluid">
     <div class="container-fluid row">
         <div class="col-md-6">
@@ -88,7 +96,7 @@
                                             <td>
                                                 @if(item == record[0])
                                                 {
-                                                    @if(record[14]=="Resolved")
+                                                    @if(record[14]!="")
                                                     {
                                                         <a asp-page="./OCR" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-LogId="@item">Log @item</a>
                                                     }

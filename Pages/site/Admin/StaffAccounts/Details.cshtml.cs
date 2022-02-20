@@ -82,13 +82,13 @@ namespace GroupCCP.Pages.site.Admin.StaffAccounts
             RoleAssignment = await _context.RoleAssignment
                 .Include(s => s.Roles)
                 .Include(s => s.Staff).ThenInclude(s => s.User)
-                .Where(s => s.Staff == StaffAccount)
+                .Where(s => s.StaffId == AccountId)
                 .ToListAsync();
 
             Membership = await _context.LevelMemberships
                 .Include(l => l.Level)
                 .Include(l => l.Staff).ThenInclude(l => l.User)
-                .Where(l => l.Staff == StaffAccount)
+                .Where(s => s.StaffId == AccountId)
                 .ToListAsync();
 
             return Page();

@@ -2,7 +2,7 @@
 {
     public class Timelines
     {
-        public int TimeLineId { get; set; } = 1;
+        public int TimeLineId { get; set; }
         public int PriorityId { get; set; }
         public Priority Priority { get; set; }
         public float OverdueAssignedHrs { get; set; }
@@ -13,7 +13,7 @@
         public bool OverdueResolvedEscallate { get; set; }
         public float OverdueResolvedClosedHrs { get; set; }
         public float OverdueResolvedClosedReminderHrs { get; set; }
-        public float OverdueClosedEscallate { get; set; }
+        public bool OverdueClosedEscallate { get; set; }
         public int CompanyId { get; set; }
         public Company Company { get; set; }
         

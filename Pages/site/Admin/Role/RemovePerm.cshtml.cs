@@ -7,34 +7,36 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using GroupCCP.Data;
 using GroupCCP.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace GroupCCP.Pages.site.Admin.Companies
+namespace GroupCCP.Pages.site.Admin.Role
 {
-    public class CreateModel : PageModel
+    public class RemovePermModel : PageModel
     {
         private readonly GroupCCP.Data.ApplicationDbContext _context;
 
-        public CreateModel(GroupCCP.Data.ApplicationDbContext context)
+        public RemovePermModel(GroupCCP.Data.ApplicationDbContext context)
         {
             _context = context;
         }
-
-        [BindProperty]
-        public Company Companies { get; set; }
+        public Permissions Permission { get; set; }
+        public Roles Roles { get; set; }
         public Company Company { get; set; }
         public string PageTitle { get; set; }
         public bool StaffHasPerm { get; set; }
         public StaffAccount StaffAccount { get; set; }
         public string PermissionRequired { get; set; }
         public string PermissionEntity { get; set; }
+        public bool CustomerEditPerm { get; set; }
+        public bool CustomerDeletePerm { get; set; }
+        [BindProperty]
+        public PermissionAssignment PermissionAssignment { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? CompanyId)
+        public async Task<IActionResult> OnGetAsync(int? CompanyId, int? RoleId, int? AssignmentId)
         {
             //Check Passed Parameters if are ok
-            if (CompanyId == null)
+            if (CompanyId == null || RoleId == null || AssignmentId == null)
             {
-                return NotFound("Company not found");
+                return NotFound();
             }
             else
             {
@@ -42,18 +44,27 @@ namespace GroupCCP.Pages.site.Admin.Companies
                     .Include(c => c.Group)
                     .FirstOrDefaultAsync(c => c.CompanyId == CompanyId);
 
-                if (Company == null)
+                Roles = await _context.Roles
+                    .Include(r => r.Company).FirstOrDefaultAsync(m => m.RoleId == RoleId);
+
+
+                PermissionAssignment = await _context.PermissionAssignment
+                    .Include(p => p.Permissions)
+                    .Include(p => p.Roles).FirstOrDefaultAsync(m => m.AssignmentId == AssignmentId);
+
+
+                if (Company == null || Roles == null || PermissionAssignment == null)
                 {
                     return NotFound();
                 }
             }
-
+            Console.WriteLine("this is not fair");
             // Common Functions
             Defaults Default = new(_context);
 
             //Initialize Permissions required
-            PermissionRequired = "Create";
-            PermissionEntity = "Admin - Companies";
+            PermissionRequired = "Edit";
+            PermissionEntity = "Admin - Roles";
 
             //Check if Staff has a valid staff account
             if (!Default.UserIsStaff(User.Identity.Name, Company.CompanyId))
@@ -67,24 +78,13 @@ namespace GroupCCP.Pages.site.Admin.Companies
                 StaffHasPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, PermissionRequired);
             }
 
-            //Other Context Objects
-            PageTitle = "Admin - Roles Create";
-            ViewData["GroupId"] = new SelectList(_context.Group, "GroupId", "GroupName");
-
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int CompanyId)
-        {
-            if (!ModelState.IsValid)
+            if(StaffHasPerm == true)
             {
-                return Page();
+                _context.PermissionAssignment.Remove(PermissionAssignment);
+                await _context.SaveChangesAsync();
             }
-            Companies.CompanyCreateDate = DateTime.Now.ToString("dd/MM/yyyy hh:mm tt");
-            _context.Company.Add(Companies);
-            await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index", new { CompanyId });
+            return RedirectToPage("./Details", new { CompanyId, RoleId });
         }
     }
 }

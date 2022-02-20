@@ -85,7 +85,9 @@ namespace GroupCCP.Pages.site.Admin.Role
             _context.Roles.Add(Roles);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index", new { CompanyId });
+            int RoleId = Roles.RoleId;
+
+            return RedirectToPage("./Details", new { CompanyId, RoleId });
         }
     }
 }

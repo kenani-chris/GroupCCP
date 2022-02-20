@@ -54,11 +54,11 @@
                         <h3 class="card-title">Timelines Table</h3>
                         @if (Model.TimelineCreatePerm)
                         {
-                            <a asp-page="./Create" asp-route-CompanyId="@Model.Company.CompanyId"><div class="nav-link float-right btn btn-info  text-white">New Company</div></a>      
+                            <a asp-page="./Create" asp-route-CompanyId="@Model.Company.CompanyId"><div class="nav-link float-right btn btn-info  text-white">New Timeline</div></a>      
                         }
                     </div>
               
-                    <div class="card-body container-fluid">
+                    <div class="card-body container-fluid" style="overflow-x: auto">
                         <table class="table table-striped" id="searchTable">
                                 <thead>
                                     <tr>
@@ -101,7 +101,7 @@
                             @foreach (var item in Model.Timelines) {
                                     <tr>
                                         <td>
-                                            <a asp-page="./Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-Timelined="@item.TimeLineId">@Html.DisplayFor(modelItem => item.Priority.PriorityId)</a>
+                                            <a asp-page="./Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-TimelineId="@item.TimeLineId">@Html.DisplayFor(modelItem => item.Priority.PriorityName)</a>
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.OverdueAssignedHrs)

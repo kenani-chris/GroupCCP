@@ -6,27 +6,117 @@
     Layout = "~/Pages/Shared/_SystemLayout.cshtml";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Roles</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Roles.Role)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Roles.Role)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Roles.Company)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Roles.Company.CompanyName)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Roles.RoleId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
+
+ <section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId">Admin</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Role/Index" asp-route-CompanyId="@Model.Company.CompanyId">Roles</a></li>
+                <li class="breadcrumb-item">Details</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row container-fluid card-body">
+            @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card card-default container-fluid">
+                    <div class="card-header">
+                        <h3 class="card-title">Roles Table</h3>
+                    </div>
+              
+                    <div class="card-body container-fluid">
+                        <dl class="row">
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Roles.Role)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Roles.Role)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Roles.Company)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Roles.Company.CompanyName)
+                            </dd>
+                        </dl>
+
+                    </div>
+                </div>
+
+                <div class="card card-default container-fluid">
+                    <div class="card-header">
+                        <h3 class="card-title">Permissions in Role</h3>
+                    </div>
+              
+                    <div class="card-body container-fluid">
+                         <table class="table table-striped" id="searchTable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Permission
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                        <th>
+                                            Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var item in Model.AllPermissions)
+                                {
+                                    <tr>
+                                        <td>@item.PermissionEntity</td>
+                                        @if(Model.RolePermissions.FirstOrDefault(c => c.PermissionId == item.PermissionId) == null)
+                                        {
+                                            <td>Not Added</td>
+                                            <td><a asp-page="./AddPerm" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-RoleId="@Model.Roles.RoleId"  asp-route-PermissionId="@item.PermissionId"  class="btn btn-sm btn-info">Add</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td>Added</td>
+                                            <td><a asp-page="./RemovePerm" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-RoleId="@Model.Roles.RoleId"  asp-route-AssignmentId="@Model.RolePermissions.FirstOrDefault(c => c.PermissionId == item.PermissionId).AssignmentId" class="btn btn-sm btn-danger">Remove</a></td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                            </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

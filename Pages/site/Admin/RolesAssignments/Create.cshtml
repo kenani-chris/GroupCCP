@@ -6,32 +6,89 @@
     Layout = "~/Pages/Shared/_SystemLayout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>RoleAssignment</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="RoleAssignment.StaffId" class="control-label"></label>
-                <select asp-for="RoleAssignment.StaffId" class ="form-control" asp-items="ViewBag.StaffId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoleAssignment.RoleID" class="control-label"></label>
-                <select asp-for="RoleAssignment.RoleID" class ="form-control" asp-items="ViewBag.RoleID"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+ <section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId">Admin</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/StaffAccounts/Index" asp-route-CompanyId="@Model.Company.CompanyId">StaffAccounts</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/StaffAccounts/Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-AccountId="@Model.StaffAccounts.AccountId">Account</a></li>
+                <li class="breadcrumb-item">Membership Create</li>
+            </ol>
+        </div>
     </div>
-</div>
+</section>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row container-fluid card-body">
+            @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card card-default container-fluid">
+                    <div class="card-header">
+                        <h3 class="card-title">Timelines Table</h3>
+                    </div>
+              
+                    <div class="card-body container-fluid">
+
+                        
+                        <dl class="row">
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.StaffAccounts.User)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.StaffAccounts.User.Email)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.StaffAccounts.Company)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.StaffAccounts.Company.CompanyName)
+                            </dd>
+                        </dl>
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="RoleAssignment.RoleID" class="control-label"></label>
+                                <select asp-for="RoleAssignment.RoleID" class ="form-control" asp-items="ViewBag.RoleID"></select>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

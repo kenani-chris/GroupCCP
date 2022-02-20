@@ -69,34 +69,34 @@
 
                         <dl class="row">
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.StaffAccount.User)
+                                @Html.DisplayNameFor(model => model.StaffAccounts.User)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.StaffAccount.User.Id)
+                                @Html.DisplayFor(model => model.StaffAccounts.User.Email)
                             </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.StaffAccount.Company)
+                                @Html.DisplayNameFor(model => model.StaffAccounts.Company)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.StaffAccount.Company.CompanyName)
+                                @Html.DisplayFor(model => model.StaffAccounts.Company.CompanyName)
                             </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.StaffAccount.IsActive)
+                                @Html.DisplayNameFor(model => model.StaffAccounts.IsActive)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.StaffAccount.IsActive)
+                                @Model.StaffAccounts.IsActive
                             </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.StaffAccount.IsSuperUser)
+                                @Html.DisplayNameFor(model => model.StaffAccounts.IsSuperUser)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.StaffAccount.IsSuperUser)
+                                @Model.StaffAccounts.IsSuperUser
                             </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.StaffAccount.CreateDate)
+                                @Html.DisplayNameFor(model => model.StaffAccounts.CreateDate)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.StaffAccount.CreateDate)
+                                @Html.DisplayFor(model => model.StaffAccounts.CreateDate)
                             </dd>
                         </dl>
                     </div>
@@ -105,7 +105,7 @@
                 <div class="card card-default container-fluid">
                     <div class="card-header">
                         <h3 class="card-title">Level membership</h3>
-                        <a asp-page="../Membership/Create" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-AccountId="@Model.StaffAccounts.AccountId"><div class="nav-link float-right btn btn-info  text-white">New Membership</div></a>
+                        <a asp-page="../Memberships/Create" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-AccountId="@Model.StaffAccounts.AccountId"><div class="nav-link float-right btn btn-info  text-white">New Membership</div></a>
                     </div>
               
                     <div class="card-body container-fluid">
@@ -129,8 +129,8 @@
 
                 <div class="card card-default container-fluid">
                     <div class="card-header">
-                        <h3 class="card-title">Staff Roles</h3>
-                        <a asp-page="../Role/Create" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-AccountId="@Model.StaffAccounts.AccountId"><div class="nav-link float-right btn btn-info  text-white">New Membership</div></a>
+                        <h3 class="card-title">Staff Rolesh</h3>
+                        <a asp-page="../RolesAssignments/Create" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-AccountId="@Model.StaffAccounts.AccountId"><div class="nav-link float-right btn btn-info  text-white">New Role</div></a>
                     </div>
               
                     <div class="card-body container-fluid">

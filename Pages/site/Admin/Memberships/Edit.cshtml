@@ -58,6 +58,21 @@
               
                     <div class="card-body container-fluid">
 
+                        <dl class="row">
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.StaffAccounts.User)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.StaffAccounts.User.Email)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.StaffAccounts.Company)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.StaffAccounts.Company.CompanyName)
+                            </dd>
+                        </dl>
+
                         <form method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="LevelMembership.MembershipId" />
@@ -79,6 +94,7 @@
                                     <input class="form-check-input" asp-for="LevelMembership.MembershipActive" /> @Html.DisplayNameFor(model => model.LevelMembership.MembershipActive)
                                 </label>
                             </div>
+                            <br>
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-primary" />
                             </div>

@@ -4,6 +4,7 @@ using GroupCCP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupCCP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220215131315_AZServerMigration01")]
+    partial class AZServerMigration01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2041,8 +2043,8 @@ namespace GroupCCP.Migrations
                     b.Property<float>("OverdueAssignedReminderHrs")
                         .HasColumnType("real");
 
-                    b.Property<bool>("OverdueClosedEscallate")
-                        .HasColumnType("bit");
+                    b.Property<float>("OverdueClosedEscallate")
+                        .HasColumnType("real");
 
                     b.Property<float>("OverdueResolvedClosedHrs")
                         .HasColumnType("real");

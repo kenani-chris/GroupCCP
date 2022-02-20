@@ -77,7 +77,7 @@ namespace GroupCCP.Pages.site.Admin.Timeline
 
             //Other Context Objects
             PageTitle = "Admin - Timeline Edit";
-            ViewData["PriorityId"] = new SelectList(_context.Priority, "PriorityId", "PriorityId");
+            ViewData["PriorityId"] = new SelectList(_context.Priority, "PriorityId", "PriorityName");
 
             return Page();
         }

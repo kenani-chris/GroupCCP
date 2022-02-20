@@ -74,7 +74,7 @@
                             @foreach (var item in Model.Roles) {
                                     <tr>
                                         <td>
-                                            <a asp-page="./Details" asp-route-id="@item.RoleId">@Html.DisplayFor(modelItem => item.Role)</a>
+                                            <a asp-page="./Details" asp-route-CompanyId="@Model.Company.CompanyId" asp-route-RoleId="@item.RoleId">@Html.DisplayFor(modelItem => item.Role)</a>
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Company.CompanyName)
@@ -90,5 +90,4 @@
         </div>
     </div>
 </section>
-<table class="table">
     

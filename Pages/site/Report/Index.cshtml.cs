@@ -69,22 +69,34 @@ namespace GroupCCP.Pages.site.Report
             //Other Context Objects
             Records = new List<IList<string>>();
             PageTitle = "Report - Logs";
+            ComplaintLogs = new List<ComplaintLogDetail>();
             if (StaffAccount.IsSuperUser == false)
             {
                 ComplaintLogs = Default.GetLevelAndLevelDownLogs(StaffAccount.AccountId);
             }
             else
             {
-                ComplaintLogs = Default.GetLevelAndLevelDownLogs(StaffAccount.AccountId);
+                ComplaintLogs = await _context.ComplaintLogDetail
+                    .Include(c => c.ComplaintVehicleInfo)
+                    .Include(c => c.Status)
+                    .Include(c => c.Means)
+                    .Include(c => c.Level)
+                    .Include(c => c.Customers)
+                    .Include(c => c.Priority)
+                    .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                    .ToListAsync();
             }
-                
+
+            Console.WriteLine("there are actually this number of logs here " + ComplaintLogs.Count.ToString());
+
+
             foreach(var log in ComplaintLogs)
             {
                     
                 var DateReceived = log.StatusSubmitDate;
                 var ReceivedMeans = log.Means.Means;
                 var Level = log.Level.LevelName;
-                var PIC = Default.GetStaffAssignedLog(log.LogId).User.Email;
+                var PIC = Default.GetStaffAssignedLog(log.LogId) == null ? null : Default.GetStaffAssignedLog(log.LogId).User.Email;
                 var CRSupportMember = "";
                 var Registration = log.ComplaintVehicleInfo.VehicleRegistrationNumber;
                 var Model = log.ComplaintVehicleInfo.VehicleModel;
@@ -96,20 +108,21 @@ namespace GroupCCP.Pages.site.Report
                 var CorrectiveAction = Default.GetCorrectives(log.LogId)[1];
                 var Status = log.Status.Status;
                 var StatusDate = "";
-                var ProgressUpdate = Default.GetLogFollowUps(log.LogId).Count().ToString() + " FollowUps";
+                var ProgressUpdate = Default.GetLogFollowUps(log.LogId).Count.ToString() + " FollowUps";
                 var CustomerDiscussion = Default.GetLogSummaryDiscussion(log.LogId);
                 var KaizenOCR = log.Status.Status == "Closed" ? "Yes" : "No";
                 var Satisfaction24 = Default.SatisfactionCheck(log.LogId, "24hr Satisfaction");
                 var Satisfaction48 = Default.SatisfactionCheck(log.LogId, "48hr Satisfaction");
                 var Satisfaction72 = Default.SatisfactionCheck(log.LogId, "72hr Satisfaction");
                 var CloseDate = log.StatusClosedDate;
-                if(String.IsNullOrEmpty(log.StatusClosedDate) == true)
+                var DaysTaken = "";
+                if (String.IsNullOrEmpty(log.StatusClosedDate) == true)
                 {
-                    var DaysTaken = "";
+                    DaysTaken = "";
                 }
                 else
                 {
-                    var DaysTaken = (DateTime.Parse(log.StatusSubmitDate).Date - DateTime.Parse(log.StatusClosedDate).Date).TotalDays;
+                    DaysTaken = (DateTime.Parse(log.StatusSubmitDate).Date - DateTime.Parse(log.StatusClosedDate).Date).TotalDays.ToString();
                 }
 
                 IList<string> OneRecord = new List<string>
@@ -120,7 +133,7 @@ namespace GroupCCP.Pages.site.Report
                 Records.Add(OneRecord);
 
             }
-
+            
             return Page();
         }
     }

@@ -233,38 +233,45 @@ namespace GroupCCP.Pages.site
         }
         public IList<ComplaintLogDetail> GetLevelAndLevelDownLogs(int StaffId)
         {
-            var Memberships = _context.LevelMemberships
-                .Include(c => c.Level)
-                .Where(c => c.LevelId == StaffId)
-                .First();
-
-            IList <Level> LevelsDown = GetLevelDown(StaffId);
-            if(Memberships != null)
-            {
-                LevelsDown.Add(Memberships.Level);
-            }
-            
             IList<ComplaintLogDetail> LogDetails = new List<ComplaintLogDetail>();
-            if (LevelsDown != null)
+
+            var AllMemberships = _context.LevelMemberships
+                .Include(c => c.Level)
+                .Where(c => c.LevelId == StaffId);
+                
+
+            if(AllMemberships.Any() == true)
             {
-                foreach(var LevelDown in LevelsDown)
+                var Memberships = AllMemberships.First();
+                IList<Level> LevelsDown = GetLevelDown(StaffId);
+                if (Memberships != null)
                 {
-                    var Logs = _context.ComplaintLogDetail
-                        .Include(c => c.ComplaintVehicleInfo)
-                        .Include(c => c.Status)
-                        .Include(c => c.Means)
-                        .Include(c => c.Level)
-                        .Include(c => c.Customers)
-                        .Include(c => c.Priority)
-                        .Include(c => c.StaffAccount).ThenInclude(c => c.User)
-                        .Where(c => c.Level == LevelDown)
-                        .ToList();
-                    if(Logs != null)
+                    LevelsDown.Add(Memberships.Level);
+                }
+
+
+                if (LevelsDown != null)
+                {
+                    foreach (var LevelDown in LevelsDown)
                     {
-                        LogDetails.AddRange(Logs);
+                        var Logs = _context.ComplaintLogDetail
+                            .Include(c => c.ComplaintVehicleInfo)
+                            .Include(c => c.Status)
+                            .Include(c => c.Means)
+                            .Include(c => c.Level)
+                            .Include(c => c.Customers)
+                            .Include(c => c.Priority)
+                            .Include(c => c.StaffAccount).ThenInclude(c => c.User)
+                            .Where(c => c.Level == LevelDown)
+                            .ToList();
+                        if (Logs != null)
+                        {
+                            LogDetails.AddRange(Logs);
+                        }
                     }
                 }
             }
+                
             return LogDetails;
 
         }
@@ -305,16 +312,22 @@ namespace GroupCCP.Pages.site
 
         public StaffAccount GetStaffAssignedLog(int LogId)
         {
-            return _context.ComplaintAssignment
+            var Staff = _context.ComplaintAssignment
                 .Include(c => c.Staff).ThenInclude(c => c.User)
                 .Where(c => c.LogId == LogId)
-                .OrderByDescending(c => c.AssignmentId)
-                .FirstOrDefault().Staff;
+                .OrderByDescending(c => c.AssignmentId);
+            if (Staff.Any() == true)
+            {
+                return Staff.FirstOrDefault().Staff;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public IList<string> GetCorrectives(int LogId)
         {
-            var Summary = "";
             var Correctives = _context.ComplaintCorrectiveInfo
                 .Where(c => c.LogId == LogId);
 

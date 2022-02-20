@@ -25,8 +25,8 @@ namespace GroupCCP.Pages.site.Admin.Companies
         public StaffAccount StaffAccount { get; set; }
         public string PermissionRequired { get; set; }
         public string PermissionEntity { get; set; }
-        public bool TimelineEditPerm { get; set; }
-        public bool TimelineDeletePerm { get; set; }
+        public bool CompanyEditPerm { get; set; }
+        public bool CompanyDeletePerm { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync(int? CompanyId, int? SelectCompanyId)
@@ -73,8 +73,8 @@ namespace GroupCCP.Pages.site.Admin.Companies
 
             //Other Context Objects
             PageTitle = "Admin - Companies Details";
-            TimelineDeletePerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, "Delete");
-            TimelineEditPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, "Edit");
+            CompanyDeletePerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, "Delete");
+            CompanyEditPerm = Default.StaffHasPermission(StaffAccount, PermissionEntity, "Edit");
 
             return Page();
         }

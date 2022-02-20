@@ -75,14 +75,8 @@ namespace GroupCCP.Pages.site.Admin.Memberships
             }
 
             //Other Context Objects
-            PageTitle = "Admin - Tmelines Create";
-
+            PageTitle = "Admin - Membership Create";
             ViewData["LevelId"] = new SelectList(_context.Level.Include(c => c.LevelCategory).Where(c => c.LevelCategory.CompanyId == CompanyId), "LevelId", "LevelName");
-            ViewData["StaffId"] = _context.StaffAccount.Where(c => c.CompanyId == CompanyId).Select(a => new SelectListItem
-            {
-                Value = a.AccountId.ToString(),
-                Text = a.User.Email
-            }).ToList();
 
             return Page();
         }
@@ -98,7 +92,7 @@ namespace GroupCCP.Pages.site.Admin.Memberships
             _context.LevelMemberships.Add(LevelMembership);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("../StaffAccounts/Index", new { CompanyId, AccountId });
+            return RedirectToPage("../StaffAccounts/Details", new { CompanyId, AccountId });
         }
     }
 }

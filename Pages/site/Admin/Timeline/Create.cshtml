@@ -6,77 +6,124 @@
     Layout = "~/Pages/Shared/_SystemLayout.cshtml";
 }
 
-<h1>Create</h1>
 
-<h4>Timelines</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Timelines.PriorityId" class="control-label"></label>
-                <select asp-for="Timelines.PriorityId" class ="form-control" asp-items="ViewBag.PriorityId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Timelines.OverdueAssignedHrs" class="control-label"></label>
-                <input asp-for="Timelines.OverdueAssignedHrs" class="form-control" />
-                <span asp-validation-for="Timelines.OverdueAssignedHrs" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Timelines.OverdueAssignedReminderHrs" class="control-label"></label>
-                <input asp-for="Timelines.OverdueAssignedReminderHrs" class="form-control" />
-                <span asp-validation-for="Timelines.OverdueAssignedReminderHrs" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Timelines.OverdueAssignedEscallate" /> @Html.DisplayNameFor(model => model.Timelines.OverdueAssignedEscallate)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Timelines.OverdueResolvedHrs" class="control-label"></label>
-                <input asp-for="Timelines.OverdueResolvedHrs" class="form-control" />
-                <span asp-validation-for="Timelines.OverdueResolvedHrs" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Timelines.OverdueResolvedReminderHrs" class="control-label"></label>
-                <input asp-for="Timelines.OverdueResolvedReminderHrs" class="form-control" />
-                <span asp-validation-for="Timelines.OverdueResolvedReminderHrs" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Timelines.OverdueResolvedEscallate" /> @Html.DisplayNameFor(model => model.Timelines.OverdueResolvedEscallate)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Timelines.OverdueResolvedClosedHrs" class="control-label"></label>
-                <input asp-for="Timelines.OverdueResolvedClosedHrs" class="form-control" />
-                <span asp-validation-for="Timelines.OverdueResolvedClosedHrs" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Timelines.OverdueResolvedClosedReminderHrs" class="control-label"></label>
-                <input asp-for="Timelines.OverdueResolvedClosedReminderHrs" class="form-control" />
-                <span asp-validation-for="Timelines.OverdueResolvedClosedReminderHrs" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Timelines.OverdueClosedEscallate" class="control-label"></label>
-                <input asp-for="Timelines.OverdueClosedEscallate" class="form-control" />
-                <span asp-validation-for="Timelines.OverdueClosedEscallate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Timelines.CompanyId" class="control-label"></label>
-                <select asp-for="Timelines.CompanyId" class ="form-control" asp-items="ViewBag.CompanyId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+ <section class="content-header container-fluid">
+    <div class="container-fluid row">
+        <div class="col-md-6">
+            <h1 class="m-0 text-dark">@Model.PageTitle</h1>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a asp-page="/site/Index" asp-route-CompanyId="@Model.Company.CompanyId">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Index" asp-route-CompanyId="@Model.Company.CompanyId">Admin</a></li>
+                <li class="breadcrumb-item"><a asp-page="/site/Admin/Timeline/Index" asp-route-CompanyId="@Model.Company.CompanyId">Timelines</a></li>
+                <li class="breadcrumb-item">Create</li>
+            </ol>
+        </div>
     </div>
-</div>
+</section>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row container-fluid card-body">
+            @if (!Model.StaffHasPerm)
+            {
+                <div class="card card-warning container-fluid">
+                    <div class="card-header">
+                        Denied Access
+                    </div>
+                    <div class="card-body">
+                        It appears you do not have permission to this page
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Permission Entity</th>
+                                <td>@Model.PermissionEntity</td>
+                            </tr>
+                            <tr>
+                                <th>Permission Required</th>
+                                <td>@Model.PermissionRequired</td>
+                            </tr>
+                        </table>
+                        You may need to contact respective admin to add the permission to your role
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card card-primary container-fluid">
+                    <div class="card-header">
+                        <h3 class="card-title">Brand Table</h3>
+                    </div>
+              
+                    <div class="card-body container-fluid">
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Timelines.PriorityId" class="control-label"></label>
+                                <select asp-for="Timelines.PriorityId" class ="form-control" asp-items="ViewBag.PriorityId"></select>
+                            </div>
+                            <div class="row container-fluid">
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Timelines.OverdueAssignedHrs" class="control-label"></label>
+                                    <input asp-for="Timelines.OverdueAssignedHrs" class="form-control" />
+                                    <span asp-validation-for="Timelines.OverdueAssignedHrs" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Timelines.OverdueAssignedReminderHrs" class="control-label"></label>
+                                    <input asp-for="Timelines.OverdueAssignedReminderHrs" class="form-control" />
+                                    <span asp-validation-for="Timelines.OverdueAssignedReminderHrs" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4 form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="Timelines.OverdueAssignedEscallate" /> @Html.DisplayNameFor(model => model.Timelines.OverdueAssignedEscallate)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row container-fluid">
+                                <div class="form-group col-md-4">
+                            
+                                    <label asp-for="Timelines.OverdueResolvedHrs" class="control-label"></label>
+                                    <input asp-for="Timelines.OverdueResolvedHrs" class="form-control" />
+                                    <span asp-validation-for="Timelines.OverdueResolvedHrs" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Timelines.OverdueResolvedReminderHrs" class="control-label"></label>
+                                    <input asp-for="Timelines.OverdueResolvedReminderHrs" class="form-control" />
+                                    <span asp-validation-for="Timelines.OverdueResolvedReminderHrs" class="text-danger"></span>
+                                </div>
+                                <div class="form-group form-check  col-md-4">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="Timelines.OverdueResolvedEscallate" /> @Html.DisplayNameFor(model => model.Timelines.OverdueResolvedEscallate)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row container-fluid">
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Timelines.OverdueResolvedClosedHrs" class="control-label"></label>
+                                    <input asp-for="Timelines.OverdueResolvedClosedHrs" class="form-control" />
+                                    <span asp-validation-for="Timelines.OverdueResolvedClosedHrs" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Timelines.OverdueResolvedClosedReminderHrs" class="control-label"></label>
+                                    <input asp-for="Timelines.OverdueResolvedClosedReminderHrs" class="form-control" />
+                                    <span asp-validation-for="Timelines.OverdueResolvedClosedReminderHrs" class="text-danger"></span>
+                                </div>
+                                <div class="form-group form-check  col-md-4">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="Timelines.OverdueClosedEscallate" /> @Html.DisplayNameFor(model => model.Timelines.OverdueClosedEscallate)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
