@@ -33,6 +33,11 @@ namespace GroupCCP.Pages.site
         public bool StaffHasPerm { get; set; }
         public IList<string> PageLists { get; set; }
         public IList<int> WeekResults { get; set; }
+        public IList<IList<string>> LevelLogs { get; set; }
+        public IList<string> LevelLabels { get; set; }
+        public IList<string> LevelData { get; set; }
+
+
         public async Task<IActionResult> OnGetAsync(int? CompanyId)
         {
             //Check Passed Parameters if are ok
@@ -85,7 +90,6 @@ namespace GroupCCP.Pages.site
                     .Where(c => DateTime.ParseExact(c.StatusSubmitDate, "dd/MM/yyyy hh:mm tt", provider) >= DayStart)
                     .Where(c => DateTime.ParseExact(c.StatusSubmitDate, "dd/MM/yyyy hh:mm tt", provider) <= DayEnd);
 
-                Console.WriteLine(TheDate.ToString() + " - " + i.ToString() + " - " + TheLogs.Count().ToString());
                 WeekResults.Add(TheLogs.Count());
             }
             
@@ -119,6 +123,61 @@ namespace GroupCCP.Pages.site
                 {
                     MyResolvedLogs.Add(item);
                 }
+            }
+
+            LevelLogs = new List<IList<string>>();
+            IList<Level> LevelsDown = new List<Level>();
+            if(StaffAccount.IsSuperUser == true)
+            {
+                LevelsDown = await _context.Level
+                    .Include(c => c.LevelCategory)
+                    .Where(c => c.LevelCategory.CompanyId == CompanyId)
+                    .ToListAsync();
+            }
+            else
+            {
+                LevelsDown = Default.GetLevelDown(StaffAccount.AccountId);
+            }
+            LevelLabels = new List<string>();
+            LevelData = new List<string>();
+            foreach (var Level in LevelsDown)
+            {
+                IList<string> LevelDetails = new List<string>();
+                LevelDetails.Add(Level.LevelName);
+
+                var TotalLogs = await _context.ComplaintLogDetail
+                    .Where(c => c.Level == Level)
+                    .CountAsync();
+                LevelDetails.Add(TotalLogs.ToString());
+                var OpenLogs = await _context.ComplaintLogDetail
+                    .Where(c => c.Level == Level)
+                    .Where(c => c.LogStatusId == 1)
+                    .CountAsync();
+                LevelDetails.Add(OpenLogs.ToString());
+                var AssignedLogs = await _context.ComplaintLogDetail
+                    .Where(c => c.Level == Level)
+                    .Where(c => c.LogStatusId == 2)
+                    .CountAsync();
+                LevelDetails.Add(AssignedLogs.ToString());
+                var WIPLogs = await _context.ComplaintLogDetail
+                    .Where(c => c.Level == Level)
+                    .Where(c => c.LogStatusId == 3)
+                    .CountAsync();
+                LevelDetails.Add(WIPLogs.ToString());
+                var ResolvedLogs = await _context.ComplaintLogDetail
+                    .Where(c => c.Level == Level)
+                    .Where(c => c.LogStatusId == 4)
+                    .CountAsync();
+                LevelDetails.Add(ResolvedLogs.ToString());
+                var ClosedLogs = await _context.ComplaintLogDetail
+                    .Where(c => c.Level == Level)
+                    .Where(c => c.LogStatusId == 5)
+                    .CountAsync();
+                LevelDetails.Add(ClosedLogs.ToString());
+
+                LevelLabels.Add(Level.LevelName);
+                LevelData.Add(TotalLogs.ToString());
+                LevelLogs.Add(LevelDetails);
             }
             
             return Page();

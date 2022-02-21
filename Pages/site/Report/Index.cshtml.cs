@@ -87,9 +87,6 @@ namespace GroupCCP.Pages.site.Report
                     .ToListAsync();
             }
 
-            Console.WriteLine("there are actually this number of logs here " + ComplaintLogs.Count.ToString());
-
-
             foreach(var log in ComplaintLogs)
             {
                     

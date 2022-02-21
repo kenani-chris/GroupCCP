@@ -359,6 +359,31 @@
         
     </script>
     <script>
+        const ctx3 = document.getElementById('myChart3');
+        if(ctx2)
+        {
+            const ctx3 = document.getElementById('myChart3').getContext('2d');
+            var labels = JSON.parse('@Html.Raw(Json.Serialize(ViewData["LevelLabels"]))');
+            var data = JSON.parse('@Html.Raw(Json.Serialize(ViewData["LevelData"]))');
+            
+            const labels3 =  labels;
+            const data3 =  data;
+            const myChart23 = new Chart(ctx3, {
+                type: 'pie',
+                data: {
+                    labels: labels3,
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: data3,
+                        fill: false,
+                        hoverOffset: 4
+                    }]
+                }
+            });
+        }
+        
+    </script>
+    <script>
         var OCRTable = document.getElementById('OCRTable');
         if(OCRTable)
         {

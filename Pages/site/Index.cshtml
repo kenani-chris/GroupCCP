@@ -19,6 +19,10 @@
     ViewData["Day7"] = Model.WeekResults[6];
     ViewData["Day0"] = Model.WeekResults[7];
 
+    ViewData["LevelLabels"] = Model.LevelLabels;
+    ViewData["LevelData"] = Model.LevelData;
+
+
     
 }
  <section class="content-header container-fluid">
@@ -107,16 +111,7 @@ else
                 </div>
                 <div class="card-body">
                 <div class="d-flex">
-                    <p class="d-flex flex-column">
-                    <span class="text-bold text-lg">0</span>
-                    <span>Complaints Over Time</span>
-                    </p>
-                    <p class="ml-auto d-flex flex-column text-right">
-                    <span class="text-success">
-                        <i class="fas fa-arrow-up"></i> 0%
-                    </span>
-                    <span class="text-muted">Since last week</span>
-                    </p>
+                    <span class="text-muted">My Logs since last week</span>
                 </div>
                 <!-- /.d-flex -->
 
@@ -125,6 +120,54 @@ else
                 </div>
 
                 
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="d-flex">
+                        <span class="text-muted">Levels in Paths Logs</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped" id="searchTable">
+                        <thead>
+                            <th>Level</th>
+                            <th>Open</th>
+                            <th>Assigned</th>
+                            <th>WIP</th>
+                            <th>Resolved</th>
+                            <th>Closed</th>
+                            <th class="bg-info">TotaL</th>
+                        </thead>
+                        <tbody>
+                            @foreach(var level in Model.LevelLogs)
+                            {
+                                <tr>
+                                    <td>
+                                        @level[0]
+                                    </td>
+                                    <td>
+                                        @level[2]
+                                    </td>
+                                    <td>
+                                        @level[3]
+                                    </td>
+                                    <td>
+                                        @level[4]
+                                    </td>
+                                    <td>
+                                        @level[5]
+                                    </td>
+                                    <td>
+                                        @level[6]
+                                    </td>
+                                    <td>
+                                        @level[1]
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         <!-- /.card -->
@@ -139,7 +182,19 @@ else
                 <div class="card-body">
 
                     <div class="position-relative mb-4">
-                        <canvas id="myChart2" height="10"></canvas>
+                        <canvas id="myChart2" width="80%"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
+                </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="position-relative mb-4">
+                        <canvas id="myChart3" width="80%"></canvas>
                     </div>
                 </div>
             </div>

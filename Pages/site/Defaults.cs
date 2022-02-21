@@ -75,8 +75,6 @@ namespace GroupCCP.Pages.site
         // Method to determine if  staff account has page permission
         public bool StaffHasPermission(StaffAccount Staff, string Entity, string Permission)
         {
-            Console.WriteLine(Entity);
-            Console.WriteLine(Permission);
             var HasPerm = false;
             if (Staff == null || Entity == null || Permission == null)
             {
@@ -212,6 +210,7 @@ namespace GroupCCP.Pages.site
             {
                 foreach(var LevelDown in LevelsDown)
                 {
+                    Console.WriteLine(LevelDown.LevelName);
                     var Logs = _context.ComplaintLogDetail
                         .Include(c => c.ComplaintVehicleInfo)
                         .Include(c => c.Status)
@@ -284,14 +283,12 @@ namespace GroupCCP.Pages.site
                 .Include(c => c.Level)
                 .Where(c => c.StaffId == StaffId)
                 .ToList();
-            if(Memberships != null)
+            foreach(var Membership in Memberships)
             {
-                foreach(var Membership in Memberships)
-                {
-                    RecursiveLevelDown(Membership.Level, LevelsDown);
-                }
+                Console.WriteLine(Membership.MembershipId.ToString() + " - it appears we have this");
+                RecursiveLevelDown(Membership.Level, LevelsDown);
             }
-            Console.WriteLine(LevelsDown);
+
             return LevelsDown;
             
         }
