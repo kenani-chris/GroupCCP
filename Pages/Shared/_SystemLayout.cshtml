@@ -359,13 +359,26 @@
         
     </script>
     <script>
+        function GenerateRGB()
+        {
+            var randomNum = () => Math.floor(Math.random() * (235 - 52 + 1) + 52);
+            return `rgb(${randomNum()}, ${randomNum()}, ${randomNum()})`;
+        }
+    </script>
+    <script>
         const ctx3 = document.getElementById('myChart3');
-        if(ctx2)
+        if(ctx3)
         {
             const ctx3 = document.getElementById('myChart3').getContext('2d');
             var labels = JSON.parse('@Html.Raw(Json.Serialize(ViewData["LevelLabels"]))');
             var data = JSON.parse('@Html.Raw(Json.Serialize(ViewData["LevelData"]))');
             
+            var colors = [];
+
+            for(let i=0; i < data.length; i++)
+            {
+                colors.push(GenerateRGB());
+            }
             const labels3 =  labels;
             const data3 =  data;
             const myChart23 = new Chart(ctx3, {
@@ -376,12 +389,19 @@
                         label: 'My First Dataset',
                         data: data3,
                         fill: false,
+                        backgroundColor: colors,
                         hoverOffset: 4
                     }]
                 }
             });
         }
         
+    </script>
+    <script>
+        function S
+        
+        console.log(randomRGB());
+        console.log("this is is the new color that has been generated");
     </script>
     <script>
         var OCRTable = document.getElementById('OCRTable');
